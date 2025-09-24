@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarAzul.cl</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <header class="container-fluid py-2 bg-light border-bottom">
+        <div class="row align-items-center">
+            <div class="col-1 text-center">
+                <div class="d-flex justify-content-around">
+                    <div style="width: 20px; height: 20px; border: 1px solid black;"></div>
+                    <div style="width: 20px; height: 20px; border: 1px solid black;"></div>
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="input-group">
+                    <span class="input-group-text">HTTPS://</span>
+                    <input type="text" class="form-control" value="www.MarAzul.cl">
+                </div>
+            </div>
+            <div class="col-3 d-flex justify-content-end">
+                <div style="width: 20px; height: 20px; border-radius: 50%; border: 1px solid black; margin-right: 5px;"></div>
+                <div style="width: 20px; height: 20px; border-radius: 50%; border: 1px solid black; margin-right: 5px;"></div>
+                <div style="width: 20px; height: 20px; border-radius: 50%; border: 1px solid black;"></div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container-fluid mt-3">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="d-flex justify-content-center align-items-start">
+                    <div class="p-4 border rounded shadow-sm" style="max-width: 400px;">
+                        <h5 class="text-center">Inicia Sesión</h5>
+                        <form>
+                            <div class="mb-3">
+                                <label for="nombreUsuario" class="form-label">Nombre de usuario:</label>
+                                <input type="text" class="form-control" id="nombreUsuario">
+                            </div>
+                            <div class="mb-3">
+                                <label for="contrasena" class="form-label">Contraseña:</label>
+                                <input type="password" class="form-control" id="contrasena">
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                            </div>
+                            <div class="text-center mt-2">
+                                <a href="#" class="link-secondary">¿Olvidaste la contraseña?</a>
+                            </div>
+                        </form>
+                        <hr>
+                        <div class="text-center mt-2">
+                            <span>¿Nuevo usuario?</span>
+                            <button class="btn btn-outline-secondary d-block mx-auto mt-2">Regístrate</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="col-md-4">
+                <div class="card border">
+                    <div class="card-header bg-primary text-white">
+                        B-02 : Inicio de Sesión
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <strong>Card:</strong><br>
+                            Como usuario, quiero iniciar sesión con mi email y contraseña para gestionar mis datos personales.
+                        </p>
+                        <p class="card-text">
+                            <strong>Conversation:</strong><br>
+                            - Supuestos: bloquear después de 5 intentos fallidos por 10 minutos; sesión expira tras 20 min de inactividad.
+                        </p>
+                        <p class="card-text">
+                            <strong>Confirmation (Oberkin):</strong><br>
+                            <strong>Escenario:</strong> Login exitoso<br>
+                            Dado que existe el usuario "Pedro@ejemplo.com" con contraseña válida<br>
+                            Cuando ingreso "Pedro@ejemplo.com" y la contraseña correcta<br>
+                            Entonces accedo al panel "Mi perfil"
+                        </p>
+                        </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
