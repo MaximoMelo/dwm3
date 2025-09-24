@@ -2,114 +2,38 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Historial de Pedidos</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 20px;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: auto;
-        }
-
-        .card {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-        }
-
-        .card-body ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .card-body li {
-            display: flex;
-            justify-content: space-between;
+        body { font-family: sans-serif; }
+        .pedido-link {
+            display: block;
+            padding: 10px;
             margin-bottom: 5px;
-        }
-
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 10px;
-            border-top: 1px solid #eee;
-        }
-
-        .total {
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-
-        .btn-repeat {
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            background-color: #28a745;
-            color: white;
-            cursor: pointer;
+            background-color: #f0f0f0;
             text-decoration: none;
+            color: #333;
+            border-radius: 5px;
         }
+        .pedido-link:hover {
+            background-color: #e0e0e0;
+        }
+        .pedido-title { font-weight: bold; }
+        .pedido-date { float: right; color: #777; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Historial de Pedidos</h1>
+    <h1>Historial de Pedidos</h1>
 
-        <div class="card">
-            <div class="card-header">
-                <h3>Pedido #45678</h3>
-                <span>Fecha: 23/10/2024</span>
-            </div>
-            <div class="card-body">
-                <ul>
-                    <li><span>Hamburguesa Clásica</span><span>$8.500</span></li>
-                    <li><span>Papas Fritas</span><span>$3.000</span></li>
-                    <li><span>Bebida</span><span>$2.000</span></li>
-                </ul>
-            </div>
-            <div class="card-footer">
-                <span class="total">Total: $13.500</span>
-                <a href="#" class="btn-repeat">Repetir Pedido</a>
-            </div>
-        </div>
+    <a href="detalle.html?id=1001" class="pedido-link">
+        <span class="pedido-title">Pedido #1001</span>
+        <span class="pedido-date">23/10/2024</span>
+    </a>
 
-        <div class="card">
-            <div class="card-header">
-                <h3>Pedido #45679</h3>
-                <span>Fecha: 22/10/2024</span>
-            </div>
-            <div class="card-body">
-                <ul>
-                    <li><span>Pizza de Pepperoni</span><span>$12.000</span></li>
-                </ul>
-            </div>
-            <div class="card-footer">
-                <span class="total">Total: $12.000</span>
-                <a href="#" class="btn-repeat">Repetir Pedido</a>
-            </div>
-        </div>
-
-        </div>
+    <a href="detalle.html?id=1002" class="pedido-link">
+        <span class="pedido-title">Pedido #1002</span>
+        <span class="pedido-date">22/10/2024</span>
+    </a>
 
 </body>
 </html>
