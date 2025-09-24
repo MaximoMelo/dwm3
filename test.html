@@ -2,48 +2,114 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Slider Simple</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Pedidos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .card-body ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .card-body li {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .total {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .btn-repeat {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="slider-container">
-        <div class="slider-item">
-            <h2>Pedido #1001</h2>
-            <p>Fecha: 2024-10-20</p>
-            <ul>
-                <li>Hamburguesa - $10.00</li>
-                <li>Papas Fritas - $5.00</li>
-            </ul>
-        </div>
-        
-        <div class="slider-item">
-            <h2>Pedido #1002</h2>
-            <p>Fecha: 2024-10-21</p>
-            <ul>
-                <li>Pizza de Pepperoni - $15.00</li>
-            </ul>
-        </div>
-        
-        <div class="slider-item">
-            <h2>Pedido #1003</h2>
-            <p>Fecha: 2024-10-22</p>
-            <ul>
-                <li>Ensalada César - $8.00</li>
-                <li>Agua - $2.00</li>
-            </ul>
+    <div class="container">
+        <h1>Historial de Pedidos</h1>
+
+        <div class="card">
+            <div class="card-header">
+                <h3>Pedido #45678</h3>
+                <span>Fecha: 23/10/2024</span>
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li><span>Hamburguesa Clásica</span><span>$8.500</span></li>
+                    <li><span>Papas Fritas</span><span>$3.000</span></li>
+                    <li><span>Bebida</span><span>$2.000</span></li>
+                </ul>
+            </div>
+            <div class="card-footer">
+                <span class="total">Total: $13.500</span>
+                <a href="#" class="btn-repeat">Repetir Pedido</a>
+            </div>
         </div>
 
-        <a class="prev">&#10094;</a>
-        <a class="next">&#10095;</a>
-    </div>
+        <div class="card">
+            <div class="card-header">
+                <h3>Pedido #45679</h3>
+                <span>Fecha: 22/10/2024</span>
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li><span>Pizza de Pepperoni</span><span>$12.000</span></li>
+                </ul>
+            </div>
+            <div class="card-footer">
+                <span class="total">Total: $12.000</span>
+                <a href="#" class="btn-repeat">Repetir Pedido</a>
+            </div>
+        </div>
 
-    <div class="dots-container">
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-    </div>
+        </div>
 
-    <script src="script.js"></script>
 </body>
 </html>
