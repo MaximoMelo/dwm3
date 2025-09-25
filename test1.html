@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Filtro Simple de Productos</title>
+</head>
+<body>
+
+    <h2>Filtro de Productos</h2>
+
+    <form action="/buscar-productos" method="get">
+        <label for="categoria">Categoría:</label>
+        <select id="categoria" name="categoria">
+            <option value="">Todas</option>
+            <option value="electronica">Electrónica</option>
+            <option value="ropa">Ropa</option>
+            <option value="libros">Libros</option>
+        </select>
+        <br><br>
+
+        <label for="precioMaximo">Precio Máximo:</label>
+        <input type="number" id="precioMaximo" name="precioMaximo" step="0.01">
+        <br><br>
+        
+        <input type="submit" value="Filtrar">
+    </form>
+
+</body>
+</html>
