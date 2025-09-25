@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Filtro Simple de Productos</title>
+    <title>Filtro con Búsqueda Manual</title>
 </head>
 <body>
 
-    <h2>Filtro de Productos</h2>
+    <h2>Filtro de Productos con Búsqueda</h2>
 
     <form action="/buscar-productos" method="get">
+        <label for="terminoBusqueda">Buscar producto:</label>
+        <input type="text" id="terminoBusqueda" name="terminoBusqueda" placeholder="Ej: zapatillas, iPhone...">
+        <br><br>
+
         <label for="categoria">Categoría:</label>
         <select id="categoria" name="categoria">
             <option value="">Todas</option>
@@ -21,7 +25,7 @@
         <input type="number" id="precioMaximo" name="precioMaximo" step="0.01">
         <br><br>
         
-        <input type="submit" value="Filtrar">
+        <input type="submit" value="Buscar">
     </form>
 
 </body>
