@@ -1,32 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Filtro con Búsqueda Manual</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selecciona tu método de pago</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="container">
+        <h1>Selecciona tu método de pago</h1>
+        <div class="payment-options">
+            <button class="payment-button" data-service="paypal">
+                <img src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-mark-color.svg" alt="Pagar con PayPal">
+                <span>PayPal</span>
+            </button>
+            <button class="payment-button" data-service="stripe">
+                <img src="https://stripe.com/img/v3/home/features/stripe-products.svg" alt="Pagar con Stripe">
+                <span>Stripe</span>
+            </button>
+            <button class="payment-button" data-service="mercadopago">
+                <img src="https://http2.mlstatic.com/frontend-s/mercadopago/ui-web/assets/logo-mercadopago.svg" alt="Pagar con Mercado Pago">
+                <span>Mercado Pago</span>
+            </button>
+        </div>
+    </div>
 
-    <h2>Filtro de Productos con Búsqueda</h2>
-
-    <form action="/buscar-productos" method="get">
-        <label for="terminoBusqueda">Buscar producto:</label>
-        <input type="text" id="terminoBusqueda" name="terminoBusqueda" placeholder="Ej: zapatillas, iPhone...">
-        <br><br>
-
-        <label for="categoria">Categoría:</label>
-        <select id="categoria" name="categoria">
-            <option value="">Todas</option>
-            <option value="electronica">Electrónica</option>
-            <option value="ropa">Ropa</option>
-            <option value="libros">Libros</option>
-        </select>
-        <br><br>
-
-        <label for="precioMaximo">Precio Máximo:</label>
-        <input type="number" id="precioMaximo" name="precioMaximo" step="0.01">
-        <br><br>
-        
-        <input type="submit" value="Buscar">
-    </form>
-
+    <script src="script.js"></script>
 </body>
 </html>
