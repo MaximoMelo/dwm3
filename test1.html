@@ -3,94 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generación de Reportes - Panel de Administración</title>
+    <title>Registro de Productos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Para que el padding no afecte el ancho total */
+        }
+        .form-group textarea {
+            resize: vertical;
+        }
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .btn-submit:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
 
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#">Inicio</a></li>
-                <li><a href="#">Productos</a></li>
-                <li><a href="#">Pedidos</a></li>
-                <li><a href="#">Reportes de Ventas</a></li>
-                <li><a href="#">Configuración</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <h1>Generación y Descarga de Reportes</h1>
-        <p>Analiza el rendimiento de tu negocio a largo plazo.</p>
-
-        <section id="controles-filtro">
-            <h2>Seleccionar Rango de Tiempo</h2>
-            <form>
-                <div>
-                    <label for="tipo-reporte">Tipo de Reporte:</label>
-                    <select id="tipo-reporte" name="tipo-reporte">
-                        <option value="mensual">Mensual</option>
-                        <option value="trimestral">Trimestral</option>
-                        <option value="anual">Anual</option>
-                        <option value="personalizado">Rango de fechas personalizado</option>
-                    </select>
-                </div>
-                
-                <div>
-                    <label for="fecha-desde">Desde:</label>
-                    <input type="date" id="fecha-desde" name="fecha-desde">
-                </div>
-                
-                <div>
-                    <label for="fecha-hasta">Hasta:</label>
-                    <input type="date" id="fecha-hasta" name="fecha-hasta">
-                </div>
-                
-                <button type="button">Generar Reporte</button>
-                <button type="button">Descargar Reporte</button>
-            </form>
-        </section>
-
-        <section id="visualizacion-reporte">
-            <h2>Resumen del Reporte</h2>
-            <div>
-                <h3>Ingresos Totales</h3>
-                <p>[Placeholder para gráfico]</p>
+    <div class="container">
+        <h1>Registro de Nuevo Producto</h1>
+        <form>
+            <div class="form-group">
+                <label for="nombre">Nombre del Producto:</label>
+                <input type="text" id="nombre" name="nombre" required>
             </div>
-
-            <div>
-                <h3>Pedidos por Producto</h3>
-                <p>[Placeholder para gráfico]</p>
+            <div class="form-group">
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" rows="4"></textarea>
             </div>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Ingresos Totales</th>
-                        <th>N° de Pedidos</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>01/09/2025</td>
-                        <td>$000.000</td>
-                        <td>00</td>
-                    </tr>
-                    <tr>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-    </main>
-
-    <footer>
-        <p>&copy; 2025 Empresa de Ejemplo</p>
-    </footer>
+            <div class="form-group">
+                <label for="categoria">Categoría:</label>
+                <select id="categoria" name="categoria">
+                    <option value="comida">Comida</option>
+                    <option value="bebida">Bebida</option>
+                    <option value="postre">Postre</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="precio">Precio:</label>
+                <input type="number" id="precio" name="precio" min="0" required>
+            </div>
+            <div class="form-group">
+                <label for="stock">Stock:</label>
+                <input type="number" id="stock" name="stock" min="0" required>
+            </div>
+            <button type="submit" class="btn-submit">Registrar Producto</button>
+        </form>
+    </div>
 
 </body>
 </html>
