@@ -3,28 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selecciona tu método de pago</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Generación de Reportes - Panel de Administración</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Selecciona tu método de pago</h1>
-        <div class="payment-options">
-            <button class="payment-button" data-service="paypal">
-                <img src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-mark-color.svg" alt="Pagar con PayPal">
-                <span>PayPal</span>
-            </button>
-            <button class="payment-button" data-service="stripe">
-                <img src="https://stripe.com/img/v3/home/features/stripe-products.svg" alt="Pagar con Stripe">
-                <span>Stripe</span>
-            </button>
-            <button class="payment-button" data-service="mercadopago">
-                <img src="https://http2.mlstatic.com/frontend-s/mercadopago/ui-web/assets/logo-mercadopago.svg" alt="Pagar con Mercado Pago">
-                <span>Mercado Pago</span>
-            </button>
-        </div>
-    </div>
 
-    <script src="script.js"></script>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Productos</a></li>
+                <li><a href="#">Pedidos</a></li>
+                <li><a href="#">Reportes de Ventas</a></li>
+                <li><a href="#">Configuración</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Generación y Descarga de Reportes</h1>
+        <p>Analiza el rendimiento de tu negocio a largo plazo.</p>
+
+        <section id="controles-filtro">
+            <h2>Seleccionar Rango de Tiempo</h2>
+            <form>
+                <div>
+                    <label for="tipo-reporte">Tipo de Reporte:</label>
+                    <select id="tipo-reporte" name="tipo-reporte">
+                        <option value="mensual">Mensual</option>
+                        <option value="trimestral">Trimestral</option>
+                        <option value="anual">Anual</option>
+                        <option value="personalizado">Rango de fechas personalizado</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="fecha-desde">Desde:</label>
+                    <input type="date" id="fecha-desde" name="fecha-desde">
+                </div>
+                
+                <div>
+                    <label for="fecha-hasta">Hasta:</label>
+                    <input type="date" id="fecha-hasta" name="fecha-hasta">
+                </div>
+                
+                <button type="button">Generar Reporte</button>
+                <button type="button">Descargar Reporte</button>
+            </form>
+        </section>
+
+        <section id="visualizacion-reporte">
+            <h2>Resumen del Reporte</h2>
+            <div>
+                <h3>Ingresos Totales</h3>
+                <p>[Placeholder para gráfico]</p>
+            </div>
+
+            <div>
+                <h3>Pedidos por Producto</h3>
+                <p>[Placeholder para gráfico]</p>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Ingresos Totales</th>
+                        <th>N° de Pedidos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>01/09/2025</td>
+                        <td>$000.000</td>
+                        <td>00</td>
+                    </tr>
+                    <tr>
+                        <td>...</td>
+                        <td>...</td>
+                        <td>...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Empresa de Ejemplo</p>
+    </footer>
+
 </body>
 </html>
