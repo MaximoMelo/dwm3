@@ -9,21 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     
     <style>
-        /* -------------------------------------- */
-        /* Estilos Base: Centrado y Box Model */
-        /* -------------------------------------- */
-        /* Flexbox para centrar la interfaz en el viewport */
-        body {
-            display: flex;
-            align-items: center; 
-            justify-content: center;
-            min-height: 100vh;
-            background-color: #f8f9fa; /* Fondo gris claro */
-        }
-
-        /* Contenedor principal: Tarjeta compacta */
         .main-card {
-            /* Limitar el ancho y aplicar Box Model */
             max-width: 800px;
             width: 95%;
             padding: 25px;
@@ -32,19 +18,12 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-        /* Contenedor del listado (simula scroll si fuera necesario) */
+  
         .product-table-container {
-            /* Altura y scroll opcionales para listas largas */
             max-height: 350px; 
             overflow-y: auto;
             border: 1px solid #dee2e6;
             border-radius: 5px;
-        }
-
-        /* Ajuste Box Model para el campo de búsqueda/filtro */
-        .filter-group .input-group {
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        }
     </style>
 </head>
 <body>
@@ -57,9 +36,6 @@
                 <label for="categories" class="form-label mb-1 fw-bold">Categorías</label>
                 <select class="form-select" id="categories">
                     <option selected>Todas</option>
-                    <option>Comida</option>
-                    <option>Bebida</option>
-                    <option>Postre</option>
                 </select>
             </div>
 
@@ -76,28 +52,20 @@
             </div>
         </div>
 
-        <h5 class="mt-4 mb-2 text-center">Listado de productos</h5>
+        <h5 class="mt-4 mb-2 text-center">Lista de productos</h5>
         <div class="product-table-container">
-            <table class="table table-striped table-hover mb-0 text-center">
-                <thead>
-                    <tr>
-                        <th scope="col" style="width: 10%;">#</th>
-                        <th scope="col" style="width: 50%;">Nombre del Producto</th>
-                        <th scope="col" style="width: 20%;">Categoría</th>
-                        <th scope="col" style="width: 20%;">Stock</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>1</td><td>Producto 1</td><td>Comida</td><td>15</td></tr>
-                    <tr><td>2</td><td>Producto 2</td><td>Bebida</td><td>30</td></tr>
-                    <tr><td>3</td><td>Producto 3</td><td>Postre</td><td>8</td></tr>
-                    <tr><td>4</td><td>Producto 4</td><td>Comida</td><td>22</td></tr>
-                    <tr><td>5</td><td>Producto 5</td><td>Bebida</td><td>10</td></tr>
-                    <tr><td>6</td><td>Producto 6</td><td>Postre</td><td>5</td></tr>
-                    <tr><td>7</td><td>Producto 7</td><td>Comida</td><td>18</td></tr>
-                    <tr><td>8</td><td>Producto 8</td><td>Bebida</td><td>25</td></tr>
-                    <tr><td>9</td><td>Producto 9</td><td>Postre</td><td>12</td></tr>
-                    <tr><td>10</td><td>Producto 10</td><td>Comida</td><td>9</td></tr>
+            <table class="table mb-0 text-center">
+                <tbody></tbody>
+                    <tr><td></td><td>Producto 1</td><td></td><td></td></tr>
+                    <tr><td></td><td>Producto 2</td><td></td><td></td></tr>
+                    <tr><td></td><td>Producto 3</td><td></td><td></td></tr>
+                    <tr><td></td><td>Producto 4</td><td></td><td></td></tr>
+                    <tr><td></td><td>Producto 5</td><td></td><td></td></tr>
+                    <tr><td></td><td>Producto 6</td><td></td><td></td></tr>
+                    <tr><td></td><td>Producto 7</td><td></td><td></td></tr>
+                    <tr><td></td><td>Producto 8</td><td></td><td></td></tr>
+                    <tr><td></td><td>Producto 9</td><td></td><td></td></tr>
+                    <tr><td></td><td>Producto 10</td><td></td><td></td></tr>
                     </tbody>
             </table>
         </div>
