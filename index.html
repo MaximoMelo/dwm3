@@ -177,18 +177,6 @@
         
         if (cart[productId]) {
             cart[productId].quantity += 1;
-        } else {
-            let price = 10000; 
-            if (productName.includes('Gohan Clásico')) price = 8500;
-            else if (productName.includes('Bowl')) price = 9000;
-            else if (productName.includes('Yakimeshi') || productName.includes('Empanadas') || productName.includes('Extra')) price = 3500;
-            else if (productName.includes('Bebida Grande')) price = 2000;
-            
-            cart[productId] = { 
-                name: productName,
-                quantity: 1,
-                price: price 
-            };
         }
         
         localStorage.setItem('shoppingCart', JSON.stringify(cart));
