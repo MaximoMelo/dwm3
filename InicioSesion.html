@@ -8,33 +8,26 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         
         <style>
-            /* Variables de tema oscuro del código principal */
+            /* Variables y estilos CSS... (Se mantienen intactos) */
             :root {
-                --dark-bg: #1e1e28;     /* Fondo principal oscuro */
-                --card-bg: #2d2d39;     /* Fondo de contenedores (la tarjeta de login) */
-                --dark-border: #444455; /* Borde oscuro y divisor de línea */
-                --text-light: #f8f9fa;  /* Texto claro */
+                --dark-bg: #1e1e28;
+                --card-bg: #2d2d39;
+                --dark-border: #444455;
+                --text-light: #f8f9fa;
             }
 
-            /* 1. Fondo del Body oscuro */
             body {
                 background-color: var(--dark-bg) !important;
             }
-
-            /* 2. Estilo de la Tarjeta de Login */
             .login-card {
                 max-width: 400px; 
                 width: 90%;
-                padding: 30px; /* Aumentamos el padding para mejor estética */
+                padding: 30px;
                 border-radius: 10px;
-                background-color: var(--card-bg) !important; /* Fondo de tarjeta oscuro */
-                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6); /* Sombra más pronunciada */
+                background-color: var(--card-bg) !important;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
             }
-
-            /* 3. Estilos de Texto y Títulos */
-            .login-card h2, 
-            .login-card label,
-            .login-card p {
+            .login-card h2, .login-card label, .login-card p {
                 color: var(--text-light) !important;
             }
             .login-card h2 {
@@ -42,34 +35,27 @@
                 border-bottom: 2px solid var(--dark-border);
                 padding-bottom: 10px;
             }
-
-            /* 4. Estilo de Inputs (igual que en el código principal) */
             .form-control {
                 background-color: var(--dark-bg) !important;
                 border-color: var(--dark-border) !important;
                 color: var(--text-light) !important;
-                margin-bottom: 15px; /* Separación entre campos */
+                margin-bottom: 15px;
             }
-            
-            /* 5. Ajuste para los botones */
             .btn-primary {
-                background-color: #0d6efd; /* Color primario de Bootstrap (o tu color de acento) */
+                background-color: #0d6efd;
                 border-color: #0d6efd;
             }
             .btn-secondary {
-                background-color: #6c757d; /* Color secundario */
+                background-color: #6c757d;
                 border-color: #6c757d;
             }
-            
-            /* Ajuste de fuentes y tamaños */
             .form-label {
-                font-size: 0.95rem !important; /* Estándar en lugar de 1vw */
+                font-size: 0.95rem !important;
                 margin-top: 10px;
             }
             .btn {
                 font-size: 1rem !important;
             }
-
         </style>
         
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -80,7 +66,7 @@
         <div class="login-card"> 
             <h2 class="text-center">INICIO DE SESIÓN</h2>
             
-            <form>
+            <form id="login-form">
                 <div class="mb-3">
                     <label for="username" class="form-label">Nombre de Usuario</label>
                     <input type="text" class="form-control form-control-lg" id="username">
@@ -100,27 +86,43 @@
                 <p>¿Nuevo usuario? 
                     <a href="#" class="btn btn-secondary w-100 mt-2">Regístrate</a>
                 </p>
-                <li class="nav-item">
-                        <a class="nav-link text-light mx-2" href="index.html">
-                            Volver
-                        </a>
-                    </li>
+                <li class="nav-item list-unstyled mt-3">
+                    <a class="nav-link text-light mx-2" href="index.html">
+                        Volver
+                    </a>
+                </li>
+                <p class="text-secondary mt-2" style="font-size: 0.8rem;">
+                    *Utiliza el usuario "cliente123@gmail.com" y la contraseña "contraseña123".
+                </p>
             </div>
         </div>
+        
         <script>
-            function registrousuario(){
-            let email=document.getElementById("username").value;
-            let password=document.getElementById("password").value;
-            if(email=="Cliente123@gmail.com" && password="contraseña123"){
-                location.href = "index.html";
-            }
-            if(email=="Cliente@gmail.com"){
-                alert("El correo ya está en uso")
-            }
-            if(password=="123"){
-                alert("La contraseña no cumple los requisitos mínimos")
-            }
-        }
+            // CORREGIDO: Eliminada la ')' extra después de function(event)
+            document.getElementById('login-form').addEventListener('submit', function(event) {
+                event.preventDefault(); // Detiene el envío del formulario
+
+                let email = document.getElementById("username").value;
+                // CORREGIDO: Cambio de coma (,) por punto (.) antes de .value
+                let password = document.getElementById("password").value; 
+
+                // INICIO DE SESIÓN EXITOSO (CORREGIDO: Añadidas las llaves {} para agrupar las acciones)
+                if (email === "cliente123@gmail.com" && password === "contraseña123") {
+                    localStorage.setItem('userEmail', email);
+                    localStorage.setItem('isLoggedIn', 'true');
+                    window.location.href = "index.html"; // Usar window.location.href es más estándar que location.href
+                } 
+                
+                // VALIDACIONES ADICIONALES
+                else if (email === "cliente@gmail.com") {
+                    alert("El email ya está en uso.");
+                } else if (password === "123") {
+                    alert("La contraseña no cumple los requisitos mínimos.");
+                } else {
+                    // Si ninguna condición se cumple (credenciales inválidas)
+                    alert("Credenciales inválidas. Por favor, revisa el usuario y la contraseña.");
+                }
+            });
         </script>
     </body>
 </html>
