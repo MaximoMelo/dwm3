@@ -9,15 +9,16 @@
     
     <style>
         /* ========================================================= */
-        /* ESTILOS GENERALES Y AJUSTES DE TEMA CLARO PARA EL CONTENIDO */
+        /* ESTILOS GENERALES Y AJUSTES DE DISEÑO */
         /* ========================================================= */
         body {
-            padding-top: 70px; /* Espacio para la barra fija */
+            padding-top: 70px; 
             background-color: #f8f9fa;
         }
 
         .main-card {
-            max-width: 1000px; /* Aumentamos el ancho máximo para la nueva estructura */
+            /* Aumentamos el ancho máximo para la nueva estructura */
+            max-width: 1000px; 
             width: 95%;
             padding: 25px;
             border-radius: 10px;
@@ -26,27 +27,47 @@
             margin: auto;
         }
 
-        /* AJUSTE DE FILTROS: Usa flexbox para alinear elementos */
+        /* AJUSTE DE FILTROS: Mueve categorías a la izquierda y búsqueda/filtrar a la derecha */
         .filter-header {
             display: flex;
-            justify-content: space-between; /* Mueve los grupos a los extremos */
-            align-items: flex-end; /* Alinea los elementos inferiores (botones) */
+            justify-content: space-between; 
+            align-items: flex-end; 
             padding: 15px 0;
             margin-bottom: 20px;
+            /* Usamos la misma estética de la caja de filtros de la imagen anterior */
+            background-color: #f8f9fa; 
+            border-radius: 5px;
+            padding: 15px;
         }
 
         .filter-left, .filter-right {
             display: flex;
-            gap: 10px; /* Espacio entre elementos */
+            gap: 10px;
+            /* Asegura que los elementos se apilen en móviles */
+            flex-wrap: wrap; 
         }
-        
+
+        /* Damos un ancho flexible a la derecha para que ocupe el espacio restante */
         .filter-right {
-            min-width: 400px; /* Asegura que tengan espacio en pantallas grandes */
+            flex-grow: 1;
+            justify-content: flex-end; 
+            align-items: flex-end; 
+        }
+
+        /* Ajustes de ancho para elementos de formulario en el header */
+        .category-select-wrapper {
+            min-width: 180px;
+        }
+        .search-input-wrapper {
+            min-width: 250px;
+        }
+        .filter-button-wrapper {
+            width: 100px;
         }
 
         /* ESTILOS CLAROS PARA EL CONTENEDOR DE LA LISTA */
         .product-table-container {
-            max-height: 500px; /* Aumentamos un poco la altura para más productos */
+            max-height: 500px; 
             overflow-y: auto;
             background-color: white; 
             border: 1px solid #dee2e6; 
@@ -54,19 +75,11 @@
             padding: 0 !important;
         }
 
-        /* Título de la sección de la lista */
-        .list-header {
-            padding: 10px 25px;
-            border-bottom: 1px solid #dee2e6;
-            font-weight: bold;
-            background-color: #f8f9fa; /* Fondo gris claro para el encabezado */
-        }
-
-        /* Estilo del Ítem de Producto */
+        /* Estilo del Ítem de Producto con Imagen */
         .product-item {
             display: flex;
             align-items: center;
-            padding: 15px 25px; /* Más padding para más espacio */
+            padding: 15px 25px; 
             border-bottom: 1px solid #dee2e6 !important; 
             color: #212529; 
         }
@@ -76,12 +89,18 @@
         }
 
         .product-image-placeholder {
-            width: 60px; /* Tamaño de la imagen individual */
+            width: 60px; 
             height: 60px;
-            background-color: #e9ecef; /* Placeholder gris claro */
+            background-color: #e9ecef; 
             border-radius: 5px;
             margin-right: 15px;
-            flex-shrink: 0; /* No permite que se encoja */
+            flex-shrink: 0; 
+            /* Para centrar un icono o texto dentro del placeholder si se desea */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: #6c757d;
         }
     </style>
 </head>
@@ -97,9 +116,4 @@
                 <ul class="navbar-nav ms-auto">
                     
                     <li class="nav-item">
-                        <a class="nav-link btn btn-outline-light mx-2" href="InicioSesion.html">
-                            Inicia Sesión
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-outline-info mx-
+                        <a class="nav
