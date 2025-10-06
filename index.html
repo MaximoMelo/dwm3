@@ -9,7 +9,7 @@
     
     <style>
         /* ========================================================= */
-        /* ESTILOS GENERALES Y AJUSTES DE TEMA OSCURO */
+        /* ESTILOS GENERALES Y AJUSTES DE TEMA CLARO PARA EL CONTENIDO */
         /* ========================================================= */
         body {
             padding-top: 70px; /* Espacio para la barra fija */
@@ -21,32 +21,33 @@
             width: 95%;
             padding: 25px;
             border-radius: 10px;
-            /* Hacemos transparente la tarjeta para que el fondo se vea bien */
-            background-color: transparent; 
-            box-shadow: none;
+            /* La tarjeta principal es blanca y tiene sombra */
+            background-color: white; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
             margin: auto;
         }
- 
-        /* ESTILOS ESPECÍFICOS PARA LA LISTA OSCURA */
+
+        /* ESTILOS CLAROS PARA EL CONTENEDOR DE LA LISTA */
         .product-table-container {
             max-height: 350px; 
             overflow-y: auto;
-            background-color: #343a40; /* Fondo oscuro (bg-dark) */
-            border: 1px solid #495057; /* Borde gris oscuro */
+            background-color: white; /* Fondo blanco */
+            border: 1px solid #dee2e6; /* Borde gris claro alrededor del contenedor */
             border-radius: 5px;
             padding: 0 !important;
         }
 
-        /* Texto y elementos en el contenedor oscuro deben ser claros */
+        /* Asegurar que el texto sea oscuro sobre fondo claro */
         .product-table-container h5, 
-        .product-table-container label {
-            color: #f8f9fa !important; /* Texto claro (text-light) */
+        .product-table-container label,
+        .product-table-container span { 
+            color: #212529 !important; /* Texto oscuro (text-dark) */
         }
         
-        /* Líneas divisorias en la lista oscura */
-        .list-item-dark {
-            border-bottom: 1px solid #495057 !important; 
-            color: #f8f9fa; /* Texto de los productos en color claro */
+        /* Líneas divisorias para los ítems de la lista (simulando líneas de tabla) */
+        .list-item-light {
+            border-bottom: 1px solid #dee2e6 !important; 
+            color: #212529; 
         }
     </style>
 </head>
@@ -97,7 +98,7 @@
         // 1. HTML DE LAS VISTAS
         // ******************************************************
         
-        // Vista de Listado de Productos (Vista por defecto)
+        // Vista de Listado de Productos (Estilo CLARO/BLANCO)
         const listadoHTML = `
             <div class="main-card">
                 
@@ -124,85 +125,3 @@
                 </div>
 
                 <h5 class="mt-4 mb-2 text-center text-dark">Lista de productos</h5>
-
-                <div class="product-table-container"> 
-                    
-                    <div class="d-flex justify-content-between align-items-center p-3 list-item-dark">
-                        <span class="data-label fw-bold">Producto 1</span>
-                        <button type="button" class="btn btn-outline-light btn-sm" style="font-size: 0.8rem; width: 35px;">+</button>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center p-3 list-item-dark">
-                        <span class="data-label fw-bold">Producto 2</span>
-                        <button type="button" class="btn btn-outline-light btn-sm" style="font-size: 0.8rem; width: 35px;">+</button>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center p-3 list-item-dark">
-                        <span class="data-label fw-bold">Producto 3</span>
-                        <button type="button" class="btn btn-outline-light btn-sm" style="font-size: 0.8rem; width: 35px;">+</button>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center p-3 list-item-dark">
-                        <span class="data-label fw-bold">Producto 4</span>
-                        <button type="button" class="btn btn-outline-light btn-sm" style="font-size: 0.8rem; width: 35px;">+</button>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center p-3 list-item-dark">
-                        <span class="data-label fw-bold">Producto 5</span>
-                        <button type="button" class="btn btn-outline-light btn-sm" style="font-size: 0.8rem; width: 35px;">+</button>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center p-3 list-item-dark">
-                        <span class="data-label fw-bold">Producto 6</span>
-                        <button type="button" class="btn btn-outline-light btn-sm" style="font-size: 0.8rem; width: 35px;">+</button>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center p-3 list-item-dark">
-                        <span class="data-label fw-bold">Producto 7</span>
-                        <button type="button" class="btn btn-outline-light btn-sm" style="font-size: 0.8rem; width: 35px;">+</button>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center p-3 list-item-dark">
-                        <span class="data-label fw-bold">Producto 8</span>
-                        <button type="button" class="btn btn-outline-light btn-sm" style="font-size: 0.8rem; width: 35px;">+</button>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center p-3 list-item-dark">
-                        <span class="data-label fw-bold">Producto 9</span>
-                        <button type="button" class="btn btn-outline-light btn-sm" style="font-size: 0.8rem; width: 35px;">+</button>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center p-3 text-light"> 
-                        <span class="data-label fw-bold">Producto 10</span>
-                        <button type="button" class="btn btn-outline-light btn-sm" style="font-size: 0.8rem; width: 35px;">+</button>
-                    </div>
-
-                </div>
-            </div>
-        `;
-        
-        // Define aquí otras vistas (ej: adminHTML, perfilHTML)
-        const adminHTML = `<h1 class="text-center mt-5">Panel de Administrador</h1>`;
-
-
-        // ******************************************************
-        // 2. LÓGICA DE NAVEGACIÓN (LOADVIEW)
-        // ******************************************************
-
-        const appContent = document.getElementById('app-content');
-
-        function loadView(viewName) {
-            let content = '';
-            
-            switch (viewName) {
-                case 'listado':
-                    content = listadoHTML;
-                    break;
-                case 'admin':
-                    content = adminHTML;
-                    break;
-                default:
-                    content = `<h1 class="text-center mt-5">Vista no encontrada.</h1>`;
-            }
-            
-            appContent.innerHTML = content;
-        }
-
-        // Carga la vista de listado AL INICIAR la página.
-        window.onload = function() {
-            loadView('listado');
-        };
-    </script>
-</body>
-</html>
