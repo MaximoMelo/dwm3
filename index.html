@@ -13,7 +13,7 @@
         /* ========================================================= */
         :root {
             --dark-bg: #1e1e28; /* Fondo principal oscuro (similar al ejemplo) */
-            --card-bg: #2d2d39; /* Fondo de contenedores (main-card) */
+            --card-bg: #2d2d39; /* Fondo de contenedores (para filtros, slider y lista) */
             --dark-border: #444455; /* Borde oscuro y divisor de línea */
             --text-light: #f8f9fa;
         }
@@ -23,21 +23,19 @@
             background-color: var(--dark-bg); /* Fondo principal oscuro */
         }
 
-        .main-card {
-            max-width: 1200px; /* Aumentamos el ancho para el nuevo layout */
+        /* ELIMINACIÓN DE .main-card: Reajustamos el espaciado y ancho */
+        .page-content-wrapper {
+            max-width: 1200px; 
             width: 95%;
-            padding: 25px;
-            border-radius: 10px;
-            background-color: var(--card-bg); /* Fondo oscuro de la tarjeta */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
             margin: auto;
-            min-height: 70vh; /* Aseguramos que tenga un alto visible */
+            padding: 25px 0; /* Padding solo vertical en la página */
+            min-height: 70vh;
         }
 
         /* TÍTULOS Y TEXTOS EN TEMA OSCURO */
-        .main-card h5, 
-        .main-card label,
-        .main-card button {
+        .page-content-wrapper h5, 
+        .page-content-wrapper label,
+        .page-content-wrapper button {
             color: var(--text-light) !important;
         }
         
@@ -54,29 +52,44 @@
         /* ========================================================= */
         /* ESTILOS DE FILTROS Y LAYOUT PRINCIPAL (Flex) */
         /* ========================================================= */
+        
+        /* Contenedor de Filtros, ahora con el fondo de tarjeta */
+        .filter-section {
+            background-color: var(--card-bg); /* Fondo oscuro de la tarjeta */
+            padding: 15px 25px; /* Espaciado interno */
+            border-radius: 10px 10px 0 0; /* Bordes redondeados solo arriba si hay más contenido */
+            margin-bottom: 0;
+        }
+
         .content-container {
             display: flex;
-            gap: 20px; /* Espacio entre el slider y la lista de productos */
-            margin-top: 20px;
+            gap: 20px;
+            /* Margen superior 0 porque los filtros están justo arriba */
+            margin-top: 0; 
         }
 
         /* Diseño del Slider de Categorías (Izquierda) */
         .category-slider-wrapper {
-            width: 35%; /* Ocupa un tercio del espacio */
+            width: 35%;
             min-width: 300px; 
+            background-color: var(--card-bg); /* Fondo oscuro */
+            padding: 25px; /* Espaciado interno */
+            border-radius: 0 0 10px 10px; /* Bordes redondeados solo abajo */
+        }
+        .category-slider-wrapper-inner {
+            margin-top: 10px;
         }
 
         /* Elemento tipo Carrusel/Slider placeholder */
         .image-slider-placeholder {
             height: 350px;
-            background-color: #3d3d49; /* Fondo gris oscuro */
+            background-color: #3d3d49; 
             border: 1px solid var(--dark-border);
             border-radius: 5px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 5px;
-            margin-top: 10px;
         }
         .slider-arrow {
             color: white;
@@ -87,33 +100,35 @@
 
         /* Contenedor del Listado de Productos (Derecha) */
         .product-list-wrapper {
-            flex-grow: 1; /* Ocupa el espacio restante */
+            flex-grow: 1; 
             width: 65%;
             padding: 0;
+            background-color: var(--card-bg); /* Fondo oscuro */
             border: 1px solid var(--dark-border);
-            border-radius: 5px;
+            border-radius: 0 0 10px 10px;
             max-height: 500px;
             overflow-y: auto;
         }
         
         /* ========================================================= */
-        /* ESTILOS DE ÍTEMS DE PRODUCTO EN LISTA */
+        /* ESTILOS DE ÍTEMS DE PRODUCTO (Sin estructura de tabla) */
         /* ========================================================= */
         .product-item {
             display: flex;
             align-items: center;
             padding: 10px 15px;
-            border-bottom: 1px solid var(--dark-border) !important; 
+            border-bottom: 1px solid var(--dark-border); 
+            background-color: var(--card-bg);
         }
 
         .product-item:last-child {
-            border-bottom: none !important;
+            border-bottom: none;
         }
 
         .product-image-placeholder {
             width: 60px; 
             height: 60px;
-            background-color: #555566; /* Fondo oscuro para la imagen */
+            background-color: #555566; 
             border-radius: 5px;
             margin-right: 15px;
             flex-shrink: 0; 
@@ -129,22 +144,25 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold">Mar Azul</a> 
+            <a class="navbar-brand fw-bold" href="#" onclick="loadView('listado')">Mi Sistema</a> 
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     
                     <li class="nav-item">
-                        <a class="nav-link text-white btn-outline-info mx-2" href="InicioSesion.html">
+                        <a class="nav-link text-white me-3" href="InicioSesion.html">
                             Inicia Sesión
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white btn-outline-info mx-2" href="CarritoCompras.html">
+                        <a class="nav-link text-white me-3" href="CarritoCompras.html">
                             Mi Carrito 🛒
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white btn-danger mx-2" href="#" onclick="loadView('admin')">
+                        <a class="nav-link text-white" href="#" onclick="loadView('admin')">
                             Sección Administrador
                         </a>
                     </li>
@@ -177,15 +195,15 @@
             `;
         }
         
-        // Vista de Listado de Productos (Tema Oscuro con Slider y Lista)
+        // Vista de Listado de Productos (Contenido Flotante)
         const listadoHTML = `
-            <div class="main-card">
+            <div class="page-content-wrapper">
                 
-                <div class="d-flex justify-content-between align-items-end mb-4">
+                <div class="filter-section d-flex justify-content-between align-items-end">
                     
                     <div class="d-flex align-items-center">
                         <div style="width: 180px;">
-                             <select class="form-select btn btn-outline-light text-start shadow-none" id="categoria">
+                            <select class="form-select btn btn-outline-light text-start shadow-none" id="categoria">
                                 <option selected class="text-dark">Categorías</option>
                                 <option class="text-dark">Comida</option>
                                 <option class="text-dark">Bebidas</option>
@@ -214,7 +232,6 @@
                     </div>
 
                     <div class="product-list-wrapper"> 
-                        
                         ${generateProductItem('Producto 1 - Gohan Nikkei')}
                         ${generateProductItem('Producto 2 - Gohan Clásico')}
                         ${generateProductItem('Producto 3 - Yakimeshi')}
@@ -225,7 +242,6 @@
                         ${generateProductItem('Producto 8 - Camarón Furai')}
                         ${generateProductItem('Producto 9 - Ceviche Mixto')}
                         ${generateProductItem('Producto 10 - Bebida Grande', true)}
-                        
                     </div>
                 </div>
             </div>
