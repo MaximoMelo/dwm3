@@ -63,7 +63,7 @@
                 <ul class="navbar-nav ms-auto">
                     
                     <li class="nav-item">
-                        <a class="nav-link btn btn-outline-light mx-2" href="InicioSesion.html">
+                        <a class="nav-link btn btn-outline-info mx-2" href="InicioSesion.html">
                             Inicia Sesión
                         </a>
                     </li>
@@ -87,16 +87,8 @@
             </div>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // ******************************************************
-        // 1. HTML DE LAS VISTAS
-        // ******************************************************
-        
-        // Vista de Listado de Productos (Estilo CLARO/BLANCO)
-        const listadoHTML = `
-            <div class="main-card">
-                
+    <script>     
+            <div class= "row">        
                 <div class="row filter-group gx-2 mb-3 align-items-end p-3 rounded bg-white shadow-sm">
                     
                     <div class="col-12 col-md-4 mb-2 mb-md-0">
@@ -166,39 +158,6 @@
 
                 </div>
             </div>
-        `;
-        
-        // Vista de Administración (Se mantiene por si quieres usarla)
-        const adminHTML = `<h1 class="text-center mt-5">Panel de Administrador</h1>`;
-
-
-        // ******************************************************
-        // 2. LÓGICA DE NAVEGACIÓN DINÁMICA
-        // ******************************************************
-
-        const appContent = document.getElementById('app-content');
-
-        function loadView(viewName) {
-            let content = '';
-            
-            switch (viewName) {
-                case 'listado':
-                    content = listadoHTML;
-                    break;
-                case 'admin':
-                    content = adminHTML;
-                    break;
-                default:
-                    content = `<h1 class="text-center mt-5">Vista no encontrada.</h1>`;
-            }
-            
-            appContent.innerHTML = content;
-        }
-
-        // Carga la vista de listado automáticamente AL INICIAR la página.
-        window.onload = function() {
-            loadView('listado');
-        };
     </script>
 </body>
 </html>
