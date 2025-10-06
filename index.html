@@ -23,6 +23,17 @@
             background-color: var(--dark-bg); /* Fondo principal oscuro */
         }
 
+        /* NUEVO ESTILO: Contenedor con ancho extendido */
+        .custom-wide-container {
+            /* Define un ancho máximo más amplio que el de .container normal */
+            max-width: 1450px; 
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1.5rem !important; /* Mantiene el padding de container-fluid */
+            padding-right: 1.5rem !important; /* Mantiene el padding de container-fluid */
+        }
+
         /* La clase .main-card fue eliminada del HTML. Sus estilos de relleno se mueven aquí: */
         .filters-row {
             padding-top: 25px; 
@@ -31,9 +42,10 @@
         }
 
         /* TÍTULOS Y TEXTOS EN TEMA OSCURO */
-        .container h5, 
-        .container label,
-        .container button {
+        /* Se usa .custom-wide-container para aplicar los estilos de texto */
+        .custom-wide-container h5, 
+        .custom-wide-container label,
+        .custom-wide-container button {
             color: var(--text-light) !important;
         }
         
@@ -59,7 +71,7 @@
         /* Diseño del Slider de Categorías (Izquierda) - AHORA SIN FONDO NI SOMBRA */
         .category-slider-wrapper {
             width: 35%;
-            min-width: 300px;
+            min-width: 300px; 
             padding: 20px 0; /* Mantenemos padding horizontal de 0 para alineación */
             border-radius: 0;
             /* SE ELIMINA el fondo, la sombra y el border-radius para que se integre al fondo del body */
@@ -166,7 +178,7 @@
         </div>
     </nav>
 
-    <main class="container mt-4">
+    <main class="container-fluid mt-4 custom-wide-container"> 
         <div id="app-content">
             </div>
     </main>
@@ -190,7 +202,7 @@
             `;
         }
         
-        // Vista de Listado de Productos
+        // Vista de Listado de Productos (sin cambios en su contenido)
         const listadoHTML = `
             <div class="filters-row">
                 
