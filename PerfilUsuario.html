@@ -10,30 +10,25 @@
         <style>
             /* Variables de tema oscuro consistentes con index.html */
             :root {
-                --dark-bg: #1e1e28;     /* Fondo principal oscuro */
-                --card-bg: #2d2d39;     /* Fondo de contenedores (la tarjeta de login/perfil) */
-                --dark-border: #444455; /* Borde oscuro y divisor de línea */
-                --text-light: #f8f9fa;  /* Texto claro */
+                --dark-bg: #1e1e28;
+                --card-bg: #2d2d39;
+                --dark-border: #444455;
+                --text-light: #f8f9fa;
             }
 
-            /* 1. Fondo del Body oscuro */
+            /* Estilos CSS anteriores (se mantienen) */
             body {
                 background-color: var(--dark-bg) !important;
             }
-
-            /* 2. Estilo de la Tarjeta de Perfil */
             .profile-card {
-                max-width: 500px; /* Un poco más ancha que la de login */
+                max-width: 500px;
                 width: 90%;
                 padding: 30px; 
                 border-radius: 10px;
-                background-color: var(--card-bg) !important; /* Fondo de tarjeta oscuro */
+                background-color: var(--card-bg) !important;
                 box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6); 
             }
-
-            /* 3. Estilos de Texto y Títulos */
-            .profile-card h2, 
-            .profile-card label {
+            .profile-card h2, .profile-card label {
                 color: var(--text-light) !important;
             }
             .profile-card h2 {
@@ -41,24 +36,21 @@
                 border-bottom: 2px solid var(--dark-border);
                 padding-bottom: 10px;
             }
-            
-            /* 4. Estilo de Inputs */
             .form-control {
                 background-color: var(--dark-bg) !important;
                 border-color: var(--dark-border) !important;
                 color: var(--text-light) !important;
-                /* Eliminamos el margin-bottom aquí y lo manejamos con mb-3 en el HTML */
+                cursor: not-allowed; /* Añadido para simular que están bloqueados */
             }
-            
-            /* Estilo para los inputs deshabilitados (datos del usuario) */
-            .form-control:disabled {
-                opacity: 0.7;
+            /* Inputs habilitados para edición */
+            .form-control.editable {
+                background-color: #3d3d49 !important; /* Ligeramente más claro para indicar edición */
+                border-color: #0d6efd !important;
+                cursor: text;
             }
-
-            /* 5. Estilo de las Etiquetas (Labels) y Campos */
             .profile-card label {
                 font-size: 0.9rem !important;
-                min-width: 150px; /* Asegura alineación vertical de las etiquetas */
+                min-width: 150px;
                 text-align: right;
                 margin-bottom: 0;
             }
@@ -70,21 +62,21 @@
             .form-label-container .form-control {
                 flex-grow: 1;
             }
-
-            /* 6. Icono */
             .icon-top {
                 max-width: 60px; 
                 height: auto;
                 margin-bottom: 15px; 
-                border-radius: 50%; /* Si quieres que sea circular */
+                border-radius: 50%;
                 border: 3px solid var(--dark-border);
             }
-            
-            /* 7. Botones */
             .btn-primary {
                 background-color: #0d6efd;
                 border-color: #0d6efd;
-                font-size: 1rem !important; /* Estándar */
+                font-size: 1rem !important;
+            }
+            .btn-success-save {
+                background-color: #198754;
+                border-color: #198754;
             }
 
         </style>
@@ -101,31 +93,31 @@
                 <img src="https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg" alt="Icono de Perfil" class="icon-top">
             </div>
 
-            <form>
+            <form id="profile-form">
                 
                 <div class="form-label-container">
                     <label for="nombre" class="form-label">Nombre:</label>
-                    <input type="text" class="form-control" id="nombre" value="[Nombre del Cliente]" disabled>
+                    <input type="text" class="form-control" id="nombre" disabled>
                 </div>
                 
                 <div class="form-label-container">
                     <label for="email" class="form-label">Email:</label>
-                    <input type="email" class="form-control" id="email" value="[Email del Cliente]" disabled>
+                    <input type="email" class="form-control" id="email" disabled>
                 </div>
 
                 <div class="form-label-container">
                     <label for="direccion" class="form-label">Dirección:</label>
-                    <input type="text" class="form-control" id="direccion" value="[Dirección Guardada]" disabled>
+                    <input type="text" class="form-control" id="direccion" disabled>
                 </div>
 
                 <div class="form-label-container">
                     <label for="metodopago" class="form-label">Método de pago asociado:</label>
-                    <input type="text" class="form-control" id="metodopago" value="**** 4567" disabled>
+                    <input type="text" class="form-control" id="metodopago" disabled>
                 </div>
 
                 <div class="form-label-container">
                     <label for="numtelefono" class="form-label">Número de teléfono:</label>
-                    <input type="text" class="form-control" id="numtelefono" value="+56 9 XXXX XXXX" disabled>
+                    <input type="text" class="form-control" id="numtelefono" disabled>
                 </div>
 
                 <div class="d-grid gap-2 mt-4">
@@ -133,31 +125,113 @@
                 </div>
                 
                 <div class="d-grid gap-2 mt-2">
-                    <button type="button" class="btn btn-secondary btn-lg">Editar Datos</button>
+                    <button type="button" class="btn btn-secondary btn-lg" id="edit-btn">Editar Datos</button>
                 </div>
                 
             </form>
             
             <div class="text-center mt-4">
-                 <a href="index.html" class="btn btn-link text-light">Volver a la tienda</a>
+                 <a href="index.html" class="btn btn-link text-light">Volver</a>
             </div>
             
         </div>
         
         <script>
-            // LÓGICA PARA CARGAR EL EMAIL DESDE localStorage
-            document.addEventListener('DOMContentLoaded', function() {
+            // Referencias a los elementos clave
+            const fields = document.querySelectorAll('#profile-form input');
+            const editBtn = document.getElementById('edit-btn');
+
+            // ----------------------------------------------------
+            // 1. FUNCIÓN PARA CARGAR DATOS INICIALES
+            // ----------------------------------------------------
+            function loadProfileData() {
                 const userEmail = localStorage.getItem('userEmail');
-                const emailInput = document.getElementById('email');
                 
-                if (userEmail && emailInput) {
-                    emailInput.value = userEmail;
-                    
-                    // Opcional: Usar la parte del nombre del email como Nombre del Cliente
+                // Cargar datos persistentes (simulado por localStorage)
+                const storedData = JSON.parse(localStorage.getItem('profileData'));
+
+                if (userEmail) {
+                    // Inicializar el email y el nombre
                     const namePart = userEmail.substring(0, userEmail.indexOf('@'));
-                    document.getElementById('nombre').value = namePart.charAt(0).toUpperCase() + namePart.slice(1);
+                    
+                    document.getElementById('email').value = userEmail;
+                    document.getElementById('nombre').value = storedData ? storedData.nombre : namePart.charAt(0).toUpperCase() + namePart.slice(1);
+                    
+                    // Cargar el resto de los datos guardados
+                    if (storedData) {
+                        document.getElementById('direccion').value = storedData.direccion || '';
+                        document.getElementById('metodopago').value = storedData.metodopago || '';
+                        document.getElementById('numtelefono').value = storedData.numtelefono || '';
+                    }
                 }
+            }
+            
+            // ----------------------------------------------------
+            // 2. FUNCIÓN PARA GUARDAR DATOS EN LOCALSTORAGE
+            // ----------------------------------------------------
+            function saveProfileData() {
+                // Objeto con la nueva data
+                const newProfileData = {
+                    nombre: document.getElementById('nombre').value,
+                    direccion: document.getElementById('direccion').value,
+                    metodopago: document.getElementById('metodopago').value,
+                    numtelefono: document.getElementById('numtelefono').value,
+                };
+                
+                // Guardar como JSON
+                localStorage.setItem('profileData', JSON.stringify(newProfileData));
+                alert('¡Datos actualizados correctamente!');
+            }
+            
+            // ----------------------------------------------------
+            // 3. FUNCIÓN PARA ACTIVAR/DESACTIVAR EL MODO EDICIÓN
+            // ----------------------------------------------------
+            function toggleEditMode() {
+                // Comprobar si estamos en modo edición (botón dice 'Guardar Cambios')
+                const isEditing = editBtn.textContent === 'Guardar Cambios';
+
+                if (isEditing) {
+                    // --- MODO GUARDAR CAMBIOS ---
+                    saveProfileData(); // Llama a la función de guardado
+                    
+                    // Restaurar el botón y los inputs
+                    editBtn.textContent = 'Editar Datos';
+                    editBtn.classList.remove('btn-success-save');
+                    editBtn.classList.add('btn-secondary');
+                    
+                    fields.forEach(input => {
+                        if (input.id !== 'email') { // El email no es editable
+                            input.disabled = true;
+                            input.classList.remove('editable');
+                        }
+                    });
+                } else {
+                    // --- MODO EDITAR ---
+                    editBtn.textContent = 'Guardar Cambios';
+                    editBtn.classList.remove('btn-secondary');
+                    editBtn.classList.add('btn-success-save');
+                    
+                    fields.forEach(input => {
+                        if (input.id !== 'email') { // El email no es editable
+                            input.disabled = false;
+                            input.classList.add('editable');
+                        }
+                    });
+                }
+            }
+
+            // ----------------------------------------------------
+            // 4. INICIALIZACIÓN
+            // ----------------------------------------------------
+            document.addEventListener('DOMContentLoaded', function() {
+                loadProfileData();
+                editBtn.addEventListener('click', toggleEditMode);
             });
+            
+            // Asegurarse de que si no hay sesión, el usuario no entre a esta página
+            if (localStorage.getItem('isLoggedIn') !== 'true') {
+                 window.location.href = "index.html";
+            }
         </script>
     </body>
 </html>
