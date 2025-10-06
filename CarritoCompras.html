@@ -18,17 +18,15 @@
 
         body {
             background-color: var(--dark-bg) !important;
-            padding-top: 50px; /* Ajuste global */
+            padding-top: 50px;
         }
 
-        /* Contenedor que simula el área visible del carrito */
         .cart-wrapper {
-            max-width: 900px; /* Ancho cómodo */
+            max-width: 900px;
             margin: 0 auto;
             padding: 20px;
         }
 
-        /* Encabezado */
         .cart-header {
             display: flex;
             justify-content: space-between;
@@ -50,11 +48,19 @@
             color: var(--text-light);
         }
 
+        /* Contenedor principal de la lista */
+        #cart-items-container {
+            border: 1px solid var(--dark-border); /* Borde opcional para el contenedor principal */
+            border-radius: 5px;
+            background-color: var(--card-bg); /* Fondo oscuro para el área de la lista */
+            min-height: 200px; /* Altura mínima para que se vea la caja vacía */
+        }
+        
         /* Estilo de cada fila de producto */
         .product-item-row {
             display: flex;
             align-items: center;
-            padding: 10px 0;
+            padding: 10px 15px; /* Más padding para que se vea más lleno */
             border-bottom: 1px solid var(--dark-border);
             color: var(--text-light);
         }
@@ -63,7 +69,6 @@
             border-bottom: none;
         }
         
-        /* Placeholder de la imagen (más pequeño) */
         .product-image-placeholder {
             width: 70px;
             height: 70px;
@@ -76,4 +81,189 @@
         .product-info {
             flex-grow: 1; 
             display: flex;
-            justify-content: space
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-name-and-qty {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .product-name-and-qty span {
+            font-weight: normal;
+            color: #adb5bd;
+            margin-left: 10px;
+            font-size: 0.9rem;
+        }
+
+        .btn-remove {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: var(--text-light);
+            padding: 8px 15px;
+            font-size: 0.8rem;
+        }
+
+        /* Estilo del mensaje de carrito vacío */
+        .empty-cart-message {
+            text-align: center;
+            color: #adb5bd;
+            padding: 50px 20px;
+            font-size: 1.1rem;
+        }
+        
+        /* Resumen de totales */
+        .cart-summary {
+            padding-top: 15px;
+            margin-top: 20px;
+            border-top: 1px solid var(--dark-border);
+            color: var(--text-light);
+            text-align: right;
+        }
+
+        .cart-summary div {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 8px;
+        }
+        .cart-summary label {
+            font-size: 1.1rem;
+            min-width: 150px;
+            margin-right: 10px;
+        }
+        .cart-summary #total-value {
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+        
+        .btn-checkout {
+            background-color: #28a745;
+            border-color: #28a745;
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            width: 100%;
+            max-width: 400px; /* Limita el ancho del botón para que no se extienda por toda la página */
+            margin-left: auto;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="cart-wrapper"> 
+        
+        <div class="cart-header">
+            <h5>Carrito de compras</h5>
+            <a href="index.html">Volver</a>
+        </div>
+        
+        <div id="cart-items-container">
+            </div>
+
+        <div class="cart-summary">
+            <div>
+                <label for="subtotal">Subtotal:</label>
+                <span id="subtotal-value">$0</span>
+            </div>
+            <div>
+                <label for="total" id="total-label">Total:</label>
+                <span id="total-value">$0</span>
+            </div>
+
+            <button type="button" class="btn btn-success btn-checkout" onclick="alert('¡Procediendo al Pago!')">
+                Proceder al Pago
+            </button>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        
+        const formatCurrency = (number) => {
+            // Aseguramos que sea un número entero para el formato de Chile/clp
+            return '$' + Math.round(number).toLocaleString('es-CL');
+        };
+
+        // ----------------------------------------------------
+        // 1. FUNCIÓN PARA DIBUJAR EL CARRITO (renderCart)
+        //    Ahora solo inyecta el HTML de la lista o el mensaje de vacío.
+        // ----------------------------------------------------
+        function renderCart() {
+            const cart = JSON.parse(localStorage.getItem('shoppingCart')) || {};
+            const container = document.getElementById('cart-items-container');
+            const subtotalElement = document.getElementById('subtotal-value');
+            const totalElement = document.getElementById('total-value');
+            let total = 0;
+            let cartHtml = '';
+
+            container.innerHTML = ''; // Limpiar contenido previo
+
+            const productIds = Object.keys(cart);
+
+            if (productIds.length === 0) {
+                // **CAMBIO CLAVE:** En lugar de ocultar, inyectamos el mensaje dentro del contenedor visible.
+                container.innerHTML = '<p class="empty-cart-message">Tu carrito está vacío.</p>';
+                subtotalElement.textContent = formatCurrency(0);
+                totalElement.textContent = formatCurrency(0);
+                return;
+            } 
+            
+            // Generar el HTML para cada producto
+            productIds.forEach((productId) => {
+                const item = cart[productId];
+                const itemSubtotal = item.quantity * item.price;
+                total += itemSubtotal;
+
+                cartHtml += `
+                    <div class="product-item-row">
+                        <div class="product-image-placeholder"></div>
+                        <div class="product-info">
+                            <span class="product-name-and-qty">
+                                ${item.name} 
+                                <span>(x${item.quantity})</span>
+                            </span>
+                            
+                            <span class="text-light me-3">${formatCurrency(itemSubtotal)}</span>
+
+                            <button type="button" class="btn btn-danger btn-remove" 
+                                    onclick="removeItemFromCart('${productId}')">
+                                Quitar
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = cartHtml;
+            subtotalElement.textContent = formatCurrency(total);
+            totalElement.textContent = formatCurrency(total); 
+        }
+
+        // ----------------------------------------------------
+        // 2. FUNCIÓN PARA QUITAR UNA UNIDAD (Quitar)
+        //    Reduce la cantidad en 1. Si llega a 0, elimina el producto.
+        // ----------------------------------------------------
+        function removeItemFromCart(productId) {
+            let cart = JSON.parse(localStorage.getItem('shoppingCart')) || {};
+
+            if (cart[productId]) {
+                cart[productId].quantity -= 1;
+                
+                // Si la cantidad es 0 o menos, elimina la clave del producto.
+                if (cart[productId].quantity <= 0) {
+                    delete cart[productId]; 
+                }
+                
+                localStorage.setItem('shoppingCart', JSON.stringify(cart));
+                renderCart(); // Vuelve a dibujar la lista.
+            }
+        }
+        
+        // 3. INICIALIZACIÓN
+        window.onload = renderCart;
+    </script>
+</body>
+</html>
