@@ -8,48 +8,39 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <style>
-        /* ========================================================= */
-        /* ESTILOS DE TEMA OSCURO (Global y Contenedores) */
-        /* ========================================================= */
         :root {
-            --dark-bg: #1e1e28; /* Fondo principal oscuro */
-            --card-bg: #2d2d39; /* Fondo de contenedores (ahora solo para filas de producto) */
-            --dark-border: #444455; /* Borde oscuro y divisor de línea */
+            --dark-bg: #1e1e28;
+            --card-bg: #2d2d39;
+            --dark-border: #444455;
             --text-light: #f8f9fa;
         }
 
         body {
             padding-top: 70px;
-            background-color: var(--dark-bg); /* Fondo principal oscuro */
+            background-color: var(--dark-bg);
         }
 
-        /* NUEVO ESTILO: Contenedor con ancho extendido */
         .custom-wide-container {
-            /* Define un ancho máximo más amplio que el de .container normal */
             max-width: 1450px; 
             width: 100%;
             margin-left: auto;
             margin-right: auto;
-            padding-left: 1.5rem !important; /* Mantiene el padding de container-fluid */
-            padding-right: 1.5rem !important; /* Mantiene el padding de container-fluid */
+            padding-left: 1.5rem !important;
+            padding-right: 1.5rem !important;
         }
 
-        /* La clase .main-card fue eliminada del HTML. Sus estilos de relleno se mueven aquí: */
         .filters-row {
             padding-top: 25px; 
             padding-bottom: 25px;
             min-height: 70vh;
         }
 
-        /* TÍTULOS Y TEXTOS EN TEMA OSCURO */
-        /* Se usa .custom-wide-container para aplicar los estilos de texto */
         .custom-wide-container h5, 
         .custom-wide-container label,
         .custom-wide-container button {
             color: var(--text-light) !important;
         }
         
-        /* Ajuste de color para campos de formulario en tema oscuro */
         .form-control, .form-select {
             background-color: var(--dark-bg) !important;
             border-color: var(--dark-border) !important;
@@ -59,28 +50,22 @@
             color: #aaaaaa;
         }
 
-        /* ========================================================= */
-        /* ESTILOS DE FILTROS Y LAYOUT PRINCIPAL (Flex) */
-        /* ========================================================= */
         .content-container {
             display: flex;
-            gap: 20px; /* Espacio entre el slider y la lista de productos */
+            gap: 20px;
             margin-top: 20px;
         }
 
-        /* Diseño del Slider de Categorías (Izquierda) - AHORA SIN FONDO NI SOMBRA */
         .category-slider-wrapper {
             width: 35%;
             min-width: 300px; 
-            padding: 20px 0; /* Mantenemos padding horizontal de 0 para alineación */
+            padding: 20px 0;
             border-radius: 0;
-            /* SE ELIMINA el fondo, la sombra y el border-radius para que se integre al fondo del body */
         }
 
-        /* Elemento tipo Carrusel/Slider placeholder */
         .image-slider-placeholder {
             height: 350px;
-            background-color: #3d3d49; /* Fondo gris oscuro */
+            background-color: #3d3d49;
             border: 1px solid var(--dark-border);
             border-radius: 5px;
             display: flex;
@@ -96,7 +81,6 @@
             cursor: pointer;
         }
 
-        /* Contenedor del Listado de Productos (Derecha) - AHORA SIN FONDO NI SOMBRA */
         .product-list-wrapper {
             flex-grow: 1; 
             width: 65%;
@@ -104,14 +88,9 @@
             border-radius: 0;
             max-height: 500px;
             overflow-y: auto;
-            /* SE ELIMINA el fondo, la sombra y el borde para que se integre al fondo del body */
         }
         
-        /* ========================================================= */
-        /* ESTILOS DE ÍTEMS DE PRODUCTO EN LISTA */
-        /* ========================================================= */
         .product-item {
-            /* Se aplica el fondo de tarjeta A CADA ITEM */
             background-color: var(--card-bg); 
             display: flex;
             align-items: center;
@@ -137,7 +116,6 @@
             color: var(--text-light);
         }
         
-        /* Media Query para responsividad (mantener) */
         @media (max-width: 992px) {
             .content-container {
                 flex-direction: column;
@@ -185,11 +163,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // ******************************************************
-        // 1. HTML DE LAS VISTAS
-        // ******************************************************
         
-        // Función auxiliar para generar un ítem de producto
         function generateProductItem(name, isLast = false) {
             return `
                 <div class="product-item">
@@ -202,13 +176,14 @@
             `;
         }
         
-        // Vista de Listado de Productos (sin cambios en su contenido)
         const listadoHTML = `
             <div class="filters-row">
                 
                 <div class="d-flex justify-content-between align-items-end mb-4">
                     
-                    <div class="d-flex align-items-center">
+                    <div></div> 
+
+                    <div class="d-flex gap-2 align-items-end">
                         <div style="width: 180px;">
                              <select class="form-select btn btn-outline-light text-start shadow-none" id="categoria">
                                  <option selected class="text-dark">Categorías</option>
@@ -216,9 +191,6 @@
                                  <option class="text-dark">Bebidas</option>
                             </select>
                         </div>
-                    </div>
-
-                    <div class="d-flex gap-2">
                         <div style="width: 250px;">
                             <input type="text" class="form-control" id="search" placeholder="Buscar producto">
                         </div>
@@ -257,13 +229,8 @@
             </div>
         `;
         
-        // Vista de Administración (Se mantiene)
         const adminHTML = `<h1 class="text-center mt-5 text-light">Panel de Administrador</h1>`;
 
-
-        // ******************************************************
-        // 2. LÓGICA DE NAVEGACIÓN DINÁMICA
-        // ******************************************************
 
         const appContent = document.getElementById('app-content');
 
@@ -284,7 +251,6 @@
             appContent.innerHTML = content;
         }
 
-        // Carga la vista de listado automáticamente AL INICIAR la página.
         window.onload = function() {
             loadView('listado');
         };
