@@ -12,26 +12,26 @@
         /* ESTILOS DE TEMA OSCURO (Global y Contenedores) */
         /* ========================================================= */
         :root {
-            --dark-bg: #1e1e28; 
-            --card-bg: #2d2d39; 
-            --dark-border: #444455; 
+            --dark-bg: #1e1e28; /* Fondo principal oscuro (similar al ejemplo) */
+            --card-bg: #2d2d39; /* Fondo de contenedores (main-card) */
+            --dark-border: #444455; /* Borde oscuro y divisor de línea */
             --text-light: #f8f9fa;
         }
 
         body {
             padding-top: 70px;
-            background-color: var(--dark-bg); 
+            background-color: var(--dark-bg); /* Fondo principal oscuro */
         }
 
         .main-card {
-            max-width: 1200px; 
+            max-width: 1200px; /* Aumentamos el ancho para el nuevo layout */
             width: 95%;
             padding: 25px;
             border-radius: 10px;
-            background-color: var(--card-bg); 
+            background-color: var(--card-bg); /* Fondo oscuro de la tarjeta */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
             margin: auto;
-            min-height: 70vh; 
+            min-height: 70vh; /* Aseguramos que tenga un alto visible */
         }
 
         /* TÍTULOS Y TEXTOS EN TEMA OSCURO */
@@ -54,17 +54,22 @@
         /* ========================================================= */
         /* ESTILOS DE FILTROS Y LAYOUT PRINCIPAL (Flex) */
         /* ========================================================= */
-        
+        .content-container {
+            display: flex;
+            gap: 20px; /* Espacio entre el slider y la lista de productos */
+            margin-top: 20px;
+        }
+
         /* Diseño del Slider de Categorías (Izquierda) */
         .category-slider-wrapper {
-            width: 35%;
+            width: 35%; /* Ocupa un tercio del espacio */
             min-width: 300px; 
         }
 
         /* Elemento tipo Carrusel/Slider placeholder */
         .image-slider-placeholder {
             height: 350px;
-            background-color: #3d3d49; 
+            background-color: #3d3d49; /* Fondo gris oscuro */
             border: 1px solid var(--dark-border);
             border-radius: 5px;
             display: flex;
@@ -82,36 +87,33 @@
 
         /* Contenedor del Listado de Productos (Derecha) */
         .product-list-wrapper {
-            flex-grow: 1; 
+            flex-grow: 1; /* Ocupa el espacio restante */
             width: 65%;
             padding: 0;
-            /* Quitamos el borde general del contenedor para que solo se vean los ítems */
-            /* border: 1px solid var(--dark-border); */ 
+            border: 1px solid var(--dark-border);
             border-radius: 5px;
             max-height: 500px;
             overflow-y: auto;
         }
         
         /* ========================================================= */
-        /* ESTILOS DE ÍTEMS DE PRODUCTO (Sin estructura de tabla) */
+        /* ESTILOS DE ÍTEMS DE PRODUCTO EN LISTA */
         /* ========================================================= */
         .product-item {
             display: flex;
             align-items: center;
             padding: 10px 15px;
-            /* Usamos solo un borde inferior para separarlos */
-            border-bottom: 1px solid var(--dark-border); 
-            background-color: var(--card-bg); /* Mismo fondo de la tarjeta principal */
+            border-bottom: 1px solid var(--dark-border) !important; 
         }
 
         .product-item:last-child {
-            border-bottom: none;
+            border-bottom: none !important;
         }
 
         .product-image-placeholder {
             width: 60px; 
             height: 60px;
-            background-color: #555566; 
+            background-color: #555566; /* Fondo oscuro para la imagen */
             border-radius: 5px;
             margin-right: 15px;
             flex-shrink: 0; 
@@ -165,7 +167,7 @@
         // 1. HTML DE LAS VISTAS
         // ******************************************************
         
-        // Función auxiliar para generar un ítem de producto (ya no usa clases de "tabla")
+        // Función auxiliar para generar un ítem de producto
         function generateProductItem(name, isLast = false) {
             return `
                 <div class="product-item">
@@ -196,7 +198,7 @@
 
                     <div class="d-flex gap-2">
                         <div style="width: 250px;">
-                            <input type="text" class="form-control" id="search" placeholder="Búsqueda manual">
+                            <input type="text" class="form-control" id="search" placeholder="Buscar producto">
                         </div>
                         <div style="width: 100px;">
                             <button class="btn btn-primary w-100">Filtrar</button> 
@@ -204,11 +206,9 @@
                     </div>
                 </div>
 
-                <div class="d-flex gap-4"> 
+                <div class="content-container">
                     
                     <div class="category-slider-wrapper">
-                        <button class="btn btn-secondary w-100 mb-2">Categorías</button>
-                        
                         <div class="image-slider-placeholder">
                             <span class="slider-arrow">◀</span>
                             <span class="text-light opacity-75">Slider de Imágenes</span>
