@@ -9,7 +9,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     
     <style>
-        /* Variables de tema oscuro consistentes */
         :root {
             --dark-bg: #1e1e28;
             --card-bg: #2d2d39;
@@ -17,11 +16,9 @@
         }
 
         body {
-            /* Fondo principal oscuro */
             background-color: var(--dark-bg) !important;
         }
 
-        /* Estilo para la tarjeta/modal de pago */
         .payment-card {
             background-color: var(--card-bg) !important;
             color: var(--text-light) !important;
@@ -32,12 +29,10 @@
             color: var(--text-light) !important;
         }
         
-        /* Ajuste de botones para el esquema oscuro */
         .btn-primary {
-            /* Botones principales de pago en verde (éxito) para destacar */
             background-color: #28a745; 
             border-color: #28a745;
-            padding: 12px 0; /* Mayor padding para un mejor tacto */
+            padding: 12px 0; 
             font-weight: bold;
         }
         .btn-primary:hover {
@@ -46,7 +41,6 @@
         }
 
         .btn-secondary {
-            /* Botón secundario (Anular) en rojo para la acción de cancelación */
             background-color: #dc3545;
             border-color: #dc3545;
             color: white;
@@ -71,9 +65,13 @@
 
             <div class="row gx-4 mb-5">
                 
-                <div class="col-12 col-md-6 mb-3 mb-md-0">
-                    <button type="button" class="btn btn-primary w-100">Tarjeta de débito/crédito</button>
-                </div>
+                <li class="nav-item d-flex align-items-center">
+                <a class="nav-link text-white btn-outline-success mx-2 btn-primary w-100" 
+                    href="MetodosPago.html" 
+                    id="login-profile-btn">
+                    Pago con tarjeta de débito/crédito
+                </a>
+            </li>
                 
                 <div class="col-12 col-md-6">
                     <button type="button" class="btn btn-primary w-100">
