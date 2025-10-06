@@ -97,7 +97,7 @@
         // 1. HTML DE LAS VISTAS
         // ******************************************************
         
-        // Vista de Listado de Productos (Limpiada y con Estilo Oscuro)
+        // Vista de Listado de Productos (Vista por defecto)
         const listadoHTML = `
             <div class="main-card">
                 
@@ -188,3 +188,21 @@
             switch (viewName) {
                 case 'listado':
                     content = listadoHTML;
+                    break;
+                case 'admin':
+                    content = adminHTML;
+                    break;
+                default:
+                    content = `<h1 class="text-center mt-5">Vista no encontrada.</h1>`;
+            }
+            
+            appContent.innerHTML = content;
+        }
+
+        // Carga la vista de listado AL INICIAR la página.
+        window.onload = function() {
+            loadView('listado');
+        };
+    </script>
+</body>
+</html>
