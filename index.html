@@ -13,7 +13,7 @@
         /* ========================================================= */
         :root {
             --dark-bg: #1e1e28; /* Fondo principal oscuro */
-            --card-bg: #2d2d39; /* Fondo de contenedores (para los elementos internos) */
+            --card-bg: #2d2d39; /* Fondo de contenedores (ahora solo para filas de producto) */
             --dark-border: #444455; /* Borde oscuro y divisor de línea */
             --text-light: #f8f9fa;
         }
@@ -23,11 +23,10 @@
             background-color: var(--dark-bg); /* Fondo principal oscuro */
         }
 
-        /* Se eliminó la clase .main-card del CSS para que el contenido se aplique al fondo */
-        /* Se añade una clase auxiliar para el padding superior perdido del main-card */
+        /* La clase .main-card fue eliminada del HTML. Sus estilos de relleno se mueven aquí: */
         .filters-row {
-            padding-top: 25px; /* Compensa el padding superior del antiguo main-card */
-            padding-bottom: 25px; /* Compensa el padding inferior del antiguo main-card */
+            padding-top: 25px; 
+            padding-bottom: 25px;
             min-height: 70vh;
         }
 
@@ -57,14 +56,13 @@
             margin-top: 20px;
         }
 
-        /* Diseño del Slider de Categorías (Izquierda) - Mantiene su estilo de tarjeta */
+        /* Diseño del Slider de Categorías (Izquierda) - AHORA SIN FONDO NI SOMBRA */
         .category-slider-wrapper {
             width: 35%;
-            min-width: 300px; 
-            padding: 20px; /* Se añade el padding interior que antes daba el main-card */
-            border-radius: 10px;
-            background-color: var(--card-bg); /* Fondo oscuro de la tarjeta */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
+            min-width: 300px;
+            padding: 20px 0; /* Mantenemos padding horizontal de 0 para alineación */
+            border-radius: 0;
+            /* SE ELIMINA el fondo, la sombra y el border-radius para que se integre al fondo del body */
         }
 
         /* Elemento tipo Carrusel/Slider placeholder */
@@ -86,23 +84,23 @@
             cursor: pointer;
         }
 
-        /* Contenedor del Listado de Productos (Derecha) - Mantiene su estilo de tarjeta */
+        /* Contenedor del Listado de Productos (Derecha) - AHORA SIN FONDO NI SOMBRA */
         .product-list-wrapper {
-            flex-grow: 1; /* Ocupa el espacio restante */
+            flex-grow: 1; 
             width: 65%;
             padding: 0;
-            border: 1px solid var(--dark-border);
-            border-radius: 5px;
+            border-radius: 0;
             max-height: 500px;
             overflow-y: auto;
-            background-color: var(--card-bg); /* Fondo oscuro de la tarjeta */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
+            /* SE ELIMINA el fondo, la sombra y el borde para que se integre al fondo del body */
         }
         
         /* ========================================================= */
         /* ESTILOS DE ÍTEMS DE PRODUCTO EN LISTA */
         /* ========================================================= */
         .product-item {
+            /* Se aplica el fondo de tarjeta A CADA ITEM */
+            background-color: var(--card-bg); 
             display: flex;
             align-items: center;
             padding: 10px 15px;
@@ -116,7 +114,7 @@
         .product-image-placeholder {
             width: 60px; 
             height: 60px;
-            background-color: #555566; /* Fondo oscuro para la imagen */
+            background-color: #555566; 
             border-radius: 5px;
             margin-right: 15px;
             flex-shrink: 0; 
@@ -125,6 +123,18 @@
             justify-content: center;
             font-size: 0.8rem;
             color: var(--text-light);
+        }
+        
+        /* Media Query para responsividad (mantener) */
+        @media (max-width: 992px) {
+            .content-container {
+                flex-direction: column;
+            }
+            .category-slider-wrapper,
+            .product-list-wrapper {
+                width: 100%;
+                min-width: unset;
+            }
         }
     </style>
 </head>
@@ -180,9 +190,11 @@
             `;
         }
         
-        // Vista de Listado de Productos: SE ELIMINA EL DIV EXTERNO .main-card
+        // Vista de Listado de Productos
         const listadoHTML = `
-            <div class="filters-row"> <div class="d-flex justify-content-between align-items-end mb-4">
+            <div class="filters-row">
+                
+                <div class="d-flex justify-content-between align-items-end mb-4">
                     
                     <div class="d-flex align-items-center">
                         <div style="width: 180px;">
