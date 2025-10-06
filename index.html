@@ -63,11 +63,6 @@
                 <ul class="navbar-nav ms-auto">
                     
                     <li class="nav-item">
-                        <a class="nav-link btn btn-success mx-2" href="#" onclick="loadView('listado')">
-                            Ver Productos
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link btn btn-outline-light mx-2" href="InicioSesion.html">
                             Inicia Sesión
                         </a>
@@ -125,3 +120,85 @@
                 </div>
 
                 <h5 class="mt-4 mb-2 text-center text-dark">Lista de productos</h5>
+
+                <div class="product-table-container"> 
+                    
+                    <div class="d-flex justify-content-between align-items-center p-3 list-item-light">
+                        <span class="data-label fw-bold">Producto 1</span>
+                        <button type="button" class="btn btn-primary btn-sm" style="font-size: 0.8rem; width: 35px;">+</button>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center p-3 list-item-light">
+                        <span class="data-label fw-bold">Producto 2</span>
+                        <button type="button" class="btn btn-primary btn-sm" style="font-size: 0.8rem; width: 35px;">+</button>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center p-3 list-item-light">
+                        <span class="data-label fw-bold">Producto 3</span>
+                        <button type="button" class="btn btn-primary btn-sm" style="font-size: 0.8rem; width: 35px;">+</button>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center p-3 list-item-light">
+                        <span class="data-label fw-bold">Producto 4</span>
+                        <button type="button" class="btn btn-primary btn-sm" style="font-size: 0.8rem; width: 35px;">+</button>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center p-3 list-item-light">
+                        <span class="data-label fw-bold">Producto 5</span>
+                        <button type="button" class="btn btn-primary btn-sm" style="font-size: 0.8rem; width: 35px;">+</button>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center p-3 list-item-light">
+                        <span class="data-label fw-bold">Producto 6</span>
+                        <button type="button" class="btn btn-primary btn-sm" style="font-size: 0.8rem; width: 35px;">+</button>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center p-3 list-item-light">
+                        <span class="data-label fw-bold">Producto 7</span>
+                        <button type="button" class="btn btn-primary btn-sm" style="font-size: 0.8rem; width: 35px;">+</button>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center p-3 list-item-light">
+                        <span class="data-label fw-bold">Producto 8</span>
+                        <button type="button" class="btn btn-primary btn-sm" style="font-size: 0.8rem; width: 35px;">+</button>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center p-3 list-item-light">
+                        <span class="data-label fw-bold">Producto 9</span>
+                        <button type="button" class="btn btn-primary btn-sm" style="font-size: 0.8rem; width: 35px;">+</button>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center p-3 text-dark"> 
+                        <span class="data-label fw-bold">Producto 10</span>
+                        <button type="button" class="btn btn-primary btn-sm" style="font-size: 0.8rem; width: 35px;">+</button>
+                    </div>
+
+                </div>
+            </div>
+        `;
+        
+        // Vista de Administración (Se mantiene por si quieres usarla)
+        const adminHTML = `<h1 class="text-center mt-5">Panel de Administrador</h1>`;
+
+
+        // ******************************************************
+        // 2. LÓGICA DE NAVEGACIÓN DINÁMICA
+        // ******************************************************
+
+        const appContent = document.getElementById('app-content');
+
+        function loadView(viewName) {
+            let content = '';
+            
+            switch (viewName) {
+                case 'listado':
+                    content = listadoHTML;
+                    break;
+                case 'admin':
+                    content = adminHTML;
+                    break;
+                default:
+                    content = `<h1 class="text-center mt-5">Vista no encontrada.</h1>`;
+            }
+            
+            appContent.innerHTML = content;
+        }
+
+        // Carga la vista de listado automáticamente AL INICIAR la página.
+        window.onload = function() {
+            loadView('listado');
+        };
+    </script>
+</body>
+</html>
