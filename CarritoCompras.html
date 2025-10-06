@@ -11,138 +11,255 @@
         /* Variables de tema oscuro del código principal */
         :root {
             --dark-bg: #1e1e28;     /* Fondo principal oscuro */
-            --card-bg: #2d2d39;     /* Fondo de contenedores (la tarjeta del carrito) */
+            --card-bg: #2d2d39;     /* Fondo de las filas de producto */
             --dark-border: #444455; /* Borde oscuro y divisor de línea */
             --text-light: #f8f9fa;  /* Texto claro */
+            --text-secondary: #adb5bd; /* Texto secundario (para subtotal, etc.) */
         }
 
         body {
             background-color: var(--dark-bg) !important;
+            padding-top: 70px; /* Para dejar espacio a la navbar principal si existiera */
         }
 
-        /* Contenedor principal del carrito (Tarjeta) */
-        .main-card {
-            max-width: 1000px; /* EXPANDIDO: Antes 800px. Le damos más espacio. */
-            width: 95%;
-            padding: 30px; /* Aumentamos padding para mejor estética */
-            border-radius: 10px;
-            background-color: var(--card-bg) !important; /* Fondo de tarjeta oscuro */
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
-            color: var(--text-light); /* Texto general claro */
+        /* Contenedor principal de la vista, para dar el ancho extendido */
+        .custom-wide-container {
+            max-width: 1450px; /* Ancho extendido */
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1.5rem !important;
+            padding-right: 1.5rem !important;
         }
-        
-        .main-card h5 {
-            color: var(--text-light) !important;
+
+        /* Estilo del encabezado del carrito */
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
             border-bottom: 2px solid var(--dark-border);
-            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .cart-header h5 {
+            color: var(--text-light) !important;
+            margin-bottom: 0;
+            font-size: 1.5rem;
+        }
+        .cart-header .btn-back {
+            background-color: transparent;
+            border: 1px solid var(--dark-border);
+            color: var(--text-light);
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+        .cart-header .btn-back:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
         }
 
-        /* Contenedor de la lista de productos (Similar a product-list-wrapper) */
+        /* Contenedor de la lista de productos */
         .product-list-container {
-            max-height: 400px; /* Aumentado de 350px */
-            overflow-y: auto;
-            border: 1px solid var(--dark-border);
-            border-radius: 5px;
-            padding: 0;
-            margin-top: 20px;
+            border-radius: 5px; /* Mantener un ligero redondeo */
+            overflow-y: auto; /* Para scroll si hay muchos productos */
+            max-height: calc(100vh - 300px); /* Ajusta la altura máxima para que quepa bien en la pantalla */
         }
         
         /* Estilo de cada fila de producto */
         .product-item-row {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 12px 20px; /* Más padding para mejor estética */
+            padding: 15px 20px; /* Más padding para que se vea como en la imagen */
             border-bottom: 1px solid var(--dark-border);
-            background-color: var(--card-bg); /* Mantiene el fondo de tarjeta */
+            background-color: var(--card-bg); /* Fondo oscuro para cada fila */
         }
         
         .product-item-row:last-child {
             border-bottom: none;
         }
 
-        .product-item-row .data-label {
+        /* Estilo del placeholder de imagen de producto */
+        .product-image-placeholder {
+            width: 80px; /* Más grande que en la lista de productos */
+            height: 80px;
+            border-radius: 5px;
+            margin-right: 20px; /* Más separación */
+            flex-shrink: 0;
+            background-color: #555566; /* Color de fondo gris claro para el placeholder */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
             color: var(--text-light);
-            font-size: 1.1rem; /* Hacemos el texto un poco más grande */
+        }
+        /* Para imágenes reales dentro del placeholder */
+        .product-image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
         }
 
-        /* Estilos para el pie del carrito (Subtotal, Total, Botones) */
+        .product-info {
+            flex-grow: 1; /* Ocupa el espacio restante */
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Para separar nombre/cantidad del botón Quitar */
+        }
+        .product-info .data-label {
+            color: var(--text-light);
+            font-size: 1.2rem; /* Texto más grande */
+            font-weight: bold;
+            flex-grow: 1;
+            margin-right: 20px; /* Separación del botón Quitar */
+        }
+
+        /* Botón Quitar */
+        .btn-remove {
+            background-color: #dc3545; /* Rojo de peligro de Bootstrap */
+            border-color: #dc3545;
+            color: var(--text-light);
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            white-space: nowrap; /* Evita que el texto se rompa */
+        }
+        .btn-remove:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+            color: var(--text-light);
+        }
+
+        /* Pie del carrito (Subtotal, Total, Botones) */
         .cart-summary {
-            padding-top: 15px;
-            margin-top: 20px;
-            border-top: 1px solid var(--dark-border);
+            padding-top: 25px;
+            margin-top: 30px;
+            border-top: 2px solid var(--dark-border);
+            color: var(--text-light);
         }
 
         .cart-summary .total-label {
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             font-weight: bold;
         }
-        
+
+        /* Botón de Proceder al Pago */
+        .btn-checkout {
+            background-color: #28a745; /* Verde de éxito de Bootstrap */
+            border-color: #28a745;
+            padding: 12px 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .btn-checkout:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .product-item-row {
+                flex-wrap: wrap; /* Permite que los elementos se envuelvan */
+                justify-content: flex-start;
+                padding: 10px;
+            }
+            .product-image-placeholder {
+                width: 60px;
+                height: 60px;
+                margin-right: 15px;
+            }
+            .product-info {
+                flex-direction: column;
+                align-items: flex-start;
+                width: calc(100% - 75px); /* Ajusta ancho para dejar espacio a la imagen */
+            }
+            .product-info .data-label {
+                margin-right: 0;
+                margin-bottom: 10px;
+                font-size: 1rem;
+            }
+            .btn-remove {
+                width: 100%;
+                font-size: 0.85rem;
+                margin-top: 10px;
+            }
+            .cart-header h5 {
+                font-size: 1.2rem;
+            }
+        }
     </style>
 </head>
 
-<body class="d-flex align-items-center justify-content-center vh-100">
+<body>
 
-    <div class="main-card">
+    <div class="custom-wide-container"> 
         
-        <h5 class="text-center">Carrito de Compras 🛒</h5>
+        <div class="cart-header">
+            <h5>Carrito de compras</h5>
+            <button type="button" class="btn btn-back">Volver</button>
+        </div>
 
         <div class="product-list-container">
             <div class="product-item-row">
-                <span class="data-label fw-bold">Producto 1 - Gohan Nikkei</span>
-                <button type="button" class="btn btn-danger btn-sm" style="width: 35px;">
-                    <i class="fas fa-minus">-</i>
-                </button>
+                <div class="product-image-placeholder">
+                    <img src="https://via.placeholder.com/80x80/2d2d39/ffffff?text=Prod1" alt="Producto 1">
+                </div>
+                <div class="product-info">
+                    <span class="data-label">Producto 1 - Gohan Nikkei</span>
+                    <button type="button" class="btn btn-remove">Quitar</button>
+                </div>
             </div>
             
             <div class="product-item-row">
-                <span class="data-label fw-bold">Producto 2 - Yakimeshi</span>
-                <button type="button" class="btn btn-danger btn-sm" style="width: 35px;">
-                    -
-                </button>
+                <div class="product-image-placeholder">
+                    <img src="https://via.placeholder.com/80x80/2d2d39/ffffff?text=Prod2" alt="Producto 2">
+                </div>
+                <div class="product-info">
+                    <span class="data-label">Producto 2 - Yakimeshi</span>
+                    <button type="button" class="btn btn-remove">Quitar</button>
+                </div>
+            </div>
+
+            <div class="product-item-row">
+                <div class="product-image-placeholder">
+                    <img src="https://via.placeholder.com/80x80/2d2d39/ffffff?text=Prod3" alt="Producto 3">
+                </div>
+                <div class="product-info">
+                    <span class="data-label">Producto 3 - Empanadas Chinas</span>
+                    <button type="button" class="btn btn-remove">Quitar</button>
+                </div>
+            </div>
+
+            <div class="product-item-row">
+                <div class="product-image-placeholder">
+                    <img src="https://via.placeholder.com/80x80/2d2d39/ffffff?text=Prod4" alt="Producto 4">
+                </div>
+                <div class="product-info">
+                    <span class="data-label">Producto 4 - Bebida Grande</span>
+                    <button type="button" class="btn btn-remove">Quitar</button>
+                </div>
             </div>
             
             <div class="product-item-row">
-                <span class="data-label fw-bold">Producto 3 - Empanadas Chinas</span>
-                <button type="button" class="btn btn-danger btn-sm" style="width: 35px;">
-                    -
-                </button>
+                <div class="product-image-placeholder">
+                    <img src="https://via.placeholder.com/80x80/2d2d39/ffffff?text=Prod5" alt="Producto 5">
+                </div>
+                <div class="product-info">
+                    <span class="data-label">Producto 5 - Producto Extra</span>
+                    <button type="button" class="btn btn-remove">Quitar</button>
+                </div>
             </div>
-            
+
             <div class="product-item-row">
-                <span class="data-label fw-bold">Producto 4 - Bebida Grande</span>
-                <button type="button" class="btn btn-danger btn-sm" style="width: 35px;">
-                    -
-                </button>
+                <div class="product-image-placeholder">
+                    <img src="https://via.placeholder.com/80x80/2d2d39/ffffff?text=Prod6" alt="Producto 6">
+                </div>
+                <div class="product-info">
+                    <span class="data-label">Producto 6 - Otro Producto</span>
+                    <button type="button" class="btn btn-remove">Quitar</button>
+                </div>
             </div>
-            
-            <div class="product-item-row">
-                <span class="data-label fw-bold">Producto 5 - Producto Extra</span>
-                <button type="button" class="btn btn-danger btn-sm" style="width: 35px;">
-                    -
-                </button>
-            </div>
-            
-            <div class="product-item-row">
-                <span class="data-label fw-bold">Producto 6 - Producto Extra</span>
-                <button type="button" class="btn btn-danger btn-sm" style="width: 35px;">
-                    -
-                </button>
-            </div>
-            
-            <div class="product-item-row">
-                <span class="data-label fw-bold">Producto 7 - Producto Extra</span>
-                <button type="button" class="btn btn-danger btn-sm" style="width: 35px;">
-                    -
-                </button>
-            </div>
-            
-            <div class="product-item-row">
-                <span class="data-label fw-bold">Producto 8 - Producto Extra</span>
-                <button type="button" class="btn btn-danger btn-sm" style="width: 35px;">
-                    -
-                </button>
-            </div>
+
         </div>
 
         <div class="cart-summary">
@@ -155,7 +272,7 @@
                 <span class="total-label text-light">$XX.XXX</span>
             </div>
             
-            <button type="button" class="btn btn-success btn-lg w-100">
+            <button type="button" class="btn btn-checkout btn-lg w-100">
                 Proceder al Pago
             </button>
         </div>
