@@ -136,10 +136,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     
-                    <li class="nav-item">
+                    <li class="nav-item d-flex align-items-center" id="login-profile-container">
                         <a class="nav-link text-white btn-outline-info mx-2" 
-                           href="InicioSesion.html" 
-                           id="login-profile-btn">
+                            href="InicioSesion.html" 
+                            id="login-profile-btn">
                             Inicia Sesión
                         </a>
                     </li>
@@ -163,124 +163,133 @@
             </div>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Definición de adminHTML para evitar el error "undefined"
-        isLoggedIn = false;
-        const adminHTML = `<h1 class="text-center mt-5 text-light">Vista de Administración (Contenido en desarrollo).</h1>`;
+    // Se define adminHTML para evitar el error "undefined"
+    const adminHTML = `<h1 class="text-center mt-5 text-light">Vista de Administración (Contenido en desarrollo).</h1>`;
 
-        function generateProductItem(name, isLast = false) {
-            return `
-                <div class="product-item">
-                    <div class="product-image-placeholder">
-                        IMG
-                    </div>
-                    <span class="data-label text-light me-auto">${name}</span>
-                    <button type="button" class="btn btn-primary btn-sm" style="font-size: 0.8rem; width: 35px; flex-shrink: 0;">+</button>
-                </div>
-            `;
-        }
-        
-        const listadoHTML = `
-            <div class="filters-row">
-                
-                <div class="d-flex justify-content-between align-items-end mb-4">
-                    
-                    <div></div> 
-
-                    <div class="d-flex gap-2 align-items-end">
-                        <div style="width: 180px;">
-                                <select class="form-select btn btn-outline-light text-start shadow-none" id="categoria">
-                                    <option selected class="text-light">Categorías</option>
-                                    <option class="text-light">Ceviche</option>
-                                    <option class="text-light">Pescados al plato</option>
-                                    <option class="text-light">Acompañamientos</option>
-                                </select>
-                        </div>
-                        <div style="width: 250px;">
-                            <input type="text" class="form-control" id="search" placeholder="Buscar producto">
-                        </div>
-                        <div style="width: 100px;">
-                            <button class="btn btn-primary w-100">Filtrar</button> 
-                        </div>
-                    </div>
-                </div>
-
-                <div class="content-container">
-                    
-                    <div class="category-slider-wrapper">
-                        <h5>Productos Destacados</h5>
-                        <div class="image-slider-placeholder">
-                            <span class="slider-arrow">◀</span>
-                            <span class="text-light opacity-75">Slider de Imágenes</span>
-                            <span class="slider-arrow">▶</span>
-                        </div>
-                    </div>
-
-                    <div class="product-list-wrapper"> 
-                        
-                        ${generateProductItem('Producto 1')}
-                        ${generateProductItem('Producto 2')}
-                        ${generateProductItem('Producto 3')}
-                        ${generateProductItem('Producto 4')}
-                        ${generateProductItem('Producto 5')}
-                        ${generateProductItem('Producto 6')}
-                        ${generateProductItem('Producto 7')}
-                        ${generateProductItem('Producto 8')}
-                        ${generateProductItem('Producto 9')}
-                        ${generateProductItem('Producto 10', true)}
-                        
-                    </div>
-                </div>
+    function generateProductItem(name, isLast = false) {
+        return `
+            <div class="product-item">
+                <div class="product-image-placeholder">IMG</div>
+                <span class="data-label text-light me-auto">${name}</span>
+                <button type="button" class="btn btn-primary btn-sm" style="font-size: 0.8rem; width: 35px; flex-shrink: 0;">+</button>
             </div>
         `;
+    }
+    
+    const listadoHTML = `
+        <div class="filters-row">
+            <div class="d-flex justify-content-between align-items-end mb-4">
+                <div></div> 
+                <div class="d-flex gap-2 align-items-end">
+                    <div style="width: 180px;"><select class="form-select btn btn-outline-light text-start shadow-none" id="categoria"><option selected class="text-light">Categorías</option><option class="text-light">Ceviche</option><option class="text-light">Pescados al plato</option><option class="text-light">Acompañamientos</option></select></div>
+                    <div style="width: 250px;"><input type="text" class="form-control" id="search" placeholder="Buscar producto"></div>
+                    <div style="width: 100px;"><button class="btn btn-primary w-100">Filtrar</button></div>
+                </div>
+            </div>
+            <div class="content-container">
+                <div class="category-slider-wrapper">
+                    <h5>Productos Destacados</h5>
+                    <div class="image-slider-placeholder"><span class="slider-arrow">◀</span><span class="text-light opacity-75">Slider de Imágenes</span><span class="slider-arrow">▶</span></div>
+                </div>
+                <div class="product-list-wrapper"> 
+                    ${generateProductItem('Producto 1')}
+                    ${generateProductItem('Producto 2')}
+                    ${generateProductItem('Producto 3')}
+                    ${generateProductItem('Producto 4')}
+                    ${generateProductItem('Producto 5')}
+                    ${generateProductItem('Producto 6')}
+                    ${generateProductItem('Producto 7')}
+                    ${generateProductItem('Producto 8')}
+                    ${generateProductItem('Producto 9')}
+                    ${generateProductItem('Producto 10', true)}
+                </div>
+            </div>
+        </div>
+    `;
 
-        const appContent = document.getElementById('app-content');
+    const appContent = document.getElementById('app-content');
 
-        function loadView(viewName) {
-            let content = '';
-            
-            switch (viewName) {
-                case 'listado':
-                    content = listadoHTML;
-                    break;
-                case 'admin':
-                    content = adminHTML;
-                    break;
-                default:
-                    content = `<h1 class="text-center mt-5 text-light">Vista no encontrada.</h1>`;
+    function loadView(viewName) {
+        let content = '';
+        switch (viewName) {
+            case 'listado': content = listadoHTML; break;
+            case 'admin': content = adminHTML; break;
+            default: content = `<h1 class="text-center mt-5 text-light">Vista no encontrada.</h1>`;
+        }
+        appContent.innerHTML = content;
+    }
+
+    // NUEVA FUNCIÓN: CIERRA LA SESIÓN
+    function logout() {
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('userEmail');
+        
+        // Redirige o recarga la página para aplicar el estado de desconexión
+        window.location.href = "index.html"; 
+    }
+
+    // FUNCIÓN ACTUALIZADA: GESTIONA AMBOS BOTONES
+    function updateLoginButton() {
+        const container = document.getElementById('login-profile-container');
+        const loginButton = document.getElementById('login-profile-btn');
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        const userEmail = localStorage.getItem('userEmail'); 
+        
+        const existingLogoutButton = document.getElementById('logout-btn');
+
+        if (loginButton && isLoggedIn === 'true') {
+            // --- ESTADO: LOGUEADO ---
+
+            // 1. Transformar el botón 'Inicia Sesión' a 'Mi Perfil'
+            let profileText = 'Mi Perfil';
+            if (userEmail) {
+                let namePart = userEmail.substring(0, userEmail.indexOf('@'));
+                profileText = namePart.charAt(0).toUpperCase() + namePart.slice(1);
             }
-            
-            appContent.innerHTML = content;
-        }
 
-        // FUNCIÓN PARA ACTUALIZAR EL BOTÓN (Inicia Sesión -> Mi Perfil)
-        function updateLoginButton() {
-            const loginButton = document.getElementById('login-profile-btn');
+            loginButton.textContent = profileText;
+            loginButton.href = 'MiPerfil.html';
+            loginButton.classList.remove('btn-outline-info', 'btn-secondary');
+            loginButton.classList.add('btn-info');
             
-            const isLoggedIn = localStorage.getItem('isLoggedIn');
-            const userEmail = localStorage.getItem('userEmail'); 
-            
-            if (loginButton && isLoggedIn === 'true') {
+            // 2. Crear y añadir el botón 'Cerrar Sesión' (si no existe)
+            if (!existingLogoutButton) {
+                const logoutButton = document.createElement('a');
+                logoutButton.id = 'logout-btn';
+                logoutButton.textContent = 'Cerrar Sesión';
+                logoutButton.href = '#'; // Evita la navegación
                 
-                let profileText = 'Mi Perfil';
-                if (userEmail) {
-                    let namePart = userEmail.substring(0, userEmail.indexOf('@'));
-                    profileText = namePart.charAt(0).toUpperCase() + namePart.slice(1);
-                }
-
-                loginButton.textContent = profileText;
-                loginButton.href = 'MiPerfil.html';
+                // Clases de Bootstrap para el estilo del botón
+                logoutButton.classList.add('nav-link', 'text-white', 'btn', 'btn-secondary', 'mx-2');
                 
-                loginButton.classList.remove('btn-outline-info');
-                loginButton.classList.add('btn-info'); // Estilo de botón relleno
-            } 
-        }
+                // Vincular la función logout() al clic
+                logoutButton.onclick = logout; 
+                
+                // Insertar el nuevo botón después del botón de Perfil
+                container.appendChild(logoutButton);
+            }
 
-        window.onload = function() {
-            loadView('listado');
-            updateLoginButton(); // Llama a la función para transformar el botón
-        };
-    </script>
+        } else {
+            // --- ESTADO: DESCONECTADO (Por si la función se llama en una SPA sin recarga) ---
+            
+            // 1. Asegurar que el botón principal es 'Inicia Sesión'
+            loginButton.textContent = 'Inicia Sesión';
+            loginButton.href = 'InicioSesion.html';
+            loginButton.classList.remove('btn-info', 'btn-secondary');
+            loginButton.classList.add('btn-outline-info');
+
+            // 2. Remover el botón 'Cerrar Sesión' si existe
+            if (existingLogoutButton) {
+                existingLogoutButton.remove();
+            }
+        }
+    }
+
+    window.onload = function() {
+        loadView('listado');
+        updateLoginButton(); // Llama a la función para transformar el botón
+    };
+</script>
 </body>
 </html>
