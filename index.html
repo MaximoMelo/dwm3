@@ -164,15 +164,12 @@
     </main>
 
     <script>
-    // Se define adminHTML para evitar el error "undefined"
     const adminHTML = `<h1 class="text-center mt-5 text-light">Vista de Administración (Contenido en desarrollo).</h1>`;
 
-    // Función auxiliar para crear un ID limpio para el localStorage
     function getProductNameId(name) {
-        return name.toLowerCase().replace(/\s|\-/g, ''); // Ejemplo: "Producto 1 - Gohan Nikkei" -> "producto1gohannikkei"
+        return name.toLowerCase().replace(/\s|\-/g, ''); 
     }
 
-    // FUNCIÓN PARA AGREGAR PRODUCTO AL CARRITO
     function addToCart(productName) {
         const productId = getProductNameId(productName);
         
@@ -181,7 +178,6 @@
         if (cart[productId]) {
             cart[productId].quantity += 1;
         } else {
-            // Precio de ejemplo. Usamos $10.000 para Nikkei, $8.500 para Clásico, $5.000 para Bowls, y $3.000 para Yakimeshi/Empanadas/Extras
             let price = 10000; 
             if (productName.includes('Gohan Clásico')) price = 8500;
             else if (productName.includes('Bowl')) price = 9000;
@@ -200,7 +196,6 @@
         alert(`"${productName}" añadido al carrito, Cantidad: ${cart[productId].quantity}`);
     }
 
-    // MODIFICADA para usar los nombres de la imagen que enviaste
     function generateProductItem(name, isLast = false) {
         return `
             <div class="product-item">
@@ -213,7 +208,6 @@
         `;
     }
     
-    // LISTADO HTML con los nombres de productos de la imagen
     const listadoHTML = `
         <div class="filters-row">
             <div class="d-flex justify-content-between align-items-end mb-4">
@@ -226,20 +220,20 @@
             </div>
             <div class="content-container">
                 <div class="category-slider-wrapper">
-                    <h5>Categorías Destacadas</h5>
+                    <h5>Productos Destacados</h5>
                     <div class="image-slider-placeholder"><span class="slider-arrow">◀</span><span class="text-light opacity-75">Slider de Imágenes</span><span class="slider-arrow">▶</span></div>
                 </div>
                 <div class="product-list-wrapper"> 
-                    ${generateProductItem('Producto 1 - Gohan Nikkei')}
-                    ${generateProductItem('Producto 2 - Gohan Clásico')}
-                    ${generateProductItem('Producto 3 - Yakimeshi')}
-                    ${generateProductItem('Producto 4 - Salmón Bowl')}
-                    ${generateProductItem('Producto 5 - Pollo Teriyaki')}
-                    ${generateProductItem('Producto 6 - Vegano Bowl')}
-                    ${generateProductItem('Producto 7 - Empanadas Chinas')}
-                    ${generateProductItem('Producto 8 - Bebida Grande')}
-                    ${generateProductItem('Producto 9 - Producto Extra')}
-                    ${generateProductItem('Producto 10 - Otro Producto', true)}
+                    ${generateProductItem('Producto 1')}
+                    ${generateProductItem('Producto 2')}
+                    ${generateProductItem('Producto 3')}
+                    ${generateProductItem('Producto 4')}
+                    ${generateProductItem('Producto 5')}
+                    ${generateProductItem('Producto 6')}
+                    ${generateProductItem('Producto 7')}
+                    ${generateProductItem('Producto 8')}
+                    ${generateProductItem('Producto 9')}
+                    ${generateProductItem('Producto 10', true)}
                 </div>
             </div>
         </div>
@@ -257,14 +251,12 @@
         appContent.innerHTML = content;
     }
 
-    // FUNCIÓN PARA CERRAR LA SESIÓN (se mantiene sin cambios)
     function logout() {
         localStorage.removeItem('isLoggedIn');
         localStorage.removeItem('userEmail');
         window.location.href = "index.html"; 
     }
 
-    // FUNCIÓN PARA GESTIONAR BOTONES DE PERFIL/LOGOUT (se mantiene sin cambios)
     function updateLoginButton() {
         const container = document.getElementById('login-profile-container');
         const loginButton = document.getElementById('login-profile-btn');

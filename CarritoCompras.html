@@ -8,7 +8,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <style>
-        /* Variables de tema oscuro consistentes */
         :root {
             --dark-bg: #1e1e28;
             --card-bg: #2d2d39;
@@ -48,19 +47,18 @@
             color: var(--text-light);
         }
 
-        /* Contenedor principal de la lista */
+
         #cart-items-container {
-            border: 1px solid var(--dark-border); /* Borde opcional para el contenedor principal */
+            border: 1px solid var(--dark-border); 
             border-radius: 5px;
-            background-color: var(--card-bg); /* Fondo oscuro para el área de la lista */
-            min-height: 200px; /* Altura mínima para que se vea la caja vacía */
+            background-color: var(--card-bg); 
+            min-height: 200px; 
         }
         
-        /* Estilo de cada fila de producto */
         .product-item-row {
             display: flex;
             align-items: center;
-            padding: 10px 15px; /* Más padding para que se vea más lleno */
+            padding: 10px 15px;
             border-bottom: 1px solid var(--dark-border);
             color: var(--text-light);
         }
@@ -104,7 +102,6 @@
             font-size: 0.8rem;
         }
 
-        /* Estilo del mensaje de carrito vacío */
         .empty-cart-message {
             text-align: center;
             color: #adb5bd;
@@ -112,7 +109,6 @@
             font-size: 1.1rem;
         }
         
-        /* Resumen de totales */
         .cart-summary {
             padding-top: 15px;
             margin-top: 20px;
@@ -143,7 +139,7 @@
             font-size: 1.1rem;
             font-weight: bold;
             width: 100%;
-            max-width: 400px; /* Limita el ancho del botón para que no se extienda por toda la página */
+            max-width: 400px; 
             margin-left: auto;
             display: block;
         }
@@ -183,14 +179,10 @@
     <script>
         
         const formatCurrency = (number) => {
-            // Aseguramos que sea un número entero para el formato de Chile/clp
+            
             return '$' + Math.round(number).toLocaleString('es-CL');
         };
 
-        // ----------------------------------------------------
-        // 1. FUNCIÓN PARA DIBUJAR EL CARRITO (renderCart)
-        //    Ahora solo inyecta el HTML de la lista o el mensaje de vacío.
-        // ----------------------------------------------------
         function renderCart() {
             const cart = JSON.parse(localStorage.getItem('shoppingCart')) || {};
             const container = document.getElementById('cart-items-container');
@@ -199,19 +191,17 @@
             let total = 0;
             let cartHtml = '';
 
-            container.innerHTML = ''; // Limpiar contenido previo
+            container.innerHTML = '';
 
             const productIds = Object.keys(cart);
 
             if (productIds.length === 0) {
-                // **CAMBIO CLAVE:** En lugar de ocultar, inyectamos el mensaje dentro del contenedor visible.
                 container.innerHTML = '<p class="empty-cart-message">Tu carrito está vacío.</p>';
                 subtotalElement.textContent = formatCurrency(0);
                 totalElement.textContent = formatCurrency(0);
                 return;
             } 
             
-            // Generar el HTML para cada producto
             productIds.forEach((productId) => {
                 const item = cart[productId];
                 const itemSubtotal = item.quantity * item.price;
@@ -242,27 +232,21 @@
             totalElement.textContent = formatCurrency(total); 
         }
 
-        // ----------------------------------------------------
-        // 2. FUNCIÓN PARA QUITAR UNA UNIDAD (Quitar)
-        //    Reduce la cantidad en 1. Si llega a 0, elimina el producto.
-        // ----------------------------------------------------
         function removeItemFromCart(productId) {
             let cart = JSON.parse(localStorage.getItem('shoppingCart')) || {};
 
             if (cart[productId]) {
                 cart[productId].quantity -= 1;
                 
-                // Si la cantidad es 0 o menos, elimina la clave del producto.
                 if (cart[productId].quantity <= 0) {
                     delete cart[productId]; 
                 }
                 
                 localStorage.setItem('shoppingCart', JSON.stringify(cart));
-                renderCart(); // Vuelve a dibujar la lista.
+                renderCart(); 
             }
         }
         
-        // 3. INICIALIZACIÓN
         window.onload = renderCart;
     </script>
 </body>

@@ -8,7 +8,6 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         
         <style>
-            /* Variables y estilos CSS... (Se mantienen intactos) */
             :root {
                 --dark-bg: #1e1e28;
                 --card-bg: #2d2d39;
@@ -98,28 +97,24 @@
         </div>
         
         <script>
-            // CORREGIDO: Eliminada la ')' extra después de function(event)
             document.getElementById('login-form').addEventListener('submit', function(event) {
-                event.preventDefault(); // Detiene el envío del formulario
+                event.preventDefault();
 
                 let email = document.getElementById("username").value;
-                // CORREGIDO: Cambio de coma (,) por punto (.) antes de .value
                 let password = document.getElementById("password").value; 
 
-                // INICIO DE SESIÓN EXITOSO (CORREGIDO: Añadidas las llaves {} para agrupar las acciones)
                 if (email === "cliente123@gmail.com" && password === "contraseña123") {
                     localStorage.setItem('userEmail', email);
                     localStorage.setItem('isLoggedIn', 'true');
-                    window.location.href = "index.html"; // Usar window.location.href es más estándar que location.href
+                    window.location.href = "index.html"; 
                 } 
                 
-                // VALIDACIONES ADICIONALES
+
                 else if (email === "cliente@gmail.com") {
                     alert("El email ya está en uso.");
                 } else if (password === "123") {
                     alert("La contraseña no cumple los requisitos mínimos.");
                 } else {
-                    // Si ninguna condición se cumple (credenciales inválidas)
                     alert("Credenciales inválidas. Por favor, revisa el usuario y la contraseña.");
                 }
             });
