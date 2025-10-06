@@ -101,11 +101,26 @@
                     <a href="#" class="btn btn-secondary w-100 mt-2">Regístrate</a>
                 </p>
                 <li class="nav-item">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link text-light mx-2" href="index.html">
                             Volver
                         </a>
                     </li>
             </div>
         </div>
+        <script>
+            function registrousuario(){
+            let email=document.getElementById("username").value;
+            let password=document.getElementById("password").value;
+            if(email=="Cliente123@gmail.com" && password="contraseña123"){
+                location.href = "index.html";
+            }
+            if(email=="Cliente@gmail.com"){
+                alert("El correo ya está en uso")
+            }
+            if(password=="123"){
+                alert("La contraseña no cumple los requisitos mínimos")
+            }
+        }
+        </script>
     </body>
 </html>

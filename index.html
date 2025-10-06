@@ -163,7 +163,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        
+
         function generateProductItem(name, isLast = false) {
             return `
                 <div class="product-item">
@@ -186,9 +186,10 @@
                     <div class="d-flex gap-2 align-items-end">
                         <div style="width: 180px;">
                              <select class="form-select btn btn-outline-light text-start shadow-none" id="categoria">
-                                 <option selected class="text-dark">Categorías</option>
-                                 <option class="text-dark">Comida</option>
-                                 <option class="text-dark">Bebidas</option>
+                                 <option selected class="text-light">Categorías</option>
+                                 <option class="text-light">Ceviche</option>
+                                 <option class="text-light">Pescados al plato</option>
+                                 <option class="text-light">Acompañamientos</option>
                             </select>
                         </div>
                         <div style="width: 250px;">
@@ -213,24 +214,21 @@
 
                     <div class="product-list-wrapper"> 
                         
-                        ${generateProductItem('Producto 1 - Gohan Nikkei')}
-                        ${generateProductItem('Producto 2 - Gohan Clásico')}
-                        ${generateProductItem('Producto 3 - Yakimeshi')}
-                        ${generateProductItem('Producto 4 - Salmón Bowl')}
-                        ${generateProductItem('Producto 5 - Pollo Teriyaki')}
-                        ${generateProductItem('Producto 6 - Vegano Bowl')}
-                        ${generateProductItem('Producto 7 - Empanadas Chinas')}
-                        ${generateProductItem('Producto 8 - Camarón Furai')}
-                        ${generateProductItem('Producto 9 - Ceviche Mixto')}
-                        ${generateProductItem('Producto 10 - Bebida Grande', true)}
+                        ${generateProductItem('Producto 1')}
+                        ${generateProductItem('Producto 2')}
+                        ${generateProductItem('Producto 3')}
+                        ${generateProductItem('Producto 4')}
+                        ${generateProductItem('Producto 5')}
+                        ${generateProductItem('Producto 6')}
+                        ${generateProductItem('Producto 7')}
+                        ${generateProductItem('Producto 8')}
+                        ${generateProductItem('Producto 9')}
+                        ${generateProductItem('Producto 10', true)}
                         
                     </div>
                 </div>
             </div>
         `;
-        
-        const adminHTML = `<h1 class="text-center mt-5 text-light">Panel de Administrador</h1>`;
-
 
         const appContent = document.getElementById('app-content');
 
