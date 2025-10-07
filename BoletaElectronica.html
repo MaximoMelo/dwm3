@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <title>Boleta Electrónica</title>
     <meta charset="UTF-8">
@@ -9,57 +9,91 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <style>
-        /* Ajuste el ancho máximo para simular un recibo más compacto */
+        /* Variables de tema oscuro consistentes */
+        :root {
+            --dark-bg: #1e1e28;
+            --card-bg: #2d2d39; 
+            --dark-border: #444455;
+            --text-light: #f8f9fa;
+        }
+
+        body {
+            background-color: var(--dark-bg) !important;
+            color: var(--text-light);
+        }
+
         .main-card {
-            max-width: 450px; /* Ancho más pequeño para formato de boleta (Box Model) */
+            max-width: 450px; 
             width: 95%;
             padding: 30px;
             border-radius: 10px;
-            background-color: white;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background-color: var(--card-bg) !important;
+            color: var(--text-light) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
+            border: 1px solid var(--dark-border);
         }
         
-        /* Estilos para las líneas divisorias */
         .divider {
             border: none;
-            border-top: 1px solid #ccc;
-            margin: 10px 0; /* Espaciado arriba y abajo (Box Model) */
+            border-top: 1px solid var(--dark-border);
+            margin: 10px 0; 
         }
 
-        /* Estilo para los datos (izquierda) y el valor (derecha) */
         .data-row {
-            /* Flexbox para alinear texto a los lados */
             display: flex;
             justify-content: space-between; 
-            margin-bottom: 5px; /* Pequeño espacio entre líneas (Box Model) */
+            margin-bottom: 5px; 
             font-size: 1.1em;
+            color: var(--text-light); 
         }
 
         .data-label {
             font-weight: bold;
         }
+
+        .form-control-readonly {
+            background-color: #383845 !important;
+            color: var(--text-light) !important;
+            border: 1px solid var(--dark-border) !important;
+            padding: 0.375rem 0.5rem; 
+            height: auto;
+            width: 100%;
+            font-size: 1rem;
+            line-height: 1.5;
+            resize: none; /* Evita que el usuario cambie el tamaño del textarea */
+        }
+        
+        .input-container {
+            width: 50%;
+        }
     </style>
 </head>
-<body class="d-flex align-items-center justify-content-center vh-100 bg-light">
+<body class="d-flex align-items-center justify-content-center vh-100">
     
     <div class="main-card">
         
-        <h5 class="text-center mb-4">Boleta Electrónica</h5>
+        <h5 class="text-center mb-4 text-light">Boleta Electrónica</h5>
         <hr class="divider">
         
         <div class="data-row">
             <span class="data-label">Dirección:</span>
-            <span><input type="text" class="form-control" value="Direccion" readonly></span>
+            <span class="input-container">
+                <input type="text" class="form-control-readonly" value="Dirección del Cliente" readonly id="boleta-direccion">
+            </span>
         </div>
         
         <div class="data-row">
             <span class="data-label">Email:</span>
-            <span><input type="text" class="form-control" value="Email" readonly></span>
+            <span class="input-container">
+                <input type="text" class="form-control-readonly" value="cliente@correo.com" readonly id="boleta-email">
+            </span>
         </div>
         
         <div class="data-row mb-4">
             <span class="data-label">Fecha de emisión:</span>
-            <span><input type="text" class="form-control" value="Fecha" readonly></span>
+            <span class="input-container">
+                <input type="text" class="form-control-readonly" readonly id="boleta-fecha">
+            </span>
         </div>
         
         <hr class="divider">
@@ -67,29 +101,82 @@
         <p class="fw-bold mb-2">Detalles de venta:</p>
 
         <div class="data-row">
-            <textarea class="form-control" rows="3" style="align-items-left" readonly>
-            1.
-            2.
+            <textarea class="form-control-readonly" rows="5" readonly id="boleta-detalles">
             </textarea>
         </div>
 
         <hr class="divider">
         
         <div class="data-row">
-            <span class="data-label">Precio total:</span>
-            <span><input type="text" class="form-control" value="Precio total" readonly></span>
-        </div>
-        
-        <div class="data-row">
             <span class="data-label">Medio de pago:</span>
-            <span><input type="text" class="form-control" value="Metodo de pago" readonly></span>
+            <span class="input-container">
+                <input type="text" class="form-control-readonly" value="Tarjeta de Crédito" readonly id="boleta-medio-pago">
+            </span>
         </div>
 
+        <div class="data-row fw-bold fs-5 mt-2">
+            <span class="data-label">TOTAL PAGADO:</span>
+            <span class="input-container">
+                <input type="text" class="form-control-readonly fw-bold" readonly id="boleta-total" style="font-size: 1.2em;">
+            </span>
+        </div>
+        
         <hr class="divider">
         
-        <p class="text-center mt-3" style="font-size:0.9em;">Gracias por su compra!</p>
+        <p class="text-center mt-3" style="font-size:0.9em;">¡Gracias por su compra!</p>
         
     </div>
 
+    <script>
+        // Función para formatear números como moneda (ej: $10.000)
+        const formatCurrency = (number) => {
+            return '$' + Math.round(number).toLocaleString('es-CL');
+        };
+
+        function loadBoletaDetails() {
+            const cart = JSON.parse(localStorage.getItem('shoppingCart')) || {};
+            let total = 0;
+            let detallesTexto = "";
+            let contador = 1;
+
+            const productIds = Object.keys(cart);
+
+            if (productIds.length === 0) {
+                detallesTexto = "El carrito estaba vacío al momento de la compra.";
+            } else {
+                // 1. GENERAR EL TEXTO DE LOS DETALLES DEL PEDIDO
+                productIds.forEach((productId) => {
+                    const item = cart[productId];
+                    const itemSubtotal = item.quantity * item.price;
+                    total += itemSubtotal;
+                    
+                    // Formato: 1. Gohan Nikkei (x2) $20.000
+                    detallesTexto += `${contador}. ${item.name} (x${item.quantity}) ${formatCurrency(itemSubtotal)}\n`;
+                    contador++;
+                });
+
+                // Añadir el subtotal al final del textarea
+                detallesTexto += `\nSubtotal de ítems: ${formatCurrency(total)}`;
+            }
+            
+            // 2. INYECTAR DATOS EN LA BOLETA
+
+            // A) Detalles (Textarea)
+            document.getElementById('boleta-detalles').value = detallesTexto;
+
+            // B) Total (Input)
+            document.getElementById('boleta-total').value = formatCurrency(total);
+            
+            // C) Fecha (Input)
+            const date = new Date();
+            const formattedDate = date.toLocaleDateString('es-CL');
+            document.getElementById('boleta-fecha').value = formattedDate;
+
+            // Opcional: Limpiar el carrito después de "finalizar" la compra
+            // localStorage.removeItem('shoppingCart'); 
+        }
+
+        window.onload = loadBoletaDetails;
+    </script>
 </body>
 </html>
