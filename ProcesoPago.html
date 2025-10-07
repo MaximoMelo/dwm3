@@ -95,5 +95,34 @@
             </div>
         </form>
     </div>
+<script>
+
+function finalizeOrderAndSaveHistory() {
+    const cart = JSON.parse(localStorage.getItem('shoppingCart'));
+    
+    if (!cart || Object.keys(cart).length === 0) {
+        alert("El carrito está vacío. No se puede guardar el pedido.");
+        return; 
+    }
+
+    const history = JSON.parse(localStorage.getItem('orderHistory')) || [];
+
+    const newOrderId = `ORD-${Date.now().toString().slice(-6)}`; 
+    const date = new Date().toLocaleDateString('es-CL');
+    
+    const newOrder = {
+        id: newOrderId,
+        date: date,
+        products: cart 
+    };
+    
+    history.push(newOrder);
+    localStorage.setItem('orderHistory', JSON.stringify(history));
+    
+    localStorage.removeItem('shoppingCart'); 
+    }
+
+</script>
 </body>
 </html>
+
