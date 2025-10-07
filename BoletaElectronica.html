@@ -9,7 +9,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <style>
-        /* Variables de tema oscuro consistentes */
         :root {
             --dark-bg: #1e1e28;
             --card-bg: #2d2d39; 
@@ -60,7 +59,7 @@
             width: 100%;
             font-size: 1rem;
             line-height: 1.5;
-            resize: none; /* Evita que el usuario cambie el tamaño del textarea */
+            resize: none; 
         }
         
         .input-container {
@@ -128,7 +127,6 @@
     </div>
 
     <script>
-        // Función para formatear números como moneda (ej: $10.000)
         const formatCurrency = (number) => {
             return '$' + Math.round(number).toLocaleString('es-CL');
         };
@@ -144,36 +142,26 @@
             if (productIds.length === 0) {
                 detallesTexto = "El carrito estaba vacío al momento de la compra.";
             } else {
-                // 1. GENERAR EL TEXTO DE LOS DETALLES DEL PEDIDO
                 productIds.forEach((productId) => {
                     const item = cart[productId];
                     const itemSubtotal = item.quantity * item.price;
                     total += itemSubtotal;
                     
-                    // Formato: 1. Gohan Nikkei (x2) $20.000
                     detallesTexto += `${contador}. ${item.name} (x${item.quantity}) ${formatCurrency(itemSubtotal)}\n`;
                     contador++;
                 });
 
-                // Añadir el subtotal al final del textarea
                 detallesTexto += `\nSubtotal de ítems: ${formatCurrency(total)}`;
             }
             
-            // 2. INYECTAR DATOS EN LA BOLETA
-
-            // A) Detalles (Textarea)
             document.getElementById('boleta-detalles').value = detallesTexto;
 
-            // B) Total (Input)
             document.getElementById('boleta-total').value = formatCurrency(total);
             
-            // C) Fecha (Input)
             const date = new Date();
             const formattedDate = date.toLocaleDateString('es-CL');
             document.getElementById('boleta-fecha').value = formattedDate;
 
-            // Opcional: Limpiar el carrito después de "finalizar" la compra
-            // localStorage.removeItem('shoppingCart'); 
         }
 
         window.onload = loadBoletaDetails;
