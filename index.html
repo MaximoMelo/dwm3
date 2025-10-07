@@ -149,7 +149,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white btn-danger mx-2" href="#" onclick="loadView('admin')">
+                        <a class="nav-link text-white btn-danger mx-2" 
+                            href="GeneracionReporte.html"></a> 
                             Sección Administrador
                         </a>
                     </li>
@@ -179,7 +180,6 @@
         if (cart[productId]) {
             cart[productId].quantity += 1;
         } else {
-            // Inicialización del producto (con mock data de precio)
             let price = 5000; 
             if (productName.includes('Producto 1')) price = 10000;
             else if (productName.includes('Producto 2')) price = 8500;
