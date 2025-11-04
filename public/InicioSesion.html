@@ -9,51 +9,88 @@
         
         <style>
             :root {
-                --dark-bg: #1e1e28;
-                --card-bg: #2d2d39;
-                --dark-border: #444455;
-                --text-light: #f8f9fa;
+                --primary-bg: #1e3a8a;
+                --light-bg: #ffffff;
+                --card-bg: #ffffff;
+                --dark-border: #dddddd;
+                --text-dark: #212529;
+                --primary-color: #3498db;
+                --primary-hover: #5dade2;
+                --secondary-color: #6c757d;
+                --border-radius-lg: 12px;
+                --border-radius-sm: 6px;  
             }
 
             body {
-                background-color: var(--dark-bg) !important;
+                background-color: var(--light-bg) !important;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             }
             .login-card {
                 max-width: 400px; 
                 width: 90%;
                 padding: 30px;
-                border-radius: 10px;
+                border-radius: var(--border-radius-lg);
                 background-color: var(--card-bg) !important;
-                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                border: 1px solid var(--dark-border);
             }
             .login-card h2, .login-card label, .login-card p {
-                color: var(--text-light) !important;
+                color: var(--text-dark) !important;
             }
             .login-card h2 {
                 margin-bottom: 25px !important;
                 border-bottom: 2px solid var(--dark-border);
                 padding-bottom: 10px;
+                font-weight: 600;
             }
             .form-control {
-                background-color: var(--dark-bg) !important;
-                border-color: var(--dark-border) !important;
-                color: var(--text-light) !important;
+                background-color: var(--light-bg) !important;
+                border: 1px solid var(--dark-border) !important;
+                color: var(--text-dark) !important;
                 margin-bottom: 15px;
+                border-radius: var(--border-radius-sm);
             }
-            .btn-primary {
-                background-color: #0d6efd;
-                border-color: #0d6efd;
-            }
-            .btn-secondary {
-                background-color: #6c757d;
-                border-color: #6c757d;
-            }
-            .form-label {
-                font-size: 0.95rem !important;
-                margin-top: 10px;
+            .form-control:focus {
+                border-color: var(--primary-color) !important;
+                box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.4) !important;
             }
             .btn {
                 font-size: 1rem !important;
+                font-weight: 600;
+                border-radius: var(--border-radius-sm);
+            }
+            .btn-primary {
+                background-color: var(--primary-color) !important;
+                border-color: var(--primary-color) !important;
+                transition: background-color 0.3s, box-shadow 0.3s;
+            }
+            .btn-primary:hover {
+                background-color: var(--primary-hover) !important;
+                border-color: var(--primary-hover) !important;
+                box-shadow: 0 2px 10px rgba(52, 152, 219, 0.6);
+            }
+            .btn-secondary {
+                background-color: var(--secondary-color) !important;
+                border-color: var(--secondary-color) !important;
+                color: var(--light-bg) !important;
+            }
+            .btn-secondary:hover {
+                background-color: #5a6268 !important;
+                border-color: #5a6268 !important;
+            }
+            .form-label {
+                font-size: 0.95rem !important;
+                margin-top: 0px !important;
+                font-weight: 500;
+            }
+            .login-card .nav-link {
+                color: var(--primary-color) !important;
+                text-decoration: none;
+                transition: color 0.2s;
+            }
+            .login-card .nav-link:hover {
+                color: var(--primary-hover) !important;
+                text-decoration: underline;
             }
         </style>
         

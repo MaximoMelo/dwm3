@@ -10,42 +10,56 @@
 
     <style>
         :root {
-            --dark-bg: #1e1e28;
-            --card-bg: #2d2d39; 
-            --dark-border: #444455;
-            --text-light: #f8f9fa;
+            --primary-bg: #1e3a8a;
+            --light-bg: #ffffff;
+            --card-bg: #ffffff;
+            --dark-border: #dddddd;
+            --text-dark: #212529;
+            --primary-color: #3498db;
+            --primary-hover: #5dade2;
+            --secondary-color: #6c757d;
+            --border-radius-lg: 12px; 
+            --border-radius-sm: 6px; 
         }
 
         body {
-            background-color: var(--dark-bg) !important;
-            color: var(--text-light);
+            background-color: var(--light-bg) !important;
+            color: var(--text-dark);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .main-card {
             max-width: 800px;
             width: 95%;
             padding: 25px;
-            border-radius: 10px;
-
+            border-radius: var(--border-radius-lg);
             background-color: var(--card-bg) !important; 
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
             border: 1px solid var(--dark-border);
+        }
+        
+        .main-card h5 {
+            color: var(--text-dark) !important;
+            margin-bottom: 25px !important;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            display: inline-block;
+            font-weight: 600;
         }
 
         .product-table-container {
             max-height: 500px; 
             overflow-y: auto;
             border: 1px solid var(--dark-border);
-            border-radius: 5px;
+            border-radius: var(--border-radius-lg);
         }
-
 
         .order-item {
             display: flex;
             align-items: flex-start; 
             padding: 15px;
             border-bottom: 1px solid var(--dark-border);
-            color: var(--text-light);
+            color: var(--text-dark);
         }
         .order-item:last-child {
             border-bottom: none;
@@ -57,42 +71,61 @@
         }
         
         .order-details strong {
-            color: #ffc107; 
+            color: var(--primary-color); 
         }
 
         .order-info span {
             display: block;
             font-size: 0.9em;
-            color: #aaaaaa; 
+            color: var(--secondary-color); 
             margin-bottom: 5px;
         }
 
-     
         .order-products {
             font-size: 0.9em;
-            color: var(--text-light);
+            color: var(--text-dark);
             white-space: pre-wrap;
             margin-top: 5px;
             padding: 10px;
-            background-color: #383845; 
-            border-radius: 3px;
-            border: 1px solid #3d3d49;
+            background-color: #f5f5f5; 
+            border-radius: var(--border-radius-sm);
+            border: 1px solid var(--dark-border);
         }
 
+        .btn {
+            border-radius: var(--border-radius-sm);
+            font-weight: 600;
+            transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+        
         .btn-repeat {
-
             font-size: 0.8rem;
             width: 120px;
             flex-shrink: 0;
             padding: 8px;
             margin-top: 5px;
         }
+        
+        .btn-primary {
+            background-color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-hover) !important;
+            border-color: var(--primary-hover) !important;
+            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.5);
+        }
+        .text-secondary {
+            color: var(--secondary-color) !important;
+        }
     </style>
 </head>
 <body class="d-flex align-items-center justify-content-center vh-100">
     <div class="main-card">
         
-        <h5 class="mt-2 mb-4 text-center text-light">Historial de Pedidos</h5>
+        <div class="d-flex justify-content-center">
+            <h5 class="mt-2 mb-4 text-center">Historial de Pedidos</h5>
+        </div>
         
         <div class="product-table-container">
             <div id="orders-list">
@@ -102,11 +135,13 @@
             </div>
         </div>
         
+        <div class="text-center mt-4">
+            <a href="PerfilUsuario.html" class="btn btn-link" style="color: var(--primary-color);">Volver a Mi Perfil</a>
+        </div>
     </div>
 
     <script>
         const formatCurrency = (number) => {
-
             return '$' + Math.round(number || 0).toLocaleString('es-CL');
         };
 
