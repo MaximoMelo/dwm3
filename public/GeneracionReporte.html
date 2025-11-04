@@ -10,36 +10,86 @@
     
     <style>
         :root {
-            --dark-bg: #1e1e28;
-            --card-bg: #2d2d39; 
-            --dark-border: #444455;
-            --text-light: #f8f9fa;
+            --primary-bg: #1e3a8a;
+            --light-bg: #ffffff;
+            --card-bg: #ffffff;
+            --dark-border: #dddddd;
+            --text-dark: #212529;
+            --primary-color: #3498db;
+            --primary-hover: #5dade2;
+            --danger-color: #cc4c4c;
+            --danger-hover: #e06666;
+            --info-color: #0dcaf0; 
+            --info-hover: #3dd5f3;
+            --border-radius-lg: 12px; 
+            --border-radius-sm: 6px;  
         }
 
         body {
-            background-color: var(--dark-bg) !important;
-            color: var(--text-light); 
+            background-color: var(--light-bg) !important;
+            color: var(--text-dark); 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .main-card {
             max-width: 400px; 
             width: 90%;
             padding: 30px;
-            border-radius: 10px;
+            border-radius: var(--border-radius-lg);
             background-color: var(--card-bg) !important;
-            color: var(--text-light) !important;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
+            color: var(--text-dark) !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
             border: 1px solid var(--dark-border);
+        }
+        
+        .main-card p.h5 {
+            color: var(--text-dark) !important;
+            font-weight: 600;
+            border-bottom: 2px solid var(--dark-border);
+            padding-bottom: 10px;
         }
 
         .form-select, .form-control {
-            background-color: var(--dark-bg) !important;
-            border-color: var(--dark-border) !important;
-            color: var(--text-light) !important;
+            background-color: var(--light-bg) !important;
+            border: 1px solid var(--dark-border) !important;
+            color: var(--text-dark) !important;
+            border-radius: var(--border-radius-sm);
         }
+        .form-select:focus, .form-control:focus {
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.4) !important;
+        }
+
         .form-select option {
-            background-color: var(--dark-bg);
-            color: var(--text-light);
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+        }
+        
+        .btn {
+            font-size: 1rem !important;
+            font-weight: 600;
+            border-radius: var(--border-radius-sm);
+            transition: all 0.3s;
+        }
+        
+        .btn-info {
+            background-color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+            color: var(--light-bg) !important;
+        }
+        .btn-info:hover {
+            background-color: var(--primary-hover) !important;
+            border-color: var(--primary-hover) !important;
+            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.5);
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color) !important;
+            border-color: var(--danger-color) !important;
+        }
+        .btn-danger:hover {
+            background-color: var(--danger-hover) !important;
+            border-color: var(--danger-hover) !important;
         }
     </style>
 </head>
@@ -49,7 +99,7 @@
     <div class="main-card"> 
         <form>
         
-        <p class="h5 mb-5 text-light">Seleccione la fecha deseada:</p>
+        <p class="h5 mb-5 text-center">Seleccione la fecha deseada:</p>
         
         <div class="mb-4" style="max-width: 250px; margin: 0 auto;"> 
             <label for="mes" class="form-label mb-1 fw-bold">Mes:</label>
@@ -91,7 +141,7 @@
             <div class="col-12" style="max-width: 300px;">
                 <a class="btn btn-danger w-100" 
                     href="index.html"> 
-                    Anular
+                    Volver
                 </a>
             </div>
         </div>
