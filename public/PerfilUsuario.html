@@ -176,66 +176,51 @@
             const fields = document.querySelectorAll('#profile-form input');
             const editBtn = document.getElementById('edit-btn');
 
-            function loadProfileData() {
-                const userEmail = localStorage.getItem('userEmail');
-                
-                const storedData = JSON.parse(localStorage.getItem('profileData'));
+            // Reemplaza loadProfileData y saveProfileData con:
+async function loadProfileData() {
+    const userEmail = localStorage.getItem('userEmail');
+    
+    if (!userEmail) return;
+    
+    try {
+        const response = await fetch(`/api/usuarios/${userEmail}`);
+        if (response.ok) {
+            const userData = await response.json();
+            document.getElementById('email').value = userData.email || userEmail;
+            document.getElementById('nombre').value = userData.nombre || '';
+            document.getElementById('direccion').value = userData.direccion || '';
+            document.getElementById('metodopago').value = userData.metodoPago || '';
+            document.getElementById('numtelefono').value = userData.telefono || '';
+        }
+    } catch (error) {
+        console.error('Error cargando perfil:', error);
+    }
+}
 
-                if (userEmail) {
-                    const namePart = userEmail.substring(0, userEmail.indexOf('@'));
-                    
-                    document.getElementById('email').value = userEmail;
-                    document.getElementById('nombre').value = storedData ? storedData.nombre : namePart.charAt(0).toUpperCase() + namePart.slice(1);
-                    
-                    if (storedData) {
-                        document.getElementById('direccion').value = storedData.direccion || '';
-                        document.getElementById('metodopago').value = storedData.metodopago || '';
-                        document.getElementById('numtelefono').value = storedData.numtelefono || '';
-                    }
-                }
-            }
-            
-            function saveProfileData() {
-                const newProfileData = {
-                    nombre: document.getElementById('nombre').value,
-                    direccion: document.getElementById('direccion').value,
-                    metodopago: document.getElementById('metodopago').value,
-                    numtelefono: document.getElementById('numtelefono').value,
-                };
-                
-                localStorage.setItem('profileData', JSON.stringify(newProfileData));
-                alert('¡Datos actualizados correctamente!');
-            }
-            
-            function toggleEditMode() {
-                const isEditing = editBtn.textContent === 'Guardar Cambios';
-
-                if (isEditing) {
-                    saveProfileData(); 
-                    
-                    editBtn.textContent = 'Editar Datos';
-                    editBtn.classList.remove('btn-success-save');
-                    editBtn.classList.add('btn-secondary');
-                    
-                    fields.forEach(input => {
-                        if (input.id !== 'email') { 
-                            input.disabled = true;
-                            input.classList.remove('editable');
-                        }
-                    });
-                } else {
-                    editBtn.textContent = 'Guardar Cambios';
-                    editBtn.classList.remove('btn-secondary');
-                    editBtn.classList.add('btn-success-save');
-                    
-                    fields.forEach(input => {
-                        if (input.id !== 'email') { 
-                            input.disabled = false;
-                            input.classList.add('editable');
-                        }
-                    });
-                }
-            }
+async function saveProfileData() {
+    const userEmail = localStorage.getItem('userEmail');
+    const profileData = {
+        nombre: document.getElementById('nombre').value,
+        direccion: document.getElementById('direccion').value,
+        telefono: document.getElementById('numtelefono').value,
+        metodoPago: document.getElementById('metodopago').value,
+    };
+    
+    try {
+        await fetch(`/api/usuarios/${userEmail}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(profileData)
+        });
+        
+        alert('¡Datos actualizados correctamente!');
+    } catch (error) {
+        console.error('Error guardando perfil:', error);
+        alert('Error al guardar los datos');
+    }
+}
 
             document.addEventListener('DOMContentLoaded', function() {
                 loadProfileData();

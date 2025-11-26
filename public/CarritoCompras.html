@@ -9,15 +9,24 @@
     
     <style>
         :root {
-            --dark-bg: #1e1e28;
-            --card-bg: #2d2d39;
-            --dark-border: #444455;
-            --text-light: #f8f9fa;
+            --primary-bg: #1e3a8a;
+            --light-bg: #ffffff;
+            --card-bg: #ffffff;
+            --dark-border: #dddddd;
+            --text-dark: #212529;
+            --primary-color: #3498db;
+            --primary-hover: #5dade2;   
+            --secondary-color: #6c757d;
+            --danger-color: #cc4c4c;
+            --border-radius-lg: 12px; 
+            --border-radius-sm: 6px;  
         }
 
         body {
-            background-color: var(--dark-bg) !important;
+            background-color: var(--light-bg) !important;
             padding-top: 50px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-dark);
         }
 
         .cart-wrapper {
@@ -30,50 +39,70 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--dark-border);
+            border-bottom: 2px solid var(--primary-color);
             padding-bottom: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         .cart-header h5 {
-            color: var(--text-light) !important;
-            font-size: 1.5rem;
+            color: var(--text-dark) !important;
+            font-size: 1.8rem;
+            font-weight: 600;
         }
         .cart-header a {
-            color: #adb5bd;
+            color: var(--secondary-color);
             text-decoration: none;
             font-size: 1rem;
+            transition: color 0.3s;
         }
         .cart-header a:hover {
-            color: var(--text-light);
+            color: var(--text-dark);
         }
 
 
         #cart-items-container {
             border: 1px solid var(--dark-border); 
-            border-radius: 5px;
+            border-radius: var(--border-radius-lg);
             background-color: var(--card-bg); 
             min-height: 200px; 
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
         
         .product-item-row {
             display: flex;
             align-items: center;
-            padding: 10px 15px;
+            padding: 15px 20px;
             border-bottom: 1px solid var(--dark-border);
-            color: var(--text-light);
+            color: var(--text-dark);
+            transition: background-color 0.2s;
+        }
+        .product-item-row:hover {
+            background-color: #f8f8f8;
         }
         
+        .product-item-row:first-child {
+            border-top-left-radius: var(--border-radius-lg);
+            border-top-right-radius: var(--border-radius-lg);
+        }
+
         .product-item-row:last-child {
             border-bottom: none;
+            border-bottom-left-radius: var(--border-radius-lg);
+            border-bottom-right-radius: var(--border-radius-lg);
         }
         
         .product-image-placeholder {
             width: 70px;
             height: 70px;
-            background-color: #555566;
-            margin-right: 15px;
+            background-color: #eeeeee;
+            border: 1px solid var(--dark-border);
+            margin-right: 20px;
             flex-shrink: 0;
-            border-radius: 5px;
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: var(--text-dark);
         }
 
         .product-info {
@@ -84,36 +113,45 @@
         }
 
         .product-name-and-qty {
-            font-weight: bold;
+            font-weight: 600;
             font-size: 1.1rem;
         }
         .product-name-and-qty span {
             font-weight: normal;
-            color: #adb5bd;
+            color: var(--secondary-color);
             margin-left: 10px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+        }
+        
+        .product-price {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-right: 30px;
+            font-size: 1.2rem;
         }
 
-        .btn-remove {
-            background-color: #dc3545;
-            border-color: #dc3545;
-            color: var(--text-light);
+
+        .btn-danger {
+            background-color: var(--danger-color) !important;
+            border-color: var(--danger-color) !important;
+            color: var(--light-bg) !important;
             padding: 8px 15px;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
+            border-radius: var(--border-radius-sm);
         }
 
         .empty-cart-message {
             text-align: center;
-            color: #adb5bd;
+            color: var(--secondary-color);
             padding: 50px 20px;
             font-size: 1.1rem;
         }
         
         .cart-summary {
             padding-top: 15px;
-            margin-top: 20px;
+            margin-top: 30px;
             border-top: 1px solid var(--dark-border);
-            color: var(--text-light);
+            color: var(--text-dark);
             text-align: right;
         }
 
@@ -126,23 +164,38 @@
             font-size: 1.1rem;
             min-width: 150px;
             margin-right: 10px;
+            font-weight: 500;
         }
         .cart-summary #total-value {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: bold;
+            color: var(--primary-color);
         }
         
-        .btn-checkout {
-            background-color: #28a745;
-            border-color: #28a745;
+        .btn-primary {
+            background-color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+            color: var(--light-bg) !important;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            border-radius: var(--border-radius-sm); 
+            font-size: 1.1rem !important;
             padding: 10px 20px;
-            font-size: 1.1rem;
             font-weight: bold;
             width: 100%;
-            max-width: 400px; 
+            max-width: 400px;
             margin-left: auto;
             display: block;
         }
+        .btn-primary:hover {
+            background-color: var(--primary-hover) !important;
+            border-color: var(--primary-hover) !important;
+            box-shadow: 0 2px 10px rgba(52, 152, 219, 0.6);
+        }
+        
+        .nav-link.btn-primary {
+            margin: 0 !important; 
+        }
+
     </style>
 </head>
 
@@ -151,11 +204,11 @@
     <div class="cart-wrapper"> 
         
         <div class="cart-header">
-            <h5>Carrito de compras</h5>
-            <a href="index.html">Volver</a>
+            <h5>Mi Carrito de Compras 🛒</h5>
+            <a href="index.html">← Volver al Menú</a>
         </div>
         
-        <div id="cart-items-container">
+        <div id="cart-items-container" class="shadow-sm">
             </div>
 
         <div class="cart-summary">
@@ -168,12 +221,12 @@
                 <span id="total-value">$0</span>
             </div>
 
-            <li class="nav-item d-flex align-items-center">
-                <a class="nav-link text-white btn-outline-success mx-2 btn-primary w-100" 
+            <div class="mt-4">
+                <a class="nav-link btn-primary" 
                     href="MetodosPago.html">
                     Proseguir al pago
                 </a>
-            </li>
+            </div>
         </div>
 
     </div>
@@ -212,14 +265,14 @@
 
                 cartHtml += `
                     <div class="product-item-row">
-                        <div class="product-image-placeholder"></div>
+                        <div class="product-image-placeholder">IMG</div>
                         <div class="product-info">
                             <span class="product-name-and-qty">
                                 ${item.name} 
                                 <span>(x${item.quantity})</span>
                             </span>
                             
-                            <span class="text-light me-3">${formatCurrency(itemSubtotal)}</span>
+                            <span class="product-price">${formatCurrency(itemSubtotal)}</span>
 
                             <button type="button" class="btn btn-danger btn-remove" 
                                     onclick="removeItemFromCart('${productId}')">

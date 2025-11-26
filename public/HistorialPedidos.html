@@ -179,24 +179,36 @@
             `;
         }
 
-        function loadOrderHistory() {
-            const historyContainer = document.getElementById('orders-list');
-            const emptyMessage = document.getElementById('empty-history');
-            
-            const history = JSON.parse(localStorage.getItem('orderHistory')) || [];
-
-            if (history.length === 0) {
-                emptyMessage.style.display = 'block';
-                return;
-            }
-            
-            emptyMessage.style.display = 'none';
-            historyContainer.innerHTML = ''; 
-            
-            history.slice().reverse().forEach(order => {
-                historyContainer.innerHTML += renderOrderItem(order);
-            });
+        async function loadOrderHistory() {
+    const historyContainer = document.getElementById('orders-list');
+    const emptyMessage = document.getElementById('empty-history');
+    const userEmail = localStorage.getItem('userEmail');
+    
+    if (!userEmail) {
+        emptyMessage.style.display = 'block';
+        return;
+    }
+    
+    try {
+        const response = await fetch(`/api/pedidos/${userEmail}`);
+        const pedidos = await response.json();
+        
+        if (pedidos.length === 0) {
+            emptyMessage.style.display = 'block';
+            return;
         }
+        
+        emptyMessage.style.display = 'none';
+        historyContainer.innerHTML = '';
+        
+        pedidos.forEach(pedido => {
+            historyContainer.innerHTML += renderOrderItem(pedido);
+        });
+    } catch (error) {
+        console.error('Error cargando historial:', error);
+        emptyMessage.style.display = 'block';
+    }
+}
 
         function repeatOrder(orderId) {
             const history = JSON.parse(localStorage.getItem('orderHistory')) || [];

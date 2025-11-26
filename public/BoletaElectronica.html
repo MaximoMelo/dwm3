@@ -10,25 +10,33 @@
 
     <style>
         :root {
-            --dark-bg: #1e1e28;
-            --card-bg: #2d2d39; 
-            --dark-border: #444455;
-            --text-light: #f8f9fa;
+            --primary-bg: #1e3a8a;
+            --light-bg: #ffffff;
+            --card-bg: #ffffff;
+            --dark-border: #dddddd;
+            --text-dark: #212529;
+            --primary-color: #3498db;
+            --primary-hover: #5dade2;
+            --secondary-color: #6c757d;
+            --danger-color: #cc4c4c;
+            --border-radius-lg: 12px; 
+            --border-radius-sm: 6px;  
         }
 
         body {
-            background-color: var(--dark-bg) !important;
-            color: var(--text-light);
+            background-color: var(--light-bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-dark);
         }
 
         .main-card {
             max-width: 450px; 
             width: 95%;
             padding: 30px;
-            border-radius: 10px;
+            border-radius: var(--border-radius-lg);
             background-color: var(--card-bg) !important;
-            color: var(--text-light) !important;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
+            color: var(--text-dark) !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
             border: 1px solid var(--dark-border);
         }
         
@@ -42,8 +50,8 @@
             display: flex;
             justify-content: space-between; 
             margin-bottom: 5px; 
-            font-size: 1.1em;
-            color: var(--text-light); 
+            font-size: 1.05em;
+            color: var(--text-dark); 
         }
 
         .data-label {
@@ -51,8 +59,8 @@
         }
 
         .form-control-readonly {
-            background-color: #383845 !important;
-            color: var(--text-light) !important;
+            background-color: #f8f8f8 !important; 
+            color: var(--text-dark) !important;
             border: 1px solid var(--dark-border) !important;
             padding: 0.375rem 0.5rem; 
             height: auto;
@@ -60,10 +68,25 @@
             font-size: 1rem;
             line-height: 1.5;
             resize: none; 
+            border-radius: var(--border-radius-sm);
         }
         
         .input-container {
-            width: 50%;
+            width: 60%;
+            text-align: right;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+            color: var(--light-bg) !important;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            border-radius: var(--border-radius-sm); 
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-hover) !important;
+            border-color: var(--primary-hover) !important;
+            box-shadow: 0 2px 10px rgba(52, 152, 219, 0.6);
         }
     </style>
 </head>
@@ -71,27 +94,27 @@
     
     <div class="main-card">
         
-        <h5 class="text-center mb-4 text-light">Boleta Electrónica</h5>
+        <h5 class="text-center mb-4" style="color: var(--primary-color);">Boleta Electrónica</h5>
         <hr class="divider">
         
         <div class="data-row">
             <span class="data-label">Dirección:</span>
             <span class="input-container">
-                <input type="text" class="form-control-readonly" value="Dirección del Cliente" readonly id="boleta-direccion">
+                <input type="text" class="form-control-readonly text-end" value="Dirección del Cliente" readonly id="boleta-direccion">
             </span>
         </div>
         
         <div class="data-row">
             <span class="data-label">Email:</span>
             <span class="input-container">
-                <input type="text" class="form-control-readonly" value="cliente@correo.com" readonly id="boleta-email">
+                <input type="text" class="form-control-readonly text-end" value="cliente@correo.com" readonly id="boleta-email">
             </span>
         </div>
         
         <div class="data-row mb-4">
             <span class="data-label">Fecha de emisión:</span>
             <span class="input-container">
-                <input type="text" class="form-control-readonly" readonly id="boleta-fecha">
+                <input type="text" class="form-control-readonly text-end" readonly id="boleta-fecha">
             </span>
         </div>
         
@@ -100,8 +123,7 @@
         <p class="fw-bold mb-2">Detalles de venta:</p>
 
         <div class="data-row">
-            <textarea class="form-control-readonly" rows="5" readonly id="boleta-detalles">
-            </textarea>
+            <textarea class="form-control-readonly" rows="5" readonly id="boleta-detalles" style="width: 100%;"></textarea>
         </div>
 
         <hr class="divider">
@@ -109,28 +131,26 @@
         <div class="data-row">
             <span class="data-label">Medio de pago:</span>
             <span class="input-container">
-                <input type="text" class="form-control-readonly" value="Tarjeta de Crédito" readonly id="boleta-medio-pago">
+                <input type="text" class="form-control-readonly text-end" value="Tarjeta de Débito/Crédito" readonly id="boleta-medio-pago">
             </span>
         </div>
 
-        <div class="data-row fw-bold fs-5 mt-2">
-            <span class="data-label">TOTAL PAGADO:</span>
+        <div class="data-row fw-bold fs-5 mt-3 align-items-center">
+            <span class="data-label" style="color: var(--primary-color);">TOTAL PAGADO:</span>
             <span class="input-container">
-                <input type="text" class="form-control-readonly fw-bold" readonly id="boleta-total" style="font-size: 1.2em;">
+                <input type="text" class="form-control-readonly fw-bold text-end" readonly id="boleta-total" style="font-size: 1.2em; border: 2px solid var(--primary-color) !important;">
             </span>
         </div>
         
         <hr class="divider">
         
-        <p class="text-center mt-3" style="font-size:0.9em;">¡Gracias por su compra!</p>
-        <div class="col-12 col-md-6">
-                <li class="nav-item d-flex">
-                    <a class="nav-link text-white btn-outline-success mx-2 btn-primary w-100" 
-                        href="index.html"> 
-                        Finalizar
-                    </a>
-                </li>
-            </div>
+        <p class="text-center mt-3" style="font-size:0.9em; color: var(--secondary-color);">¡Gracias por su compra!</p>
+        
+        <div class="mt-4">
+            <a class="btn btn-primary w-100" href="index.html"> 
+                Finalizar
+            </a>
+        </div>
         
     </div>
 
@@ -162,7 +182,7 @@
                 detallesTexto += `\nSubtotal de ítems: ${formatCurrency(total)}`;
             }
             
-            document.getElementById('boleta-detalles').value = detallesTexto;
+            document.getElementById('boleta-detalles').value = detallesTexto.trim();
 
             document.getElementById('boleta-total').value = formatCurrency(total);
             

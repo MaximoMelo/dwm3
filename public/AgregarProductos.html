@@ -9,7 +9,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         
         <style>
-            
             :root {
                 --dark-bg: #1e1e28;
                 --card-bg: #2d2d39; 
@@ -18,40 +17,39 @@
             }
 
             body {
-            
                 background-color: var(--dark-bg) !important;
                 color: var(--text-light); 
             }
 
-           
             .main-card {
                 max-width: 450px; 
                 width: 90%;
-                padding: 30px;
+                padding: 40px;
                 border-radius: 10px;
                 background-color: var(--card-bg) !important;
-                color: var(--text-light) !important;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
                 border: 1px solid var(--dark-border);
             }
 
-         
             .form-control {
                 background-color: var(--dark-bg) !important;
                 border-color: var(--dark-border) !important;
                 color: var(--text-light) !important;
-          
             }
            
             .form-label {
                 color: var(--text-light) !important;
-               
                 font-size: 0.9rem !important;
                 margin-top: 0.5rem; 
             }
-          
+         
             .main-card form .row:first-child .form-label {
                 margin-top: 0;
+            }
+            
+            .btn-secondary {
+                background-color: #555 !important;
+                border-color: #555 !important;
             }
         </style>
     </head>
@@ -59,42 +57,100 @@
     <body class="d-flex align-items-center justify-content-center vh-100">
 
         <div class="main-card">
-            <h2 class="text-center mb-4 text-light">AGREGAR PRODUCTO</h2>
+            <h2 class="text-center mb-5 text-light">AGREGAR PRODUCTO</h2>
             
             <form>
                 
-                <div class="row mb-2">
+                <div class="row mb-4">
                     <label for="nom.producto" class="form-label">Nombre</label>
                     <input type="text" class="form-control" id="nom.producto">
                 </div>
 
-                <div class="row mb-2">
+                <div class="row mb-4">
                     <label for="descripcion" class="form-label">Descripción</label>
                     <textarea class="form-control" id="descripcion" rows="3"></textarea>
                 </div>
 
-                <div class="row mb-2">
+                <div class="row mb-4">
                     <label for="categoria" class="form-label">Categoría</label>
                     <select class="form-control" id="categoria">
-                        </select>
+                    </select>
                 </div>
 
-                <div class="row mb-2">
+                <div class="row mb-4">
                     <label for="precio" class="form-label">Precio</label>
                     <input type="number" class="form-control" id="precio">
                 </div>
 
-                <div class="row mb-4">
+                <div class="row mb-5">
                     <label for="stock" class="form-label">Stock</label>
                     <input type="number" class="form-control" id="stock">
                 </div>
 
-                <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary w-100" style="max-width: 250px;">
+                <div class="d-flex justify-content-center gap-4">
+                    <a href="index.html" class="btn btn-secondary w-50" style="max-width: 125px;">
+                        Volver
+                    </a>
+                    <button type="submit" class="btn btn-primary w-50" style="max-width: 125px;">
                         Agregar Producto
                     </button>
                 </div>
+
             </form>
         </div>
+        
+        <script>
+            document.querySelector('form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+            
+                const producto = {
+                    nombre: document.getElementById('nom.producto').value,
+                    precio: document.getElementById('precio').value,
+                    categoria: document.getElementById('categoria').value,
+                    stock: document.getElementById('stock').value,
+                    descripcion: document.getElementById('descripcion').value,
+                    ingredientes: ''
+                };
+
+                try {
+                    const response = await fetch('/api/productos', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(producto)
+                    });
+
+                    if (response.ok) {
+                        alert(' Producto agregado exitosamente');
+                        document.querySelector('form').reset();
+                    } else {
+                        alert(' Error al agregar producto');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Error de conexión');
+                }
+            });
+
+            async function cargarCategorias() {
+                try {
+                    const response = await fetch('/api/categorias');
+                    const categorias = await response.json();
+                
+                    const categoriaSelect = document.getElementById('categoria');
+                    categorias.forEach(cat => {
+                        const option = document.createElement('option');
+                        option.value = cat;
+                        option.textContent = cat;
+                        categoriaSelect.appendChild(option);
+                    });
+                } catch (error) {
+                    console.error('Error cargando categorías:', error);
+                }
+            }
+
+            cargarCategorias();
+        </script>
     </body>
 </html>
