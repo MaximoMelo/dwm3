@@ -348,31 +348,93 @@
         `;
     }
 
-    function fetchAndRenderProducts() {
+    async function fetchAndRenderProducts() {
         const productListWrapper = document.getElementById('product-list-wrapper-content');
         if (!productListWrapper) return;
-        
-        const apiProducts = [
-            { id: 'prod1', name: 'Producto1', price: 12500 },
-            { id: 'prod2', name: 'Producto2', price: 9990 },
-            { id: 'prod3', name: 'Producto3', price: 7800 },
-            { id: 'prod4', name: 'Producto4', price: 14500 },
-            { id: 'prod5', name: 'Producto5', price: 18000 },
-            { id: 'prod6', name: 'Producto6', price: 11200 },
-            { id: 'prod7', name: 'Producto7', price: 10500 },
-            { id: 'prod8', name: 'Producto8', price: 3500 }
-        ];
-        
-        let productsHTML = '';
-        apiProducts.forEach(product => {
-            productsHTML += generateProductItemHTML(product.name, product.id, product.price);
-        });
-        
-        if (apiProducts.length === 0) {
-            productsHTML = '<p class="text-center p-4" style="color: var(--secondary-color);">No se encontraron productos.</p>';
-        }
 
-        productListWrapper.innerHTML = productsHTML;
+        try {
+            const categoriaSelect = document.getElementById('categoria');
+            const searchInput = document.getElementById('search');
+            
+            const categoriaFiltro = categoriaSelect ? categoriaSelect.value : '';
+            const busquedaFiltro = searchInput ? searchInput.value : '';
+            
+            let url = '/api/productos';
+            const params = new URLSearchParams();
+            
+            if (categoriaFiltro && categoriaFiltro !== 'Categorías') {
+                params.append('categoria', categoriaFiltro);
+            }
+            if (busquedaFiltro) {
+                params.append('busqueda', busquedaFiltro);
+            }
+            
+            if (params.toString()) {
+                url += '?' + params.toString();
+            }
+            
+            const response = await fetch(url);
+            const apiProducts = await response.json();
+            
+            let productsHTML = '';
+            apiProducts.forEach(product => {
+                productsHTML += generateProductItemHTML(product.nombre, product._id, product.precio);
+            });
+            
+            if (apiProducts.length === 0) {
+                productsHTML = '<p class="text-center p-4" style="color: var(--secondary-color);">No se encontraron productos.</p>';
+            }
+
+            productListWrapper.innerHTML = productsHTML;
+        } catch (error) {
+            console.error('Error cargando productos:', error);
+            productListWrapper.innerHTML = '<p class="text-center p-4" style="color: var(--danger-color);">Error al cargar productos</p>';
+        }
+    }
+
+    async function cargarCategorias() {
+        try {
+            const response = await fetch('/api/categorias');
+            const categorias = await response.json();
+            
+            const categoriaSelect = document.getElementById('categoria');
+            if (categoriaSelect && categorias.length > 0) {
+                let optionsHTML = '<option selected style="color: var(--text-dark);">Categorías</option>';
+                categorias.forEach(cat => {
+                    optionsHTML += `<option style="color: var(--text-dark);">${cat}</option>`;
+                });
+                categoriaSelect.innerHTML = optionsHTML;
+            }
+        } catch (error) {
+            console.error('Error cargando categorías:', error);
+        }
+    }
+
+    function aplicarFiltros() {
+        fetchAndRenderProducts();
+    }
+
+    function setupEventListeners() {
+        const filtrarBtn = document.querySelector('.btn-primary');
+        const searchInput = document.getElementById('search');
+        const categoriaSelect = document.getElementById('categoria');
+        
+        if (filtrarBtn) {
+            filtrarBtn.addEventListener('click', aplicarFiltros);
+        }
+        
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                clearTimeout(this.searchTimeout);
+                this.searchTimeout = setTimeout(() => {
+                    aplicarFiltros();
+                }, 500);
+            });
+        }
+        
+        if (categoriaSelect) {
+            categoriaSelect.addEventListener('change', aplicarFiltros);
+        }
     }
 
     const listadoHTML = `
@@ -380,7 +442,7 @@
             <div class="d-flex justify-content-between align-items-end mb-4">
                 <div></div> 
                 <div class="d-flex gap-2 align-items-end">
-                    <div style="width: 180px;"><select class="form-select btn text-start shadow-none" style="color: var(--text-dark) !important; border: 1px solid var(--dark-border);" id="categoria"><option selected style="color: var(--text-dark);">Categorías</option><option style="color: var(--text-dark);">Ceviche</option><option style="color: var(--text-dark);">Pescados al plato</option><option style="color: var(--text-dark);">Acompañamientos</option></select></div>
+                    <div style="width: 180px;"><select class="form-select btn text-start shadow-none" style="color: var(--text-dark) !important; border: 1px solid var(--dark-border);" id="categoria"><option selected style="color: var(--text-dark);">Categorías</option></select></div>
                     <div style="width: 250px;"><input type="text" class="form-control" id="search" placeholder="Buscar producto"></div>
                     <div style="width: 100px;"><button class="btn btn-primary w-100">Filtrar</button></div>
                 </div>
@@ -416,7 +478,12 @@
         appContent.innerHTML = content;
         
         if (viewName === 'listado') {
-            fetchAndRenderProducts();
+            // Pequeño delay para asegurar que el DOM esté listo
+            setTimeout(() => {
+                fetchAndRenderProducts();
+                cargarCategorias();
+                setupEventListeners();
+            }, 100);
         }
     }
 
