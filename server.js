@@ -8,22 +8,19 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname)); // Sirve todos los archivos estáticos
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Conexión a MongoDB
 const MONGO_URI = 'mongodb+srv://maximomelo10_db_user:VXXRDfGBa9FFDdk@githubdwm3.qsnwhzq.mongodb.net/marazul?retryWrites=true&w=majority';
 
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-.then(() => console.log('✅ Conectado a MongoDB'))
-.catch(err => console.error('❌ Error de conexión:', err));
+.then(() => console.log('Conectado a MongoDB'))
+.catch(err => console.error('Error de conexión:', err));
 
-// Esquemas de MongoDB
 const ProductoSchema = new mongoose.Schema({
   nombre: String,
   precio: Number,
@@ -56,58 +53,56 @@ const ReporteSchema = new mongoose.Schema({
   productoMasVendido: String
 });
 
-// Modelos
 const Producto = mongoose.model('Producto', ProductoSchema);
 const Usuario = mongoose.model('Usuario', UsuarioSchema);
 const Pedido = mongoose.model('Pedido', PedidoSchema);
 const Reporte = mongoose.model('Reporte', ReporteSchema);
 
-// Rutas para servir archivos HTML
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.get('/CarritoCompras.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'CarritoCompras.html'));
+  res.sendFile(path.join(__dirname, 'public', 'CarritoCompras.html'));
 });
 
 app.get('/PerfilUsuario.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'PerfilUsuario.html'));
+  res.sendFile(path.join(__dirname, 'public', 'PerfilUsuario.html'));
 });
 
 app.get('/HistorialPedidos.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'HistorialPedidos.html'));
+  res.sendFile(path.join(__dirname, 'public', 'HistorialPedidos.html'));
 });
 
 app.get('/InicioSesion.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'InicioSesion.html'));
+  res.sendFile(path.join(__dirname, 'public', 'InicioSesion.html'));
 });
 
 app.get('/AgregarProducts.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'AgregarProducts.html'));
+  res.sendFile(path.join(__dirname, 'public', 'AgregarProducts.html'));
 });
 
 app.get('/BoletaElectronica.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'BoletaElectronica.html'));
+  res.sendFile(path.join(__dirname, 'public', 'BoletaElectronica.html'));
 });
 
 app.get('/GeneracionReporte.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'GeneracionReporte.html'));
+  res.sendFile(path.join(__dirname, 'public', 'GeneracionReporte.html'));
 });
 
 app.get('/MetodosPago.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'MetodosPago.html'));
+  res.sendFile(path.join(__dirname, 'public', 'MetodosPago.html'));
 });
 
 app.get('/ProcesoPago.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'ProcesoPago.html'));
+  res.sendFile(path.join(__dirname, 'public', 'ProcesoPago.html'));
 });
 
 app.get('/ReporteMensual.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'ReporteMensual.html'));
+  res.sendFile(path.join(__dirname, 'public', 'ReporteMensual.html'));
 });
 
-// API Routes - Productos
+
 app.get('/api/productos', async (req, res) => {
   try {
     const { categoria, busqueda } = req.query;
@@ -131,7 +126,6 @@ app.get('/api/productos', async (req, res) => {
   }
 });
 
-// Obtener categorías únicas
 app.get('/api/categorias', async (req, res) => {
   try {
     const categorias = await Producto.distinct('categoria');
@@ -141,7 +135,6 @@ app.get('/api/categorias', async (req, res) => {
   }
 });
 
-// Agregar nuevo producto
 app.post('/api/productos', async (req, res) => {
   try {
     const { nombre, precio, categoria, stock, descripcion, ingredientes } = req.body;
@@ -162,7 +155,7 @@ app.post('/api/productos', async (req, res) => {
   }
 });
 
-// API Routes - Usuarios
+
 app.get('/api/usuarios/:email', async (req, res) => {
   try {
     const usuario = await Usuario.findOne({ email: req.params.email });
@@ -212,7 +205,7 @@ app.put('/api/usuarios/:email', async (req, res) => {
   }
 });
 
-// API Routes - Pedidos
+
 app.get('/api/pedidos/:usuarioEmail', async (req, res) => {
   try {
     const pedidos = await Pedido.find({ usuarioEmail: req.params.usuarioEmail }).sort({ fecha: -1 });
@@ -240,7 +233,7 @@ app.post('/api/pedidos', async (req, res) => {
   }
 });
 
-// API Routes - Reportes
+
 app.get('/api/reportes/:mes', async (req, res) => {
   try {
     const reporte = await Reporte.findOne({ mes: req.params.mes });
@@ -250,7 +243,7 @@ app.get('/api/reportes/:mes', async (req, res) => {
   }
 });
 
-// Datos de ejemplo para inicializar
+
 async function inicializarDatos() {
   try {
     const count = await Producto.countDocuments();
@@ -292,4 +285,4 @@ async function inicializarDatos() {
 app.listen(PORT, () => {
   console.log(` Servidor corriendo en http://localhost:${PORT}`);
   inicializarDatos();
-});
+}); 
