@@ -14,10 +14,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const MONGO_URI = 'mongodb+srv://maximomelo10_db_user:VXXRDfGBa9FFDdk@githubdwm3.qsnwhzq.mongodb.net/marazul?retryWrites=true&w=majority';
 
-mongoose.connect(MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+mongoose.connect(MONGO_URI)
 .then(() => console.log('Conectado a MongoDB'))
 .catch(err => console.error('Error de conexión:', err));
 
