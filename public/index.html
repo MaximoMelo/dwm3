@@ -353,6 +353,8 @@
         if (!productListWrapper) return;
 
         try {
+            console.log('Probando conexión a API...');
+            
             const categoriaSelect = document.getElementById('categoria');
             const searchInput = document.getElementById('search');
             
@@ -373,8 +375,16 @@
                 url += '?' + params.toString();
             }
             
+            console.log('Solicitando URL:', url);
             const response = await fetch(url);
+            
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Error ${response.status}: ${errorText}`);
+            }
+            
             const apiProducts = await response.json();
+            console.log('Productos recibidos:', apiProducts);
             
             let productsHTML = '';
             apiProducts.forEach(product => {
@@ -386,15 +396,37 @@
             }
 
             productListWrapper.innerHTML = productsHTML;
+            console.log('Productos renderizados correctamente');
+            
         } catch (error) {
             console.error('Error cargando productos:', error);
-            productListWrapper.innerHTML = '<p class="text-center p-4" style="color: var(--danger-color);">Error al cargar productos</p>';
+            
+            // Datos de ejemplo como fallback
+            const productosEjemplo = [
+                { _id: '1', nombre: 'Ceviche Mixto', precio: 12500 },
+                { _id: '2', nombre: 'Pescado a la Plancha', precio: 9990 },
+                { _id: '3', nombre: 'Arroz con Mariscos', precio: 7800 },
+                { _id: '4', nombre: 'Pulpo al Olivo', precio: 14500 }
+            ];
+            
+            let productsHTML = '';
+            productosEjemplo.forEach(product => {
+                productsHTML += generateProductItemHTML(product.nombre, product._id, product.precio);
+            });
+            
+            productListWrapper.innerHTML = productsHTML + 
+                '<p class="text-center p-2" style="color: var(--secondary-color); font-size: 0.8rem;">Usando datos de ejemplo - Error: ' + error.message + '</p>';
         }
     }
 
     async function cargarCategorias() {
         try {
             const response = await fetch('/api/categorias');
+            
+            if (!response.ok) {
+                throw new Error(`Error ${response.status}`);
+            }
+            
             const categorias = await response.json();
             
             const categoriaSelect = document.getElementById('categoria');
@@ -407,6 +439,16 @@
             }
         } catch (error) {
             console.error('Error cargando categorías:', error);
+            // Categorías por defecto si falla la API
+            const categoriaSelect = document.getElementById('categoria');
+            if (categoriaSelect) {
+                categoriaSelect.innerHTML = `
+                    <option selected style="color: var(--text-dark);">Categorías</option>
+                    <option style="color: var(--text-dark);">Ceviche</option>
+                    <option style="color: var(--text-dark);">Pescados al plato</option>
+                    <option style="color: var(--text-dark);">Acompañamientos</option>
+                `;
+            }
         }
     }
 
@@ -478,7 +520,6 @@
         appContent.innerHTML = content;
         
         if (viewName === 'listado') {
-            // Pequeño delay para asegurar que el DOM esté listo
             setTimeout(() => {
                 fetchAndRenderProducts();
                 cargarCategorias();
