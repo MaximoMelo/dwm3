@@ -14,9 +14,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const MONGO_URI = 'mongodb+srv://maximomelo10_db_user:VXXRDfGBa9FFDdk@githubdwm3.qsnwhzq.mongodb.net/marazul?retryWrites=true&w=majority';
 
+console.log('Conectando a MongoDB...');
 mongoose.connect(MONGO_URI)
 .then(() => console.log('Conectado a MongoDB'))
-.catch(err => console.error('Error de conexión:', err));
+.catch(err => {
+  console.error('Error de conexión a MongoDB:', err);
+  console.error('URI usada:', MONGO_URI.replace(/\/\/([^:]+):([^@]+)@/, '//***:***@'));
+});
 
 const ProductoSchema = new mongoose.Schema({
   nombre: String,
@@ -55,9 +59,14 @@ const Usuario = mongoose.model('Usuario', UsuarioSchema);
 const Pedido = mongoose.model('Pedido', PedidoSchema);
 const Reporte = mongoose.model('Reporte', ReporteSchema);
 
+// API Routes
 app.get('/api/productos', async (req, res) => {
   try {
+    console.log('API: Solicitando productos...');
+    
     const { categoria, busqueda } = req.query;
+    console.log('Filtros recibidos:', { categoria, busqueda });
+    
     let filtro = {};
     
     if (categoria && categoria !== 'Categorías') {
@@ -71,18 +80,33 @@ app.get('/api/productos', async (req, res) => {
       ];
     }
     
+    console.log('Filtro aplicado:', filtro);
+    
+    // Verificar conexión a la base de datos
+    const count = await Producto.countDocuments();
+    console.log('Total de productos en BD:', count);
+    
     const productos = await Producto.find(filtro);
+    console.log('Productos encontrados:', productos.length);
+    console.log('Productos:', productos);
+    
     res.json(productos);
+    
   } catch (error) {
+    console.error('ERROR en /api/productos:', error);
+    console.error('Stack trace:', error.stack);
     res.status(500).json({ error: 'Error al obtener productos' });
   }
 });
 
 app.get('/api/categorias', async (req, res) => {
   try {
+    console.log('API: Solicitando categorías...');
     const categorias = await Producto.distinct('categoria');
+    console.log('Categorías encontradas:', categorias);
     res.json(categorias);
   } catch (error) {
+    console.error('ERROR en /api/categorias:', error);
     res.status(500).json({ error: 'Error al obtener categorías' });
   }
 });
@@ -103,16 +127,17 @@ app.post('/api/productos', async (req, res) => {
     const productoGuardado = await nuevoProducto.save();
     res.status(201).json(productoGuardado);
   } catch (error) {
+    console.error('ERROR en POST /api/productos:', error);
     res.status(500).json({ error: 'Error al crear producto' });
   }
 });
-
 
 app.get('/api/usuarios/:email', async (req, res) => {
   try {
     const usuario = await Usuario.findOne({ email: req.params.email });
     res.json(usuario);
   } catch (error) {
+    console.error('ERROR en /api/usuarios/:email:', error);
     res.status(500).json({ error: 'Error al obtener usuario' });
   }
 });
@@ -137,6 +162,7 @@ app.post('/api/usuarios', async (req, res) => {
     const usuarioGuardado = await nuevoUsuario.save();
     res.status(201).json(usuarioGuardado);
   } catch (error) {
+    console.error('ERROR en POST /api/usuarios:', error);
     res.status(500).json({ error: 'Error al crear usuario' });
   }
 });
@@ -153,16 +179,17 @@ app.put('/api/usuarios/:email', async (req, res) => {
     
     res.json(usuarioActualizado);
   } catch (error) {
+    console.error('ERROR en PUT /api/usuarios/:email:', error);
     res.status(500).json({ error: 'Error al actualizar usuario' });
   }
 });
-
 
 app.get('/api/pedidos/:usuarioEmail', async (req, res) => {
   try {
     const pedidos = await Pedido.find({ usuarioEmail: req.params.usuarioEmail }).sort({ fecha: -1 });
     res.json(pedidos);
   } catch (error) {
+    console.error('ERROR en /api/pedidos/:usuarioEmail:', error);
     res.status(500).json({ error: 'Error al obtener pedidos' });
   }
 });
@@ -181,20 +208,22 @@ app.post('/api/pedidos', async (req, res) => {
     const pedidoGuardado = await nuevoPedido.save();
     res.status(201).json(pedidoGuardado);
   } catch (error) {
+    console.error('ERROR en POST /api/pedidos:', error);
     res.status(500).json({ error: 'Error al crear pedido' });
   }
 });
-
 
 app.get('/api/reportes/:mes', async (req, res) => {
   try {
     const reporte = await Reporte.findOne({ mes: req.params.mes });
     res.json(reporte);
   } catch (error) {
+    console.error('ERROR en /api/reportes/:mes:', error);
     res.status(500).json({ error: 'Error al obtener reporte' });
   }
 });
 
+// HTML Routes
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
@@ -239,11 +268,14 @@ app.get('/ReporteMensual.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'ReporteMensual.html'));
 });
 
-
+// Inicialización
 async function inicializarDatos() {
   try {
     const count = await Producto.countDocuments();
+    console.log('INICIALIZACION: Total de productos en BD:', count);
+    
     if (count === 0) {
+      console.log('INICIALIZACION: Insertando productos de ejemplo...');
       const productosEjemplo = [
         { 
           nombre: 'Ceviche Mixto', 
@@ -271,14 +303,15 @@ async function inicializarDatos() {
         }
       ];
       await Producto.insertMany(productosEjemplo);
-      console.log(' Productos de ejemplo insertados');
+      console.log('INICIALIZACION: Productos de ejemplo insertados');
     }
   } catch (error) {
-    console.log('ℹ  Base de datos ya tiene productos o error:', error.message);
+    console.error('ERROR en inicializacion:', error);
+    console.error('Stack trace:', error.stack);
   }
 }
 
 app.listen(PORT, () => {
-  console.log(` Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
   inicializarDatos();
-}); 
+});
