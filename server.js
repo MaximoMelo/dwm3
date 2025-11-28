@@ -55,51 +55,6 @@ const Usuario = mongoose.model('Usuario', UsuarioSchema);
 const Pedido = mongoose.model('Pedido', PedidoSchema);
 const Reporte = mongoose.model('Reporte', ReporteSchema);
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-app.get('/CarritoCompras.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'CarritoCompras.html'));
-});
-
-app.get('/PerfilUsuario.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'PerfilUsuario.html'));
-});
-
-app.get('/HistorialPedidos.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'HistorialPedidos.html'));
-});
-
-app.get('/InicioSesion.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'InicioSesion.html'));
-});
-
-app.get('/AgregarProducts.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'AgregarProducts.html'));
-});
-
-app.get('/BoletaElectronica.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'BoletaElectronica.html'));
-});
-
-app.get('/GeneracionReporte.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'GeneracionReporte.html'));
-});
-
-app.get('/MetodosPago.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'MetodosPago.html'));
-});
-
-app.get('/ProcesoPago.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'ProcesoPago.html'));
-});
-
-app.get('/ReporteMensual.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'ReporteMensual.html'));
-});
-
-
 app.get('/api/productos', async (req, res) => {
   try {
     const { categoria, busqueda } = req.query;
@@ -238,6 +193,50 @@ app.get('/api/reportes/:mes', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Error al obtener reporte' });
   }
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/CarritoCompras.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'CarritoCompras.html'));
+});
+
+app.get('/PerfilUsuario.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'PerfilUsuario.html'));
+});
+
+app.get('/HistorialPedidos.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'HistorialPedidos.html'));
+});
+
+app.get('/InicioSesion.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'InicioSesion.html'));
+});
+
+app.get('/AgregarProducts.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'AgregarProducts.html'));
+});
+
+app.get('/BoletaElectronica.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'BoletaElectronica.html'));
+});
+
+app.get('/GeneracionReporte.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'GeneracionReporte.html'));
+});
+
+app.get('/MetodosPago.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'MetodosPago.html'));
+});
+
+app.get('/ProcesoPago.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'ProcesoPago.html'));
+});
+
+app.get('/ReporteMensual.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'ReporteMensual.html'));
 });
 
 
