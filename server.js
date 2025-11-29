@@ -286,20 +286,76 @@ async function inicializarDatos() {
           descripcion: 'Ceviche fresco con mariscos' 
         },
         { 
-          nombre: 'Pescado a la Plancha', 
+          nombre: 'Congrio a la Plancha', 
           precio: 9990, 
-          ingredientes: ['pescado', 'limón', 'aceite de oliva', 'romero'], 
+          ingredientes: ['congrio', 'limón', 'aceite de oliva', 'romero'], 
           categoria: 'Pescados al plato',
           stock: 10, 
-          descripcion: 'Pescado fresco a la plancha' 
+          descripcion: 'Congrio fresco a la plancha' 
         },
         { 
           nombre: 'Arroz con Mariscos', 
-          precio: 7800, 
+          precio: 6800, 
           ingredientes: ['arroz', 'camarones', 'calamares', 'almejas', 'pimiento'], 
           categoria: 'Acompañamientos',
           stock: 20, 
+          descripcion: ' ' 
+        }
+        { 
+          nombre: 'Reineta a la plancha', 
+          precio: 7800, 
+          ingredientes: ['reineta', 'mantequilla', 'limón', 'pimienta', 'ajo'], 
+          categoria: 'Ceviche',
+          stock: 20, 
           descripcion: 'Arroz con mix de mariscos' 
+        }
+        { 
+          nombre: 'Machas a la parmesana ', 
+          precio: 5800, 
+          ingredientes: ['machas', 'queso', 'mantequilla', 'ajo'], 
+          categoria: 'Acompañamientos',
+          stock: 20, 
+          descripcion: 'Machas gratinadas con queso' 
+        }
+        { 
+          nombre: 'Pastel de Jaiba', 
+          precio: 7800, 
+          ingredientes: ['jaiba', 'cebolla', 'aji', 'queso'], 
+          categoria: 'Acompañamientos',
+          stock: 15, 
+          descripcion: 'Horneado de carne de jaiba' 
+        }
+        { 
+          nombre: 'Chupe de locos', 
+          precio: 6600, 
+          ingredientes: ['locos', 'queso', 'cebolla', 'aji', 'leche'], 
+          categoria: 'Acompañamientos',
+          stock: 20, 
+          descripcion: 'Guiso espeso de locos' 
+        }
+        { 
+          nombre: 'Caldillo de congrio', 
+          precio: 11500, 
+          ingredientes: ['congrio', 'papas', 'cebolla', 'aji', 'cilantro'], 
+          categoria: 'Pescados al plato',
+          stock: 10, 
+          descripcion: 'Sopa de congrio' 
+        }
+        { 
+          nombre: 'Ceviche de reineta', 
+          precio: 10000, 
+          ingredientes: ['reineta', 'limón', 'cebolla', 'cilantro', 'pimienta'], 
+          categoria: 'Ceviche',
+          stock: 20, 
+          descripcion: 'Ceviche fresco de reineta' 
+        }
+        { 
+          nombre: 'Camarones al Pil Pil', 
+          precio: 11800, 
+          ingredientes: ['camarones', 'aceite de oliva', 'ajo', 'aji verde'], 
+          categoria: 'Acompañamientos',
+          stock: 15, 
+          descripcion: 'Camarones salteados en salsa' 
         }
       ];
       await Producto.insertMany(productosEjemplo);
