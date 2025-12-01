@@ -300,7 +300,7 @@ async function inicializarDatos() {
           categoria: 'Acompañamientos',
           stock: 20, 
           descripcion: ' ' 
-        }
+        },
         { 
           nombre: 'Reineta a la plancha', 
           precio: 7800, 
@@ -308,7 +308,7 @@ async function inicializarDatos() {
           categoria: 'Ceviche',
           stock: 20, 
           descripcion: 'Arroz con mix de mariscos' 
-        }
+        },
         { 
           nombre: 'Machas a la parmesana ', 
           precio: 5800, 
@@ -316,7 +316,7 @@ async function inicializarDatos() {
           categoria: 'Acompañamientos',
           stock: 20, 
           descripcion: 'Machas gratinadas con queso' 
-        }
+        },
         { 
           nombre: 'Pastel de Jaiba', 
           precio: 7800, 
@@ -324,7 +324,7 @@ async function inicializarDatos() {
           categoria: 'Acompañamientos',
           stock: 15, 
           descripcion: 'Horneado de carne de jaiba' 
-        }
+        },
         { 
           nombre: 'Chupe de locos', 
           precio: 6600, 
@@ -332,7 +332,7 @@ async function inicializarDatos() {
           categoria: 'Acompañamientos',
           stock: 20, 
           descripcion: 'Guiso espeso de locos' 
-        }
+        },
         { 
           nombre: 'Caldillo de congrio', 
           precio: 11500, 
@@ -340,7 +340,7 @@ async function inicializarDatos() {
           categoria: 'Pescados al plato',
           stock: 10, 
           descripcion: 'Sopa de congrio' 
-        }
+        },
         { 
           nombre: 'Ceviche de reineta', 
           precio: 10000, 
@@ -348,7 +348,7 @@ async function inicializarDatos() {
           categoria: 'Ceviche',
           stock: 20, 
           descripcion: 'Ceviche fresco de reineta' 
-        }
+        },
         { 
           nombre: 'Camarones al Pil Pil', 
           precio: 11800, 
