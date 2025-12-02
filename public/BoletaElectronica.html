@@ -186,20 +186,10 @@
                     document.getElementById('boleta-email').value = userData.email || userEmail;
                     document.getElementById('boleta-direccion').value = userData.direccion || 'Sin dirección registrada';
                     document.getElementById('boleta-medio-pago').value = userData.metodoPago || 'No especificado';
-                } else {
-                    setDefaultData(userEmail);
                 }
             } catch (error) {
                 console.error('Error cargando datos del cliente:', error);
-                setDefaultData(userEmail);
             }
-        }
-        
-        function setDefaultData(email) {
-            document.getElementById('boleta-nombre').value = email.split('@')[0];
-            document.getElementById('boleta-email').value = email;
-            document.getElementById('boleta-direccion').value = 'Sin dirección registrada';
-            document.getElementById('boleta-medio-pago').value = 'No especificado';
         }
         
         async function guardarPedidoEnHistorial() {

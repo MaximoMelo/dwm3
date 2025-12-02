@@ -401,7 +401,6 @@
         } catch (error) {
             console.error('Error cargando productos:', error);
             
-            // Datos de ejemplo como fallback
             const productosEjemplo = [
                 { _id: '1', nombre: 'Ceviche Mixto', precio: 12500 },
                 { _id: '2', nombre: 'Pescado a la Plancha', precio: 9990 },
@@ -439,7 +438,6 @@
             }
         } catch (error) {
             console.error('Error cargando categorías:', error);
-            // Categorías por defecto si falla la API
             const categoriaSelect = document.getElementById('categoria');
             if (categoriaSelect) {
                 categoriaSelect.innerHTML = `

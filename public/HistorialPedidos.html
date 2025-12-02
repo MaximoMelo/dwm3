@@ -165,7 +165,7 @@
                 <div class="order-item">
                     <div class="order-details">
                         <div class="order-info">
-                            <span>ID de Pedido: <strong>#${pedido._id || 'N/A'}</strong></span>
+                            <span>ID de Pedido: <strong>#${pedido._id ? pedido._id.slice(-6) : 'N/A'}</strong></span>
                             <span>Fecha: ${fecha}</span>
                             <span>Total: <strong>${formatCurrency(total)}</strong></span>
                         </div>
