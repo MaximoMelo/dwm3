@@ -173,55 +173,104 @@
         </div>
         
         <script>
-            const fields = document.querySelectorAll('#profile-form input');
+            let modoEdicion = false;
+            const camposEditables = ['nombre', 'direccion', 'numtelefono', 'metodopago'];
             const editBtn = document.getElementById('edit-btn');
-
-            // Reemplaza loadProfileData y saveProfileData con:
-async function loadProfileData() {
-    const userEmail = localStorage.getItem('userEmail');
-    
-    if (!userEmail) return;
-    
-    try {
-        const response = await fetch(`/api/usuarios/${userEmail}`);
-        if (response.ok) {
-            const userData = await response.json();
-            document.getElementById('email').value = userData.email || userEmail;
-            document.getElementById('nombre').value = userData.nombre || '';
-            document.getElementById('direccion').value = userData.direccion || '';
-            document.getElementById('metodopago').value = userData.metodoPago || '';
-            document.getElementById('numtelefono').value = userData.telefono || '';
-        }
-    } catch (error) {
-        console.error('Error cargando perfil:', error);
-    }
-}
-
-async function saveProfileData() {
-    const userEmail = localStorage.getItem('userEmail');
-    const profileData = {
-        nombre: document.getElementById('nombre').value,
-        direccion: document.getElementById('direccion').value,
-        telefono: document.getElementById('numtelefono').value,
-        metodoPago: document.getElementById('metodopago').value,
-    };
-    
-    try {
-        await fetch(`/api/usuarios/${userEmail}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(profileData)
-        });
-        
-        alert('¡Datos actualizados correctamente!');
-    } catch (error) {
-        console.error('Error guardando perfil:', error);
-        alert('Error al guardar los datos');
-    }
-}
-
+            
+            async function loadProfileData() {
+                const userEmail = localStorage.getItem('userEmail');
+                
+                if (!userEmail) {
+                    window.location.href = "InicioSesion.html";
+                    return;
+                }
+                
+                try {
+                    const response = await fetch(`/api/usuarios/${userEmail}`);
+                    if (response.ok) {
+                        const userData = await response.json();
+                        
+                        document.getElementById('email').value = userData.email || userEmail;
+                        document.getElementById('nombre').value = userData.nombre || '';
+                        document.getElementById('direccion').value = userData.direccion || '';
+                        document.getElementById('metodopago').value = userData.metodoPago || '';
+                        document.getElementById('numtelefono').value = userData.telefono || '';
+                    } else {
+                        setDefaultData(userEmail);
+                    }
+                } catch (error) {
+                    console.error('Error cargando perfil:', error);
+                    setDefaultData(userEmail);
+                }
+            }
+            
+            function setDefaultData(email) {
+                document.getElementById('email').value = email;
+                document.getElementById('nombre').value = email.split('@')[0];
+                document.getElementById('direccion').value = 'Sin dirección registrada';
+                document.getElementById('metodopago').value = 'No especificado';
+                document.getElementById('numtelefono').value = 'Sin teléfono';
+            }
+            
+            function toggleEditMode() {
+                modoEdicion = !modoEdicion;
+                
+                camposEditables.forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    if (field) {
+                        field.disabled = !modoEdicion;
+                        if (modoEdicion) {
+                            field.classList.add('editable');
+                        } else {
+                            field.classList.remove('editable');
+                        }
+                    }
+                });
+                
+                if (modoEdicion) {
+                    editBtn.textContent = 'Guardar Cambios';
+                    editBtn.classList.remove('btn-secondary');
+                    editBtn.classList.add('btn-success-save');
+                } else {
+                    editBtn.textContent = 'Editar Datos';
+                    editBtn.classList.remove('btn-success-save');
+                    editBtn.classList.add('btn-secondary');
+                    
+                    saveProfileData();
+                }
+            }
+            
+            async function saveProfileData() {
+                const userEmail = localStorage.getItem('userEmail');
+                
+                const profileData = {
+                    nombre: document.getElementById('nombre').value,
+                    direccion: document.getElementById('direccion').value,
+                    telefono: document.getElementById('numtelefono').value,
+                    metodoPago: document.getElementById('metodopago').value
+                };
+                
+                try {
+                    const response = await fetch(`/api/usuarios/${userEmail}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(profileData)
+                    });
+                    
+                    if (response.ok) {
+                        const result = await response.json();
+                        alert(result.mensaje || '¡Datos actualizados correctamente!');
+                    } else {
+                        alert('Error al guardar los datos');
+                    }
+                } catch (error) {
+                    console.error('Error guardando perfil:', error);
+                    alert('Error de conexión al guardar los datos');
+                }
+            }
+            
             document.addEventListener('DOMContentLoaded', function() {
                 loadProfileData();
                 editBtn.addEventListener('click', toggleEditMode);

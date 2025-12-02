@@ -149,9 +149,9 @@
             let productsText = "";
             let total = 0;
             
-            Object.keys(order.products).forEach(productId => {
-                const item = order.products[productId];
-                const itemPrice = item.price || 0; 
+            Object.keys(order.productos).forEach(productId => {
+                const item = order.productos[productId];
+                const itemPrice = item.price || 0;
                 const itemSubtotal = item.quantity * itemPrice;
                 total += itemSubtotal;
                 
@@ -163,7 +163,7 @@
                     <div class="order-details">
                         <div class="order-info">
                             <span>ID de Pedido: <strong>#${order.id}</strong></span>
-                            <span>Fecha: ${order.date}</span>
+                            <span>Fecha: ${order.fecha}</span>
                             <span>Total: <strong>${formatCurrency(total)}</strong></span>
                         </div>
                         <div class="order-products">
@@ -180,47 +180,62 @@
         }
 
         async function loadOrderHistory() {
-    const historyContainer = document.getElementById('orders-list');
-    const emptyMessage = document.getElementById('empty-history');
-    const userEmail = localStorage.getItem('userEmail');
-    
-    if (!userEmail) {
-        emptyMessage.style.display = 'block';
-        return;
-    }
-    
-    try {
-        const response = await fetch(`/api/pedidos/${userEmail}`);
-        const pedidos = await response.json();
-        
-        if (pedidos.length === 0) {
-            emptyMessage.style.display = 'block';
-            return;
+            const historyContainer = document.getElementById('orders-list');
+            const emptyMessage = document.getElementById('empty-history');
+            const userEmail = localStorage.getItem('userEmail');
+            
+            if (!userEmail) {
+                emptyMessage.style.display = 'block';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/pedidos/${userEmail}`);
+                const pedidos = await response.json();
+                
+                if (pedidos.length === 0) {
+                    emptyMessage.style.display = 'block';
+                    return;
+                }
+                
+                emptyMessage.style.display = 'none';
+                historyContainer.innerHTML = '';
+                
+                pedidos.forEach(pedido => {
+                    historyContainer.innerHTML += renderOrderItem(pedido);
+                });
+            } catch (error) {
+                console.error('Error cargando historial:', error);
+                emptyMessage.style.display = 'block';
+            }
         }
-        
-        emptyMessage.style.display = 'none';
-        historyContainer.innerHTML = '';
-        
-        pedidos.forEach(pedido => {
-            historyContainer.innerHTML += renderOrderItem(pedido);
-        });
-    } catch (error) {
-        console.error('Error cargando historial:', error);
-        emptyMessage.style.display = 'block';
-    }
-}
 
         function repeatOrder(orderId) {
-            const history = JSON.parse(localStorage.getItem('orderHistory')) || [];
-            const orderToRepeat = history.find(order => order.id === orderId);
-
-            if (orderToRepeat) {
-                localStorage.setItem('shoppingCart', JSON.stringify(orderToRepeat.products));
-                alert(`Pedido #${orderId} cargado en tu carrito.`);
-                window.location.href = "CarritoCompras.html"; 
-            } else {
-                alert("Error: El pedido solicitado no fue encontrado.");
+            const userEmail = localStorage.getItem('userEmail');
+            
+            if (!userEmail) {
+                alert('Debe iniciar sesión para repetir pedido');
+                window.location.href = "InicioSesion.html";
+                return;
             }
+            
+            fetch(`/api/pedidos/${userEmail}`)
+                .then(response => response.json())
+                .then(pedidos => {
+                    const orderToRepeat = pedidos.find(order => order.id === orderId);
+                    
+                    if (orderToRepeat) {
+                        localStorage.setItem('shoppingCart', JSON.stringify(orderToRepeat.productos));
+                        alert(`Pedido #${orderId} cargado en tu carrito.`);
+                        window.location.href = "CarritoCompras.html";
+                    } else {
+                        alert("Error: El pedido solicitado no fue encontrado.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("Error al cargar el pedido.");
+                });
         }
 
         window.onload = loadOrderHistory;

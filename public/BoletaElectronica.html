@@ -20,7 +20,7 @@
             --secondary-color: #6c757d;
             --danger-color: #cc4c4c;
             --border-radius-lg: 12px; 
-            --border-radius-sm: 6px;  
+            --border-radius-sm: 6px;  
         }
 
         body {
@@ -159,6 +159,45 @@
             return '$' + Math.round(number).toLocaleString('es-CL');
         };
 
+        async function guardarPedidoEnHistorial() {
+            try {
+                const cart = JSON.parse(localStorage.getItem('shoppingCart')) || {};
+                const userEmail = localStorage.getItem('userEmail') || 'anonimo@ejemplo.com';
+                
+                if (Object.keys(cart).length === 0) {
+                    return;
+                }
+                
+                const pedidoData = {
+                    email: userEmail,
+                    productos: cart,
+                    total: calcularTotal(cart),
+                    direccion: document.getElementById('boleta-direccion').value,
+                    medioPago: document.getElementById('boleta-medio-pago').value
+                };
+                
+                const response = await fetch('/api/pedidos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(pedidoData)
+                });
+                
+                if (response.ok) {
+                    localStorage.removeItem('shoppingCart');
+                }
+            } catch (error) {
+                console.error('Error guardando pedido:', error);
+            }
+        }
+        
+        function calcularTotal(cart) {
+            return Object.values(cart).reduce((total, item) => {
+                return total + (item.quantity * item.price);
+            }, 0);
+        }
+
         function loadBoletaDetails() {
             const cart = JSON.parse(localStorage.getItem('shoppingCart')) || {};
             let total = 0;
@@ -183,13 +222,16 @@
             }
             
             document.getElementById('boleta-detalles').value = detallesTexto.trim();
-
             document.getElementById('boleta-total').value = formatCurrency(total);
             
             const date = new Date();
             const formattedDate = date.toLocaleDateString('es-CL');
             document.getElementById('boleta-fecha').value = formattedDate;
 
+            const userEmail = localStorage.getItem('userEmail') || 'cliente@correo.com';
+            document.getElementById('boleta-email').value = userEmail;
+            
+            guardarPedidoEnHistorial();
         }
 
         window.onload = loadBoletaDetails;

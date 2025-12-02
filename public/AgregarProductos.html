@@ -102,16 +102,37 @@
         <script>
             document.querySelector('form').addEventListener('submit', async function(e) {
                 e.preventDefault();
-            
+                
+                const nombre = document.getElementById('nom.producto').value.trim();
+                const precio = document.getElementById('precio').value;
+                const categoria = document.getElementById('categoria').value;
+                const stock = document.getElementById('stock').value;
+                const descripcion = document.getElementById('descripcion').value.trim();
+                
+                if (!nombre) {
+                    alert('El nombre del producto es requerido');
+                    return;
+                }
+                
+                if (!precio || precio <= 0) {
+                    alert('El precio debe ser mayor a 0');
+                    return;
+                }
+                
+                if (!categoria) {
+                    alert('Debe seleccionar una categoría');
+                    return;
+                }
+                
                 const producto = {
-                    nombre: document.getElementById('nom.producto').value,
-                    precio: document.getElementById('precio').value,
-                    categoria: document.getElementById('categoria').value,
-                    stock: document.getElementById('stock').value,
-                    descripcion: document.getElementById('descripcion').value,
-                    ingredientes: ''
+                    nombre: nombre,
+                    precio: Number(precio),
+                    categoria: categoria,
+                    stock: stock ? Number(stock) : 0,
+                    descripcion: descripcion,
+                    ingredientes: []
                 };
-
+                
                 try {
                     const response = await fetch('/api/productos', {
                         method: 'POST',
@@ -120,37 +141,75 @@
                         },
                         body: JSON.stringify(producto)
                     });
-
+                    
+                    const result = await response.json();
+                    
                     if (response.ok) {
-                        alert(' Producto agregado exitosamente');
+                        alert('Producto agregado exitosamente');
                         document.querySelector('form').reset();
+                        
+                        setTimeout(() => {
+                            window.location.href = "index.html";
+                        }, 1500);
                     } else {
-                        alert(' Error al agregar producto');
+                        alert(`Error: ${result.error || 'No se pudo agregar el producto'}`);
                     }
                 } catch (error) {
                     console.error('Error:', error);
-                    alert('Error de conexión');
+                    alert('Error de conexión con el servidor');
                 }
             });
-
+            
             async function cargarCategorias() {
                 try {
                     const response = await fetch('/api/categorias');
                     const categorias = await response.json();
-                
+                    
                     const categoriaSelect = document.getElementById('categoria');
+                    
+                    categoriaSelect.innerHTML = '<option value="">Seleccione categoría</option>';
+                    
                     categorias.forEach(cat => {
                         const option = document.createElement('option');
                         option.value = cat;
                         option.textContent = cat;
                         categoriaSelect.appendChild(option);
                     });
+                    
+                    const nuevaCategoriaOption = document.createElement('option');
+                    nuevaCategoriaOption.value = 'nueva';
+                    nuevaCategoriaOption.textContent = '+ Agregar nueva categoría';
+                    categoriaSelect.appendChild(nuevaCategoriaOption);
+                    
+                    categoriaSelect.addEventListener('change', function() {
+                        if (this.value === 'nueva') {
+                            const nuevaCategoria = prompt('Ingrese el nombre de la nueva categoría:');
+                            if (nuevaCategoria && nuevaCategoria.trim()) {
+                                const option = document.createElement('option');
+                                option.value = nuevaCategoria.trim();
+                                option.textContent = nuevaCategoria.trim();
+                                categoriaSelect.insertBefore(option, nuevaCategoriaOption);
+                                categoriaSelect.value = nuevaCategoria.trim();
+                            } else {
+                                this.value = '';
+                            }
+                        }
+                    });
+                    
                 } catch (error) {
                     console.error('Error cargando categorías:', error);
+                    const categoriasDefault = ['Ceviche', 'Pescados al plato', 'Acompañamientos', 'Entradas', 'Sopas'];
+                    const categoriaSelect = document.getElementById('categoria');
+                    categoriasDefault.forEach(cat => {
+                        const option = document.createElement('option');
+                        option.value = cat;
+                        option.textContent = cat;
+                        categoriaSelect.appendChild(option);
+                    });
                 }
             }
-
-            cargarCategorias();
+            
+            window.onload = cargarCategorias;
         </script>
     </body>
 </html>

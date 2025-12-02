@@ -20,12 +20,12 @@
             --danger-hover: #e06666;
             --border-radius-lg: 12px;
             --border-radius-sm: 6px; 
-            --success-payment: #2ecc71; /* Un verde claro para el éxito/pago */
+            --success-payment: #2ecc71;
             --success-payment-hover: #27ae60;
         }
 
         body {
-            background-color: #f4f4f9 !important; /* Fondo muy claro para contraste */
+            background-color: #f4f4f9 !important;
             color: var(--text-dark); 
             font-family: 'Inter', sans-serif;
         }
@@ -47,8 +47,8 @@
             border-radius: var(--border-radius-sm);
             transition: all 0.3s;
             text-align: center;
-            white-space: normal; /* Permite que el texto del botón se envuelva */
-            height: 60px; /* Altura uniforme para los botones de pago */
+            white-space: normal;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -92,7 +92,7 @@
             padding: 15px 0;
         }
         .payment-options-row > div {
-            padding: 5px; /* Espaciado entre columnas */
+            padding: 5px;
         }
     </style>
 </head>
@@ -106,17 +106,15 @@
             
             <p class="text-center">Seleccione el método de pago:</p>
             
-            <p class="total-display text-center">Total a pagar: $XX.XXX</p>
+            <p class="total-display text-center" id="total-pagar">Total a pagar: $0</p>
 
             <div class="row payment-options-row">
-                <!-- Opción 1: Pago con tarjeta -->
                 <div class="col-12 col-md-6 mb-3 mb-md-0">
                     <a class="btn btn-payment w-100" 
                         href="ProcesoPago.html"> 
                         Pago con tarjeta de débito/crédito
                     </a>
                 </div>
-                <!-- Opción 2: Pago mediante servicios externos -->
                 <div class="col-12 col-md-6">
                     <button type="button" class="btn btn-payment w-100">
                         Pago mediante servicios externos
@@ -136,5 +134,27 @@
 
     </div>
 
+    <script>
+        function calcularTotalCarrito() {
+            const cart = JSON.parse(localStorage.getItem('shoppingCart')) || {};
+            let total = 0;
+            
+            Object.values(cart).forEach(item => {
+                total += item.quantity * item.price;
+            });
+            
+            return total;
+        }
+        
+        function actualizarTotal() {
+            const total = calcularTotalCarrito();
+            const totalElement = document.getElementById('total-pagar');
+            if (totalElement) {
+                totalElement.textContent = `Total a pagar: $${total.toLocaleString('es-CL')}`;
+            }
+        }
+        
+        window.onload = actualizarTotal;
+    </script>
 </body>
 </html>

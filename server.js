@@ -12,7 +12,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 let usandoMongoDB = false;
 let ProductoModel = null;
 
-
 const productosEjemplo = [
   { 
     _id: '1',
@@ -43,66 +42,48 @@ const productosEjemplo = [
   },
   { 
     _id: '4',
-    nombre: 'Reineta a la plancha', 
-    precio: 7800, 
-    ingredientes: ['reineta', 'mantequilla', 'limón', 'pimienta', 'ajo'], 
-    categoria: 'Ceviche',
-    stock: 20, 
-    descripcion: 'Arroz con mix de mariscos' 
+    nombre: 'Pulpo al Olivo', 
+    precio: 14500, 
+    ingredientes: ['pulpo', 'aceitunas', 'limón', 'aceite de oliva'], 
+    categoria: 'Entradas',
+    stock: 8, 
+    descripcion: 'Pulpo tierno con salsa de olivas' 
   },
   { 
     _id: '5',
-    nombre: 'Machas a la parmesana ', 
-    precio: 5800, 
-    ingredientes: ['machas', 'queso', 'mantequilla', 'ajo'], 
-    categoria: 'Acompañamientos',
-    stock: 20, 
-    descripcion: 'Machas gratinadas con queso' 
+    nombre: 'Camarones al Ajillo', 
+    precio: 11200, 
+    ingredientes: ['camarones', 'ajo', 'vino blanco', 'perejil'], 
+    categoria: 'Entradas',
+    stock: 12, 
+    descripcion: 'Camarones salteados al ajillo' 
   },
   { 
     _id: '6',
-    nombre: 'Pastel de Jaiba', 
-    precio: 7800, 
-    ingredientes: ['jaiba', 'cebolla', 'aji', 'queso'], 
-    categoria: 'Acompañamientos',
-    stock: 15, 
-    descripcion: 'Horneado de carne de jaiba' 
+    nombre: 'Machas a la Parmesana', 
+    precio: 9800, 
+    ingredientes: ['machas', 'queso parmesano', 'mantequilla', 'vino blanco'], 
+    categoria: 'Entradas',
+    stock: 18, 
+    descripcion: 'Machas gratinadas con queso parmesano' 
   },
   { 
     _id: '7',
-    nombre: 'Chupe de locos', 
-    precio: 6600, 
-    ingredientes: ['locos', 'queso', 'cebolla', 'aji', 'leche'], 
-    categoria: 'Acompañamientos',
-    stock: 20, 
-    descripcion: 'Guiso espeso de locos' 
+    nombre: 'Paila Marina', 
+    precio: 8900, 
+    ingredientes: ['pescado', 'mariscos', 'caldo', 'verduras'], 
+    categoria: 'Sopas',
+    stock: 25, 
+    descripcion: 'Sopa de mariscos tradicional' 
   },
   { 
     _id: '8',
-    nombre: 'Caldillo de congrio', 
-    precio: 11500, 
-    ingredientes: ['congrio', 'papas', 'cebolla', 'aji', 'cilantro'], 
+    nombre: 'Salmon a la Mostaza', 
+    precio: 13800, 
+    ingredientes: ['salmón', 'mostaza', 'miel', 'limón'], 
     categoria: 'Pescados al plato',
-    stock: 10, 
-    descripcion: 'Sopa de congrio' 
-  },
-  { 
-    _id: '9',
-    nombre: 'Ceviche de reineta', 
-    precio: 10000, 
-    ingredientes: ['reineta', 'limón', 'cebolla', 'cilantro', 'pimienta'], 
-    categoria: 'Ceviche',
-    stock: 20, 
-    descripcion: 'Ceviche fresco de reineta' 
-  },
-  { 
-    _id: '10',
-    nombre: 'Camarones al Pil Pil', 
-    precio: 11800, 
-    ingredientes: ['camarones', 'aceite de oliva', 'ajo', 'aji verde'], 
-    categoria: 'Acompañamientos',
-    stock: 15, 
-    descripcion: 'Camarones salteados en salsa' 
+    stock: 14, 
+    descripcion: 'Salmón con salsa de mostaza y miel' 
   }
 ];
 
@@ -132,7 +113,6 @@ mongoose.connect(MONGO_URI, {
 })
 .catch(err => {
   console.log('Usando datos en memoria');
-  console.log('(MongoDB no disponible o en configuración)');
 });
 
 async function inicializarDatosMongoDB() {
@@ -151,6 +131,10 @@ async function inicializarDatosMongoDB() {
     console.log('Error inicializando MongoDB:', error.message);
   }
 }
+
+const usuariosEjemplo = {};
+const pedidosEjemplo = [];
+let categoriasExistentes = ['Ceviche', 'Pescados al plato', 'Acompañamientos', 'Entradas', 'Sopas'];
 
 app.get('/api/productos', async (req, res) => {
   try {
@@ -177,9 +161,7 @@ app.get('/api/productos', async (req, res) => {
       productosResultado = [...productosEjemplo];
       
       if (categoria && categoria !== 'Categorías') {
-        productosResultado = productosResultado.filter(p => 
-          p.categoria === categoria
-        );
+        productosResultado = productosResultado.filter(p => p.categoria === categoria);
       }
       
       if (busqueda) {
@@ -207,16 +189,104 @@ app.get('/api/categorias', async (req, res) => {
     if (usandoMongoDB && ProductoModel) {
       categorias = await ProductoModel.distinct('categoria');
     } else {
-      categorias = [...new Set(productosEjemplo.map(p => p.categoria))];
+      const categoriasProductos = [...new Set(productosEjemplo.map(p => p.categoria))];
+      categorias = [...new Set([...categoriasProductos, ...categoriasExistentes])];
     }
     
-    console.log(`API: Categorías: ${categorias.length} (MongoDB: ${usandoMongoDB ? 'SÍ' : 'NO'})`);
+    console.log(`API: Categorías: ${categorias.length}`);
     res.json(categorias);
     
   } catch (error) {
     console.error('Error en /api/categorias:', error.message);
-    res.json(['Ceviche', 'Pescados al plato', 'Acompañamientos']);
+    res.json(categoriasExistentes);
   }
+});
+
+app.post('/api/productos', async (req, res) => {
+    try {
+        const nuevoProducto = req.body;
+        
+        if (!nuevoProducto.nombre || !nuevoProducto.precio || !nuevoProducto.categoria) {
+            return res.status(400).json({ error: 'Faltan campos requeridos' });
+        }
+        
+        nuevoProducto._id = Date.now().toString();
+        nuevoProducto.precio = Number(nuevoProducto.precio);
+        nuevoProducto.stock = nuevoProducto.stock ? Number(nuevoProducto.stock) : 10;
+        
+        productosEjemplo.push(nuevoProducto);
+        
+        if (!categoriasExistentes.includes(nuevoProducto.categoria)) {
+            categoriasExistentes.push(nuevoProducto.categoria);
+        }
+        
+        console.log('Producto agregado:', nuevoProducto.nombre);
+        res.status(201).json({ mensaje: 'Producto agregado', producto: nuevoProducto });
+        
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/api/usuarios/:email', (req, res) => {
+    const email = req.params.email;
+    
+    if (usuariosEjemplo[email]) {
+        res.json(usuariosEjemplo[email]);
+    } else {
+        usuariosEjemplo[email] = {
+            email: email,
+            nombre: email.split('@')[0],
+            direccion: 'Sin dirección',
+            telefono: 'Sin teléfono',
+            metodoPago: 'No especificado'
+        };
+        res.json(usuariosEjemplo[email]);
+    }
+});
+
+app.put('/api/usuarios/:email', (req, res) => {
+    const email = req.params.email;
+    const datos = req.body;
+    
+    if (!usuariosEjemplo[email]) {
+        usuariosEjemplo[email] = { email: email };
+    }
+    
+    usuariosEjemplo[email] = {
+        ...usuariosEjemplo[email],
+        nombre: datos.nombre || usuariosEjemplo[email].nombre,
+        direccion: datos.direccion || usuariosEjemplo[email].direccion,
+        telefono: datos.telefono || usuariosEjemplo[email].telefono,
+        metodoPago: datos.metodoPago || usuariosEjemplo[email].metodoPago
+    };
+    
+    console.log('Perfil actualizado:', email);
+    res.json({ mensaje: 'Perfil actualizado', usuario: usuariosEjemplo[email] });
+});
+
+app.post('/api/pedidos', (req, res) => {
+    try {
+        const pedido = req.body;
+        
+        pedido.id = 'PED-' + Date.now().toString().slice(-6);
+        pedido.fecha = new Date().toLocaleDateString('es-CL');
+        pedido.estado = 'completado';
+        
+        pedidosEjemplo.push(pedido);
+        
+        console.log('Pedido guardado:', pedido.id);
+        res.status(201).json({ mensaje: 'Pedido guardado', pedido: pedido });
+        
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/api/pedidos/:email', (req, res) => {
+    const email = req.params.email;
+    const pedidosUsuario = pedidosEjemplo.filter(p => p.email === email);
+    res.json(pedidosUsuario);
 });
 
 app.get('/', (req, res) => {
@@ -239,8 +309,8 @@ app.get('/InicioSesion.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'InicioSesion.html'));
 });
 
-app.get('/AgregarProducts.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'AgregarProducts.html'));
+app.get('/AgregarProductos.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'AgregarProductos.html'));
 });
 
 app.get('/BoletaElectronica.html', (req, res) => {
@@ -266,5 +336,4 @@ app.get('/ReporteMensual.html', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
   console.log(`Modo: ${usandoMongoDB ? 'MongoDB Atlas' : 'Datos en memoria'}`);
-  console.log(`API: http://localhost:${PORT}/api/productos`);
 });
