@@ -145,34 +145,37 @@
             return '$' + Math.round(number || 0).toLocaleString('es-CL');
         };
 
-        function renderOrderItem(order) {
+        function renderOrderItem(pedido) {
             let productsText = "";
-            let total = 0;
+            let total = pedido.total || 0;
             
-            Object.keys(order.productos).forEach(productId => {
-                const item = order.productos[productId];
-                const itemPrice = item.price || 0;
-                const itemSubtotal = item.quantity * itemPrice;
-                total += itemSubtotal;
-                
-                productsText += `${item.name} (x${item.quantity}) - ${formatCurrency(itemSubtotal)}\n`;
-            });
+            if (pedido.productos && typeof pedido.productos === 'object') {
+                Object.keys(pedido.productos).forEach(productId => {
+                    const item = pedido.productos[productId];
+                    const itemPrice = item.price || 0;
+                    const itemSubtotal = item.quantity * itemPrice;
+                    
+                    productsText += `${item.name} (x${item.quantity}) - ${formatCurrency(itemSubtotal)}\n`;
+                });
+            }
+
+            const fecha = new Date(pedido.fecha).toLocaleDateString('es-CL');
 
             return `
                 <div class="order-item">
                     <div class="order-details">
                         <div class="order-info">
-                            <span>ID de Pedido: <strong>#${order.id}</strong></span>
-                            <span>Fecha: ${order.fecha}</span>
+                            <span>ID de Pedido: <strong>#${pedido._id || 'N/A'}</strong></span>
+                            <span>Fecha: ${fecha}</span>
                             <span>Total: <strong>${formatCurrency(total)}</strong></span>
                         </div>
                         <div class="order-products">
-                            ${productsText.trim()} 
+                            ${productsText.trim() || 'No hay detalles del pedido'} 
                         </div>
                     </div>
                     <button type="button" 
                             class="btn btn-primary btn-repeat" 
-                            onclick="repeatOrder('${order.id}')">
+                            onclick="repeatOrder('${pedido._id}')">
                         ¿Repetir pedido?
                     </button>
                 </div>
@@ -210,7 +213,7 @@
             }
         }
 
-        function repeatOrder(orderId) {
+        function repeatOrder(pedidoId) {
             const userEmail = localStorage.getItem('userEmail');
             
             if (!userEmail) {
@@ -222,11 +225,11 @@
             fetch(`/api/pedidos/${userEmail}`)
                 .then(response => response.json())
                 .then(pedidos => {
-                    const orderToRepeat = pedidos.find(order => order.id === orderId);
+                    const orderToRepeat = pedidos.find(order => order._id === pedidoId);
                     
                     if (orderToRepeat) {
                         localStorage.setItem('shoppingCart', JSON.stringify(orderToRepeat.productos));
-                        alert(`Pedido #${orderId} cargado en tu carrito.`);
+                        alert(`Pedido #${pedidoId.slice(-6)} cargado en tu carrito.`);
                         window.location.href = "CarritoCompras.html";
                     } else {
                         alert("Error: El pedido solicitado no fue encontrado.");

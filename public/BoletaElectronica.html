@@ -98,16 +98,23 @@
         <hr class="divider">
         
         <div class="data-row">
+            <span class="data-label">Nombre:</span>
+            <span class="input-container">
+                <input type="text" class="form-control-readonly text-end" readonly id="boleta-nombre">
+            </span>
+        </div>
+        
+        <div class="data-row">
             <span class="data-label">Dirección:</span>
             <span class="input-container">
-                <input type="text" class="form-control-readonly text-end" value="Dirección del Cliente" readonly id="boleta-direccion">
+                <input type="text" class="form-control-readonly text-end" readonly id="boleta-direccion">
             </span>
         </div>
         
         <div class="data-row">
             <span class="data-label">Email:</span>
             <span class="input-container">
-                <input type="text" class="form-control-readonly text-end" value="cliente@correo.com" readonly id="boleta-email">
+                <input type="text" class="form-control-readonly text-end" readonly id="boleta-email">
             </span>
         </div>
         
@@ -131,7 +138,7 @@
         <div class="data-row">
             <span class="data-label">Medio de pago:</span>
             <span class="input-container">
-                <input type="text" class="form-control-readonly text-end" value="Tarjeta de Débito/Crédito" readonly id="boleta-medio-pago">
+                <input type="text" class="form-control-readonly text-end" readonly id="boleta-medio-pago">
             </span>
         </div>
 
@@ -159,21 +166,57 @@
             return '$' + Math.round(number).toLocaleString('es-CL');
         };
 
+        async function cargarDatosCliente() {
+            const userEmail = localStorage.getItem('userEmail');
+            
+            if (!userEmail) {
+                document.getElementById('boleta-nombre').value = 'Cliente no identificado';
+                document.getElementById('boleta-email').value = 'No disponible';
+                document.getElementById('boleta-direccion').value = 'No disponible';
+                document.getElementById('boleta-medio-pago').value = 'No especificado';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/usuarios/${userEmail}`);
+                if (response.ok) {
+                    const userData = await response.json();
+                    
+                    document.getElementById('boleta-nombre').value = userData.nombre || userEmail.split('@')[0];
+                    document.getElementById('boleta-email').value = userData.email || userEmail;
+                    document.getElementById('boleta-direccion').value = userData.direccion || 'Sin dirección registrada';
+                    document.getElementById('boleta-medio-pago').value = userData.metodoPago || 'No especificado';
+                } else {
+                    setDefaultData(userEmail);
+                }
+            } catch (error) {
+                console.error('Error cargando datos del cliente:', error);
+                setDefaultData(userEmail);
+            }
+        }
+        
+        function setDefaultData(email) {
+            document.getElementById('boleta-nombre').value = email.split('@')[0];
+            document.getElementById('boleta-email').value = email;
+            document.getElementById('boleta-direccion').value = 'Sin dirección registrada';
+            document.getElementById('boleta-medio-pago').value = 'No especificado';
+        }
+        
         async function guardarPedidoEnHistorial() {
             try {
                 const cart = JSON.parse(localStorage.getItem('shoppingCart')) || {};
-                const userEmail = localStorage.getItem('userEmail') || 'anonimo@ejemplo.com';
+                const userEmail = localStorage.getItem('userEmail');
                 
-                if (Object.keys(cart).length === 0) {
+                if (!userEmail || Object.keys(cart).length === 0) {
                     return;
                 }
                 
+                const total = calcularTotal(cart);
+                
                 const pedidoData = {
-                    email: userEmail,
+                    usuarioEmail: userEmail,
                     productos: cart,
-                    total: calcularTotal(cart),
-                    direccion: document.getElementById('boleta-direccion').value,
-                    medioPago: document.getElementById('boleta-medio-pago').value
+                    total: total
                 };
                 
                 const response = await fetch('/api/pedidos', {
@@ -198,7 +241,7 @@
             }, 0);
         }
 
-        function loadBoletaDetails() {
+        function cargarDetallesCompra() {
             const cart = JSON.parse(localStorage.getItem('shoppingCart')) || {};
             let total = 0;
             let detallesTexto = "";
@@ -227,11 +270,12 @@
             const date = new Date();
             const formattedDate = date.toLocaleDateString('es-CL');
             document.getElementById('boleta-fecha').value = formattedDate;
+        }
 
-            const userEmail = localStorage.getItem('userEmail') || 'cliente@correo.com';
-            document.getElementById('boleta-email').value = userEmail;
-            
-            guardarPedidoEnHistorial();
+        async function loadBoletaDetails() {
+            await cargarDatosCliente();
+            cargarDetallesCompra();
+            await guardarPedidoEnHistorial();
         }
 
         window.onload = loadBoletaDetails;

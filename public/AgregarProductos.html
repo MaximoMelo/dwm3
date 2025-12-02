@@ -129,8 +129,7 @@
                     precio: Number(precio),
                     categoria: categoria,
                     stock: stock ? Number(stock) : 0,
-                    descripcion: descripcion,
-                    ingredientes: []
+                    descripcion: descripcion
                 };
                 
                 try {
@@ -176,29 +175,9 @@
                         categoriaSelect.appendChild(option);
                     });
                     
-                    const nuevaCategoriaOption = document.createElement('option');
-                    nuevaCategoriaOption.value = 'nueva';
-                    nuevaCategoriaOption.textContent = '+ Agregar nueva categoría';
-                    categoriaSelect.appendChild(nuevaCategoriaOption);
-                    
-                    categoriaSelect.addEventListener('change', function() {
-                        if (this.value === 'nueva') {
-                            const nuevaCategoria = prompt('Ingrese el nombre de la nueva categoría:');
-                            if (nuevaCategoria && nuevaCategoria.trim()) {
-                                const option = document.createElement('option');
-                                option.value = nuevaCategoria.trim();
-                                option.textContent = nuevaCategoria.trim();
-                                categoriaSelect.insertBefore(option, nuevaCategoriaOption);
-                                categoriaSelect.value = nuevaCategoria.trim();
-                            } else {
-                                this.value = '';
-                            }
-                        }
-                    });
-                    
                 } catch (error) {
                     console.error('Error cargando categorías:', error);
-                    const categoriasDefault = ['Ceviche', 'Pescados al plato', 'Acompañamientos', 'Entradas', 'Sopas'];
+                    const categoriasDefault = ['Ceviche', 'Pescados al plato', 'Acompañamientos'];
                     const categoriaSelect = document.getElementById('categoria');
                     categoriasDefault.forEach(cat => {
                         const option = document.createElement('option');
