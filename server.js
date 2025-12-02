@@ -9,11 +9,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Configuración
 let usandoMongoDB = false;
 let ProductoModel = null;
 
-// Datos de ejemplo EN MEMORIA (siempre disponibles)
+
 const productosEjemplo = [
   { 
     _id: '1',
@@ -41,10 +40,72 @@ const productosEjemplo = [
     categoria: 'Acompañamientos',
     stock: 20, 
     descripcion: 'Arroz con mix de mariscos' 
+  },
+  { 
+    _id: '4',
+    nombre: 'Reineta a la plancha', 
+    precio: 7800, 
+    ingredientes: ['reineta', 'mantequilla', 'limón', 'pimienta', 'ajo'], 
+    categoria: 'Ceviche',
+    stock: 20, 
+    descripcion: 'Arroz con mix de mariscos' 
+  },
+  { 
+    _id: '5',
+    nombre: 'Machas a la parmesana ', 
+    precio: 5800, 
+    ingredientes: ['machas', 'queso', 'mantequilla', 'ajo'], 
+    categoria: 'Acompañamientos',
+    stock: 20, 
+    descripcion: 'Machas gratinadas con queso' 
+  },
+  { 
+    _id: '6',
+    nombre: 'Pastel de Jaiba', 
+    precio: 7800, 
+    ingredientes: ['jaiba', 'cebolla', 'aji', 'queso'], 
+    categoria: 'Acompañamientos',
+    stock: 15, 
+    descripcion: 'Horneado de carne de jaiba' 
+  },
+  { 
+    _id: '7',
+    nombre: 'Chupe de locos', 
+    precio: 6600, 
+    ingredientes: ['locos', 'queso', 'cebolla', 'aji', 'leche'], 
+    categoria: 'Acompañamientos',
+    stock: 20, 
+    descripcion: 'Guiso espeso de locos' 
+  },
+  { 
+    _id: '8',
+    nombre: 'Caldillo de congrio', 
+    precio: 11500, 
+    ingredientes: ['congrio', 'papas', 'cebolla', 'aji', 'cilantro'], 
+    categoria: 'Pescados al plato',
+    stock: 10, 
+    descripcion: 'Sopa de congrio' 
+  },
+  { 
+    _id: '9',
+    nombre: 'Ceviche de reineta', 
+    precio: 10000, 
+    ingredientes: ['reineta', 'limón', 'cebolla', 'cilantro', 'pimienta'], 
+    categoria: 'Ceviche',
+    stock: 20, 
+    descripcion: 'Ceviche fresco de reineta' 
+  },
+  { 
+    _id: '10',
+    nombre: 'Camarones al Pil Pil', 
+    precio: 11800, 
+    ingredientes: ['camarones', 'aceite de oliva', 'ajo', 'aji verde'], 
+    categoria: 'Acompañamientos',
+    stock: 15, 
+    descripcion: 'Camarones salteados en salsa' 
   }
 ];
 
-// Intentar conectar a MongoDB (OPCIONAL)
 const MONGO_URI = 'mongodb+srv://maximomelo10_db_user:VXXRDfGBa9FFDdk@githubdwm3.qsnwhzq.mongodb.net/marazul?retryWrites=true&w=majority';
 
 console.log('Intentando conectar a MongoDB...');
@@ -56,7 +117,6 @@ mongoose.connect(MONGO_URI, {
   console.log('Conectado a MongoDB Atlas');
   usandoMongoDB = true;
   
-  // Esquema de producto
   const ProductoSchema = new mongoose.Schema({
     nombre: String,
     precio: Number,
@@ -68,7 +128,6 @@ mongoose.connect(MONGO_URI, {
   
   ProductoModel = mongoose.model('Producto', ProductoSchema);
   
-  // Inicializar datos si es necesario
   inicializarDatosMongoDB();
 })
 .catch(err => {
@@ -76,7 +135,6 @@ mongoose.connect(MONGO_URI, {
   console.log('(MongoDB no disponible o en configuración)');
 });
 
-// Función para inicializar datos en MongoDB
 async function inicializarDatosMongoDB() {
   if (!usandoMongoDB || !ProductoModel) return;
   
@@ -94,7 +152,6 @@ async function inicializarDatosMongoDB() {
   }
 }
 
-// API que funciona CON o SIN MongoDB
 app.get('/api/productos', async (req, res) => {
   try {
     const { categoria, busqueda } = req.query;
@@ -102,7 +159,6 @@ app.get('/api/productos', async (req, res) => {
     let productosResultado = [];
     
     if (usandoMongoDB && ProductoModel) {
-      // Usar MongoDB
       let filtro = {};
       
       if (categoria && categoria !== 'Categorías') {
@@ -118,7 +174,6 @@ app.get('/api/productos', async (req, res) => {
       
       productosResultado = await ProductoModel.find(filtro);
     } else {
-      // Usar datos en memoria
       productosResultado = [...productosEjemplo];
       
       if (categoria && categoria !== 'Categorías') {
@@ -141,7 +196,6 @@ app.get('/api/productos', async (req, res) => {
     
   } catch (error) {
     console.error('Error en /api/productos:', error.message);
-    // Si hay error, devolver datos de ejemplo
     res.json(productosEjemplo);
   }
 });
@@ -165,7 +219,6 @@ app.get('/api/categorias', async (req, res) => {
   }
 });
 
-// Rutas HTML (todas funcionan)
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
