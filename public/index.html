@@ -598,10 +598,6 @@
                     <div class="slider-track" id="slider-track">
                         ${sliderImages.map((item, index) => `
                             <div class="slide" style="background-image: url('${item.imagen || `https://via.placeholder.com/800x350/1e3a8a/ffffff?text=${encodeURIComponent(item.titulo)}`}')">
-                                <div class="slide-content">
-                                    <h4>${item.titulo}</h4>
-                                    ${item.descripcion ? `<p>${item.descripcion}</p>` : ''}
-                                </div>
                             </div>
                         `).join('')}
                     </div>
