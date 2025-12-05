@@ -23,139 +23,258 @@
             }
 
             body {
-                background-color: var(--light-bg) !important;
+                background-color: var(--light-bg);
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                padding-top: 20px;
+                padding-bottom: 20px;
             }
+            
             .profile-card {
                 max-width: 500px;
-                width: 90%;
-                padding: 30px; 
+                width: 95%;
+                padding: 30px;
                 border-radius: var(--border-radius-lg);
-                background-color: var(--card-bg) !important;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
+                background-color: var(--card-bg);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
                 border: 1px solid var(--dark-border);
+                margin: 0 auto;
             }
-            .profile-card h2, .profile-card label {
-                color: var(--text-dark) !important;
-            }
+            
             .profile-card h2 {
-                margin-bottom: 25px !important;
+                margin-bottom: 25px;
                 border-bottom: 2px solid var(--dark-border);
                 padding-bottom: 10px;
                 font-weight: 600;
+                text-align: center;
+                color: var(--text-dark);
             }
+            
             .form-control {
-                background-color: #f8f8f8 !important; 
-                border: 1px solid var(--dark-border) !important;
-                color: var(--text-dark) !important;
-                cursor: not-allowed; 
+                background-color: #f8f8f8;
+                border: 1px solid var(--dark-border);
+                color: var(--text-dark);
+                cursor: not-allowed;
                 border-radius: var(--border-radius-sm);
+                transition: all 0.3s ease;
             }
+            
             .form-control.editable {
-                background-color: var(--light-bg) !important; 
-                border-color: var(--primary-color) !important;
-                box-shadow: 0 0 0 0.15rem rgba(52, 152, 219, 0.4) !important;
+                background-color: var(--light-bg);
+                border-color: var(--primary-color);
+                box-shadow: 0 0 0 0.15rem rgba(52, 152, 219, 0.4);
                 cursor: text;
             }
+            
             .profile-card label {
-                font-size: 0.95rem !important;
-                min-width: 150px;
-                text-align: right;
-                margin-bottom: 0;
+                font-size: 0.95rem;
                 font-weight: 500;
+                margin-bottom: 5px;
+                color: var(--text-dark);
             }
-            .form-label-container {
-                display: flex;
-                align-items: center;
-                margin-bottom: 1rem;
-                gap: 15px;
+            
+            .form-group {
+                margin-bottom: 1.2rem;
             }
-            .form-label-container .form-control {
-                flex-grow: 1;
-            }
+            
             .icon-top {
-                max-width: 80px; 
-                height: auto;
-                margin-bottom: 15px; 
+                width: 100px;
+                height: 100px;
+                margin-bottom: 20px;
                 border-radius: 50%;
                 border: 4px solid var(--primary-color);
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                object-fit: cover;
             }
+            
             .btn {
-                font-size: 1rem !important;
+                font-size: 1rem;
                 font-weight: 600;
                 border-radius: var(--border-radius-sm);
-                transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+                transition: all 0.3s ease;
+                padding: 0.5rem 1.5rem;
             }
+            
             .btn-primary {
-                background-color: var(--primary-color) !important;
-                border-color: var(--primary-color) !important;
+                background-color: var(--primary-color);
+                border-color: var(--primary-color);
+                color: white;
             }
+            
             .btn-primary:hover {
-                background-color: var(--primary-hover) !important;
-                border-color: var(--primary-hover) !important;
+                background-color: var(--primary-hover);
+                border-color: var(--primary-hover);
                 box-shadow: 0 2px 8px rgba(52, 152, 219, 0.5);
             }
+            
             .btn-secondary {
-                background-color: var(--secondary-color) !important;
-                border-color: var(--secondary-color) !important;
+                background-color: var(--secondary-color);
+                border-color: var(--secondary-color);
+                color: white;
             }
+            
             .btn-success-save {
-                background-color: var(--success-color) !important;
-                border-color: var(--success-color) !important;
+                background-color: var(--success-color);
+                border-color: var(--success-color);
+                color: white;
             }
+            
             .btn-link {
-                color: var(--primary-color) !important;
+                color: var(--primary-color);
                 text-decoration: none;
                 font-weight: 500;
             }
+            
             .btn-link:hover {
-                color: var(--primary-hover) !important;
+                color: var(--primary-hover);
                 text-decoration: underline;
+            }
+            
+            .card-info {
+                background-color: #f8f9fa;
+                border-left: 4px solid var(--primary-color);
+                padding: 15px;
+                border-radius: var(--border-radius-sm);
+                margin-bottom: 20px;
+                font-size: 0.9rem;
+            }
+            
+            .validation-message {
+                font-size: 0.85rem;
+                margin-top: 5px;
+                display: none;
+            }
+            
+            .validation-success {
+                color: var(--success-color);
+            }
+            
+            .validation-error {
+                color: #dc3545;
+            }
+            
+            .input-hint {
+                font-size: 0.8rem;
+                color: var(--secondary-color);
+                margin-top: 3px;
+            }
+            
+            .toggle-password {
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                background: none;
+                border: none;
+                color: var(--secondary-color);
+                cursor: pointer;
+            }
+            
+            .password-container {
+                position: relative;
+            }
+            
+            @media (max-width: 768px) {
+                .profile-card {
+                    padding: 20px;
+                }
             }
         </style>
         
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </head>
     
-    <body class="d-flex align-items-center justify-content-center vh-100">
+    <body>
 
         <div class="profile-card"> 
-            <h2 class="text-center">Mi Perfil</h2>
+            <h2>Mi Perfil</h2>
             
-            <div class="d-flex justify-content-center">
-                <img src="https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg" alt="Icono de Perfil" class="icon-top">
+            <div>
+                <img src="https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg" 
+                     alt="Icono de Perfil" class="icon-top">
+            </div>
+
+            <div class="card-info">
+                Los datos que guardes aqui se autocompletaran automaticamente al realizar un pago.
             </div>
 
             <form id="profile-form">
                 
-                <div class="form-label-container">
-                    <label for="nombre" class="form-label">Nombre:</label>
-                    <input type="text" class="form-control" id="nombre" disabled>
+                <h5 style="color: var(--primary-color); margin-bottom: 15px; border-bottom: 1px solid var(--dark-border); padding-bottom: 8px;">
+                    Informacion Personal
+                </h5>
+                
+                <div class="form-group">
+                    <label for="nombre">Nombre completo:</label>
+                    <input type="text" class="form-control" id="nombre" disabled placeholder="Ingresa tu nombre completo">
                 </div>
                 
-                <div class="form-label-container">
-                    <label for="email" class="form-label">Email:</label>
-                    <input type="email" class="form-control" id="email" disabled>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" disabled placeholder="tu@email.com">
                 </div>
 
-                <div class="form-label-container">
-                    <label for="direccion" class="form-label">Dirección:</label>
-                    <input type="text" class="form-control" id="direccion" disabled>
+                <div class="form-group">
+                    <label for="direccion">Direccion de entrega:</label>
+                    <input type="text" class="form-control" id="direccion" disabled placeholder="Calle, numero, ciudad">
                 </div>
 
-                <div class="form-label-container">
-                    <label for="metodopago" class="form-label">Método de pago asociado:</label>
-                    <input type="text" class="form-control" id="metodopago" disabled>
+                <div class="form-group">
+                    <label for="numtelefono">Numero de telefono:</label>
+                    <input type="text" class="form-control" id="numtelefono" disabled placeholder="+56 9 1234 5678">
                 </div>
 
-                <div class="form-label-container">
-                    <label for="numtelefono" class="form-label">Número de teléfono:</label>
-                    <input type="text" class="form-control" id="numtelefono" disabled>
+                <h5 style="color: var(--primary-color); margin: 25px 0 15px 0; border-bottom: 1px solid var(--dark-border); padding-bottom: 8px;">
+                    Informacion de Pago
+                </h5>
+                
+                <div class="form-group">
+                    <label for="tipoTarjeta">Tipo de Tarjeta:</label>
+                    <select class="form-control" id="tipoTarjeta" disabled>
+                        <option value="">Seleccionar tipo</option>
+                        <option value="credito">Tarjeta de Credito</option>
+                        <option value="debito">Tarjeta de Debito</option>
+                    </select>
+                    <div class="input-hint">Selecciona el tipo de tu tarjeta</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="numtarjeta">Numero de Tarjeta:</label>
+                    <input type="text" class="form-control" id="numtarjeta" disabled 
+                           placeholder="1234 5678 9012 3456" maxlength="19">
+                    <div class="validation-message" id="card-validation"></div>
+                    <div class="input-hint">Ingresa los 13-19 digitos de tu tarjeta</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="vencimiento">Fecha de Vencimiento:</label>
+                            <input type="text" class="form-control" id="vencimiento" disabled 
+                                   placeholder="MM/AA" maxlength="5">
+                            <div class="validation-message" id="expiry-validation"></div>
+                            <div class="input-hint">Formato: Mes/Ano (ej: 12/25)</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="cvv">Codigo de Seguridad (CVV):</label>
+                            <div class="password-container">
+                                <input type="password" class="form-control" id="cvv" disabled 
+                                       placeholder="123" maxlength="4">
+                                <button type="button" class="toggle-password" id="toggle-cvv">
+                                    Mostrar
+                                </button>
+                            </div>
+                            <div class="validation-message" id="cvv-validation"></div>
+                            <div class="input-hint">3 o 4 digitos en el reverso de tu tarjeta</div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="d-grid gap-2 py-3 mx-auto" style="max-width: 300px;">
-                    <a class="btn btn-primary w-100" 
-                        href="HistorialPedidos.html"> 
+                    <a class="btn btn-primary w-100" href="HistorialPedidos.html"> 
                         Mis Pedidos
                     </a>
                 </div>
@@ -167,15 +286,145 @@
             </form>
             
             <div class="text-center mt-4">
-                   <a href="index.html" class="btn btn-link">Volver</a>
+                <a href="index.html" class="btn btn-link">Volver al Inicio</a>
             </div>
             
         </div>
         
         <script>
             let modoEdicion = false;
-            const camposEditables = ['nombre', 'direccion', 'numtelefono', 'metodopago'];
+            let cvvVisible = false;
+            const camposEditables = ['nombre', 'direccion', 'numtelefono', 'tipoTarjeta', 'numtarjeta', 'vencimiento', 'cvv'];
             const editBtn = document.getElementById('edit-btn');
+            
+            function formatCardNumber(value) {
+                const cleaned = value.replace(/\D/g, '');
+                const parts = cleaned.match(/.{1,4}/g);
+                return parts ? parts.join(' ').substring(0, 19) : '';
+            }
+            
+            function formatExpiryDate(value) {
+                const cleaned = value.replace(/\D/g, '');
+                if (cleaned.length >= 2) {
+                    let month = cleaned.substring(0, 2);
+                    let year = cleaned.substring(2, 4);
+                    
+                    if (parseInt(month) < 1) month = '01';
+                    if (parseInt(month) > 12) month = '12';
+                    
+                    return month + '/' + year;
+                }
+                return cleaned;
+            }
+            
+            function setupCardFormatting() {
+                const cardNumberInput = document.getElementById('numtarjeta');
+                const expiryInput = document.getElementById('vencimiento');
+                const cvvInput = document.getElementById('cvv');
+                
+                if (cardNumberInput) {
+                    cardNumberInput.addEventListener('input', function(e) {
+                        this.value = formatCardNumber(this.value);
+                        validateCardNumber();
+                    });
+                }
+                
+                if (expiryInput) {
+                    expiryInput.addEventListener('input', function(e) {
+                        this.value = formatExpiryDate(this.value);
+                        validateExpiryDate();
+                    });
+                }
+                
+                if (cvvInput) {
+                    cvvInput.addEventListener('input', function(e) {
+                        this.value = this.value.replace(/\D/g, '').substring(0, 4);
+                        validateCVV();
+                    });
+                }
+            }
+            
+            function validateCardNumber() {
+                const cardNumber = document.getElementById('numtarjeta').value.replace(/\D/g, '');
+                const validationMsg = document.getElementById('card-validation');
+                
+                if (!cardNumber) {
+                    validationMsg.style.display = 'none';
+                    return false;
+                }
+                
+                if (cardNumber.length >= 13 && cardNumber.length <= 19) {
+                    validationMsg.textContent = 'Numero de tarjeta valido';
+                    validationMsg.className = 'validation-message validation-success';
+                    validationMsg.style.display = 'block';
+                    return true;
+                } else {
+                    validationMsg.textContent = 'El numero debe tener 13-19 digitos';
+                    validationMsg.className = 'validation-message validation-error';
+                    validationMsg.style.display = 'block';
+                    return false;
+                }
+            }
+            
+            function validateExpiryDate() {
+                const expiry = document.getElementById('vencimiento').value;
+                const validationMsg = document.getElementById('expiry-validation');
+                
+                if (!expiry) {
+                    validationMsg.style.display = 'none';
+                    return false;
+                }
+                
+                if (/^\d{2}\/\d{2}$/.test(expiry)) {
+                    const month = parseInt(expiry.substring(0, 2));
+                    if (month >= 1 && month <= 12) {
+                        validationMsg.textContent = 'Fecha valida';
+                        validationMsg.className = 'validation-message validation-success';
+                        validationMsg.style.display = 'block';
+                        return true;
+                    }
+                }
+                
+                validationMsg.textContent = 'Formato debe ser MM/AA (ej: 12/25)';
+                validationMsg.className = 'validation-message validation-error';
+                validationMsg.style.display = 'block';
+                return false;
+            }
+            
+            function validateCVV() {
+                const cvv = document.getElementById('cvv').value;
+                const validationMsg = document.getElementById('cvv-validation');
+                
+                if (!cvv) {
+                    validationMsg.style.display = 'none';
+                    return false;
+                }
+                
+                if (cvv.length >= 3 && cvv.length <= 4) {
+                    validationMsg.textContent = 'CVV valido';
+                    validationMsg.className = 'validation-message validation-success';
+                    validationMsg.style.display = 'block';
+                    return true;
+                } else {
+                    validationMsg.textContent = 'CVV debe tener 3-4 digitos';
+                    validationMsg.className = 'validation-message validation-error';
+                    validationMsg.style.display = 'block';
+                    return false;
+                }
+            }
+            
+            document.getElementById('toggle-cvv').addEventListener('click', function() {
+                const cvvInput = document.getElementById('cvv');
+                cvvVisible = !cvvVisible;
+                
+                if (cvvVisible) {
+                    cvvInput.type = 'text';
+                    this.textContent = 'Ocultar';
+                } else {
+                    cvvInput.type = 'password';
+                    this.textContent = 'Mostrar';
+                }
+            });
             
             async function loadProfileData() {
                 const userEmail = localStorage.getItem('userEmail');
@@ -193,8 +442,24 @@
                         document.getElementById('email').value = userData.email || userEmail;
                         document.getElementById('nombre').value = userData.nombre || '';
                         document.getElementById('direccion').value = userData.direccion || '';
-                        document.getElementById('metodopago').value = userData.metodoPago || '';
                         document.getElementById('numtelefono').value = userData.telefono || '';
+                        document.getElementById('tipoTarjeta').value = userData.tipoTarjeta || '';
+                        
+                        if (userData.numTarjeta) {
+                            document.getElementById('numtarjeta').value = formatCardNumber(userData.numTarjeta);
+                            validateCardNumber();
+                        }
+                        
+                        if (userData.vencimiento) {
+                            document.getElementById('vencimiento').value = userData.vencimiento;
+                            validateExpiryDate();
+                        }
+                        
+                        if (userData.cvv) {
+                            document.getElementById('cvv').value = userData.cvv;
+                            validateCVV();
+                        }
+                        
                     } else {
                         setDefaultData(userEmail);
                     }
@@ -207,9 +472,12 @@
             function setDefaultData(email) {
                 document.getElementById('email').value = email;
                 document.getElementById('nombre').value = email.split('@')[0];
-                document.getElementById('direccion').value = 'Sin dirección registrada';
-                document.getElementById('metodopago').value = 'No especificado';
-                document.getElementById('numtelefono').value = 'Sin teléfono';
+                document.getElementById('direccion').value = '';
+                document.getElementById('numtelefono').value = '';
+                document.getElementById('tipoTarjeta').value = '';
+                document.getElementById('numtarjeta').value = '';
+                document.getElementById('vencimiento').value = '';
+                document.getElementById('cvv').value = '';
             }
             
             function toggleEditMode() {
@@ -231,11 +499,11 @@
                     editBtn.textContent = 'Guardar Cambios';
                     editBtn.classList.remove('btn-secondary');
                     editBtn.classList.add('btn-success-save');
+                    document.getElementById('nombre').focus();
                 } else {
                     editBtn.textContent = 'Editar Datos';
                     editBtn.classList.remove('btn-success-save');
                     editBtn.classList.add('btn-secondary');
-                    
                     saveProfileData();
                 }
             }
@@ -243,12 +511,58 @@
             async function saveProfileData() {
                 const userEmail = localStorage.getItem('userEmail');
                 
+                const cardValid = validateCardNumber();
+                const expiryValid = validateExpiryDate();
+                const cvvValid = validateCVV();
+                
+                if (document.getElementById('numtarjeta').value && !cardValid) {
+                    alert('Por favor, corrige el numero de tarjeta');
+                    document.getElementById('numtarjeta').focus();
+                    toggleEditMode();
+                    return;
+                }
+                
+                if (document.getElementById('vencimiento').value && !expiryValid) {
+                    alert('Por favor, corrige la fecha de vencimiento');
+                    document.getElementById('vencimiento').focus();
+                    toggleEditMode();
+                    return;
+                }
+                
+                if (document.getElementById('cvv').value && !cvvValid) {
+                    alert('Por favor, corrige el codigo CVV');
+                    document.getElementById('cvv').focus();
+                    toggleEditMode();
+                    return;
+                }
+                
                 const profileData = {
-                    nombre: document.getElementById('nombre').value,
-                    direccion: document.getElementById('direccion').value,
-                    telefono: document.getElementById('numtelefono').value,
-                    metodoPago: document.getElementById('metodopago').value
+                    nombre: document.getElementById('nombre').value.trim(),
+                    direccion: document.getElementById('direccion').value.trim(),
+                    telefono: document.getElementById('numtelefono').value.trim(),
+                    tipoTarjeta: document.getElementById('tipoTarjeta').value,
+                    numTarjeta: document.getElementById('numtarjeta').value.replace(/\s/g, ''),
+                    vencimiento: document.getElementById('vencimiento').value.trim(),
+                    cvv: document.getElementById('cvv').value
                 };
+                
+                const hasCardNumber = profileData.numTarjeta.length > 0;
+                const hasExpiry = profileData.vencimiento.length > 0;
+                const hasCVV = profileData.cvv.length > 0;
+                const hasCardType = profileData.tipoTarjeta.length > 0;
+                
+                if ((hasCardNumber || hasExpiry || hasCVV || hasCardType) && 
+                    !(hasCardNumber && hasExpiry && hasCVV && hasCardType)) {
+                    if (confirm('Tienes datos de tarjeta incompletos. Deseas guardar solo la informacion personal?')) {
+                        profileData.numTarjeta = '';
+                        profileData.vencimiento = '';
+                        profileData.cvv = '';
+                        profileData.tipoTarjeta = '';
+                    } else {
+                        toggleEditMode();
+                        return;
+                    }
+                }
                 
                 try {
                     const response = await fetch(`/api/usuarios/${userEmail}`, {
@@ -260,24 +574,28 @@
                     });
                     
                     if (response.ok) {
-                        alert('¡Datos actualizados correctamente!');
+                        alert('Datos actualizados correctamente');
                     } else {
                         alert('Error al guardar los datos');
+                        toggleEditMode();
                     }
                 } catch (error) {
                     console.error('Error guardando perfil:', error);
-                    alert('Error de conexión al guardar los datos');
+                    alert('Error de conexion al guardar los datos');
+                    toggleEditMode();
                 }
             }
             
             document.addEventListener('DOMContentLoaded', function() {
+                if (localStorage.getItem('isLoggedIn') !== 'true') {
+                    window.location.href = "index.html";
+                    return;
+                }
+                
                 loadProfileData();
+                setupCardFormatting();
                 editBtn.addEventListener('click', toggleEditMode);
             });
-            
-            if (localStorage.getItem('isLoggedIn') !== 'true') {
-                 window.location.href = "index.html";
-            }
         </script>
     </body>
 </html>

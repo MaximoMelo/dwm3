@@ -25,67 +25,67 @@
         }
 
         body {
-            background-color: var(--light-bg) !important;
+            background-color: var(--light-bg);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--text-dark);
         }
 
         .payment-form-card {
-            background-color: var(--card-bg) !important;
-            color: var(--text-dark) !important;
+            background-color: var(--card-bg);
+            color: var(--text-dark);
             border: 1px solid var(--dark-border);
             border-radius: var(--border-radius-lg);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .payment-form-card h3 {
-            color: var(--primary-color) !important; 
+            color: var(--primary-color);
             font-weight: 600;
         }
         
         .payment-form-card .form-label {
-            color: var(--text-dark) !important;
-            font-size: 1rem !important; 
+            color: var(--text-dark);
+            font-size: 1rem;
             font-weight: 500;
         }
 
         .form-control, .form-select {
-            background-color: var(--card-bg) !important;
-            border: 1px solid var(--dark-border) !important;
-            color: var(--text-dark) !important;
+            background-color: var(--card-bg);
+            border: 1px solid var(--dark-border);
+            color: var(--text-dark);
             transition: border-color 0.3s, box-shadow 0.3s;
-            border-radius: var(--border-radius-sm); 
+            border-radius: var(--border-radius-sm);
         }
         .form-control:focus, .form-select:focus {
-            border-color: var(--primary-color) !important;
-            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.4) !important;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.4);
         }
         .form-control::placeholder {
             color: #b0b0c0;
         }
         
         .btn-primary {
-            background-color: var(--primary-color) !important;
-            border-color: var(--primary-color) !important;
-            color: var(--light-bg) !important;
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--light-bg);
             transition: background-color 0.3s, box-shadow 0.3s;
-            border-radius: var(--border-radius-sm); 
-            font-size: 1.1rem !important;
+            border-radius: var(--border-radius-sm);
+            font-size: 1.1rem;
         }
         .btn-primary:hover {
-            background-color: var(--primary-hover) !important;
-            border-color: var(--primary-hover) !important;
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
             box-shadow: 0 2px 10px rgba(52, 152, 219, 0.6);
         }
         
         .btn-outline-secondary {
-            color: var(--secondary-color) !important;
-            border-color: var(--secondary-color) !important;
+            color: var(--secondary-color);
+            border-color: var(--secondary-color);
             border-radius: var(--border-radius-sm);
         }
         .btn-outline-secondary:hover {
-            background-color: var(--secondary-color) !important;
-            color: var(--light-bg) !important;
+            background-color: var(--secondary-color);
+            color: var(--light-bg);
         }
 
         .form-control-lg {
@@ -96,22 +96,6 @@
             font-size: 0.85rem;
             color: var(--secondary-color);
             margin-top: 0.25rem;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .autofill-info i {
-            font-size: 0.9rem;
-        }
-        
-        .card-icon {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--secondary-color);
-            font-size: 1.2rem;
         }
         
         .input-container {
@@ -127,6 +111,12 @@
             font-weight: 500;
             margin-left: 10px;
         }
+        
+        .alert-info {
+            background-color: #e8f4fd;
+            border-color: #b6e0fe;
+            color: #084298;
+        }
 
     </style>
 </head>
@@ -139,24 +129,35 @@
             <hr class="opacity-75" style="border-color: var(--dark-border);"> 
             
             <div class="alert alert-info alert-dismissible fade show mb-3" role="alert" style="font-size: 0.9rem;">
-                <i class="bi bi-info-circle"></i> Los datos se autocompletarán desde tu perfil si los has guardado previamente.
+                Los datos se autocompletaran desde tu perfil si los has guardado previamente.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             
             <div class="mb-3">
+                <label for="tipoTarjeta" class="form-label">Tipo de Tarjeta:</label>
+                <select class="form-control form-control-lg" id="tipoTarjeta" required>
+                    <option value="">Seleccionar tipo</option>
+                    <option value="credito">Tarjeta de Credito</option>
+                    <option value="debito">Tarjeta de Debito</option>
+                </select>
+                <div class="autofill-info" id="tipo-autofill-info" style="display: none;">
+                    Cargado desde tu perfil
+                </div>
+            </div>
+            
+            <div class="mb-3">
                 <label for="Ntarjeta" class="form-label">
-                    N° de tarjeta:
+                    Numero de tarjeta:
                     <span id="card-saved-badge" class="saved-data-badge" style="display: none;">
-                        <i class="bi bi-check-circle"></i> Guardado
+                        Guardado
                     </span>
                 </label>
                 <div class="input-container">
                     <input type="text" class="form-control form-control-lg" id="Ntarjeta" 
-                           placeholder="1234 5678 9012 3456" maxlength="19">
-                    <span class="card-icon" id="card-type-icon">💳</span>
+                           placeholder="1234 5678 9012 3456" maxlength="19" required>
                 </div>
                 <div class="autofill-info" id="card-autofill-info" style="display: none;">
-                    <i class="bi bi-arrow-clockwise"></i> Cargado desde tu perfil
+                    Cargado desde tu perfil
                 </div>
             </div>
 
@@ -165,12 +166,12 @@
                     <label for="exp" class="form-label">
                         Vencimiento:
                         <span id="expiry-saved-badge" class="saved-data-badge" style="display: none;">
-                            <i class="bi bi-check-circle"></i> Guardado
+                            Guardado
                         </span>
                     </label>
-                    <input type="text" class="form-control form-control-lg" id="exp" placeholder="MM/AA" maxlength="5">
+                    <input type="text" class="form-control form-control-lg" id="exp" placeholder="MM/AA" maxlength="5" required>
                     <div class="autofill-info" id="expiry-autofill-info" style="display: none;">
-                        <i class="bi bi-arrow-clockwise"></i> Cargado desde tu perfil
+                        Cargado desde tu perfil
                     </div>
                 </div>
 
@@ -178,27 +179,13 @@
                     <label for="cvv" class="form-label">
                         CVV:
                         <span id="cvv-saved-badge" class="saved-data-badge" style="display: none;">
-                            <i class="bi bi-check-circle"></i> Guardado
+                            Guardado
                         </span>
                     </label>
-                    <input type="password" class="form-control form-control-lg" id="cvv" placeholder="123" maxlength="4">
+                    <input type="password" class="form-control form-control-lg" id="cvv" placeholder="123" maxlength="4" required>
                     <div class="autofill-info" id="cvv-autofill-info" style="display: none;">
-                        <i class="bi bi-arrow-clockwise"></i> Cargado desde tu perfil
+                        Cargado desde tu perfil
                     </div>
-                </div>
-            </div>
-            
-            <div class="mb-4">
-                <label for="card-type" class="form-label">Tipo de tarjeta:</label>
-                <select class="form-control form-control-lg" id="card-type">
-                    <option value="">Seleccionar tipo</option>
-                    <option value="Visa">Visa</option>
-                    <option value="Mastercard">Mastercard</option>
-                    <option value="American Express">American Express</option>
-                    <option value="Débito">Tarjeta de Débito</option>
-                </select>
-                <div class="autofill-info" id="cardtype-autofill-info" style="display: none;">
-                    <i class="bi bi-arrow-clockwise"></i> Cargado desde tu perfil
                 </div>
             </div>
 
@@ -211,33 +198,10 @@
             <div class="d-grid mt-3">
                 <a href="CarritoCompras.html" class="btn btn-sm btn-outline-secondary">Volver al Carrito</a>
             </div>
-            
-            <div class="text-center mt-3">
-                <a href="PerfilUsuario.html" class="btn btn-link" style="font-size: 0.9rem;">
-                    <i class="bi bi-person-circle"></i> Gestionar datos guardados en mi perfil
-                </a>
-            </div>
         </form>
     </div>
 
     <script>
-        const style = document.createElement('style');
-        style.textContent = `
-            @font-face {
-                font-family: 'bootstrap-icons';
-                src: url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/fonts/bootstrap-icons.woff2') format('woff2'),
-                     url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/fonts/bootstrap-icons.woff') format('woff');
-            }
-            .bi::before {
-                font-family: 'bootstrap-icons' !important;
-            }
-            .bi-info-circle::before { content: "\\F431"; }
-            .bi-arrow-clockwise::before { content: "\\F116"; }
-            .bi-check-circle::before { content: "\\F26B"; }
-            .bi-person-circle::before { content: "\\F4DA"; }
-        `;
-        document.head.appendChild(style);
-        
         async function loadPaymentData() {
             const userEmail = localStorage.getItem('userEmail');
             
@@ -255,7 +219,6 @@
                         const formattedCard = formatCardNumberForDisplay(userData.numTarjeta);
                         document.getElementById('Ntarjeta').value = formattedCard;
                         showAutofillInfo('card');
-                        detectCardType(userData.numTarjeta);
                     }
                     
                     if (userData.vencimiento) {
@@ -268,9 +231,9 @@
                         showAutofillInfo('cvv');
                     }
                     
-                    if (userData.metodoPago) {
-                        document.getElementById('card-type').value = userData.metodoPago;
-                        showAutofillInfo('cardtype');
+                    if (userData.tipoTarjeta) {
+                        document.getElementById('tipoTarjeta').value = userData.tipoTarjeta;
+                        showAutofillInfo('tipo');
                     }
                 }
             } catch (error) {
@@ -283,22 +246,24 @@
                 'card': 'card-saved-badge',
                 'expiry': 'expiry-saved-badge',
                 'cvv': 'cvv-saved-badge',
-                'cardtype': 'cardtype-autofill-info'
+                'tipo': 'tipo-autofill-info'
             };
             
             const infoDivs = {
                 'card': 'card-autofill-info',
                 'expiry': 'expiry-autofill-info',
                 'cvv': 'cvv-autofill-info',
-                'cardtype': 'cardtype-autofill-info'
+                'tipo': 'tipo-autofill-info'
             };
             
             if (badges[field]) {
-                document.getElementById(badges[field]).style.display = 'inline-block';
+                const badge = document.getElementById(badges[field]);
+                if (badge) badge.style.display = 'inline-block';
             }
             
             if (infoDivs[field]) {
-                document.getElementById(infoDivs[field]).style.display = 'flex';
+                const infoDiv = document.getElementById(infoDivs[field]);
+                if (infoDiv) infoDiv.style.display = 'block';
             }
         }
         
@@ -306,24 +271,6 @@
             const cleaned = cardNumber.replace(/\D/g, '');
             const parts = cleaned.match(/.{1,4}/g);
             return parts ? parts.join(' ').substring(0, 19) : '';
-        }
-        
-        function detectCardType(cardNumber) {
-            const cleaned = cardNumber.replace(/\D/g, '');
-            const cardIcon = document.getElementById('card-type-icon');
-            
-            if (/^4/.test(cleaned)) {
-                cardIcon.textContent = ''; 
-                document.getElementById('card-type').value = 'Visa';
-            } else if (/^5[1-5]/.test(cleaned)) {
-                cardIcon.textContent = ''; 
-                document.getElementById('card-type').value = 'Mastercard';
-            } else if (/^3[47]/.test(cleaned)) {
-                cardIcon.textContent = ''; 
-                document.getElementById('card-type').value = 'American Express';
-            } else {
-                cardIcon.textContent = '💳';
-            }
         }
         
         document.getElementById('Ntarjeta').addEventListener('input', function(e) {
@@ -338,10 +285,6 @@
             }
             
             this.value = formatted.substring(0, 19);
-            
-            if (value.length >= 1) {
-                detectCardType(value);
-            }
         });
         
         document.getElementById('exp').addEventListener('input', function(e) {
@@ -367,19 +310,25 @@
         document.getElementById('payment-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
+            const tipoTarjeta = document.getElementById('tipoTarjeta').value;
             const cardNumber = document.getElementById('Ntarjeta').value.replace(/\s/g, '');
             const expiry = document.getElementById('exp').value;
             const cvv = document.getElementById('cvv').value;
-            const cardType = document.getElementById('card-type').value;
+            
+            if (!tipoTarjeta) {
+                alert('Por favor, selecciona el tipo de tarjeta');
+                document.getElementById('tipoTarjeta').focus();
+                return;
+            }
             
             if (!cardNumber) {
-                alert('Por favor, ingresa el número de tarjeta');
+                alert('Por favor, ingresa el numero de tarjeta');
                 document.getElementById('Ntarjeta').focus();
                 return;
             }
             
             if (cardNumber.length < 13 || cardNumber.length > 19) {
-                alert('El número de tarjeta debe tener entre 13 y 19 dígitos');
+                alert('El numero de tarjeta debe tener entre 13 y 19 digitos');
                 document.getElementById('Ntarjeta').focus();
                 return;
             }
@@ -404,41 +353,32 @@
             }
             
             if (!cvv) {
-                alert('Por favor, ingresa el código CVV');
+                alert('Por favor, ingresa el codigo CVV');
                 document.getElementById('cvv').focus();
                 return;
             }
             
             if (cvv.length < 3 || cvv.length > 4) {
-                alert('El CVV debe tener 3 o 4 dígitos');
+                alert('El CVV debe tener 3 o 4 digitos');
                 document.getElementById('cvv').focus();
                 return;
             }
             
-            if (!cardType) {
-                alert('Por favor, selecciona el tipo de tarjeta');
-                document.getElementById('card-type').focus();
-                return;
-            }
-            
+            const tipoTexto = tipoTarjeta === 'credito' ? 'Credito' : 'Debito';
             const lastFour = cardNumber.substring(cardNumber.length - 4);
-            localStorage.setItem('paymentMethod', `${cardType} terminada en ${lastFour}`);
-            localStorage.setItem('paymentCardType', cardType);
             
-            if (confirm(`¿Confirmar pago con ${cardType} terminada en ${lastFour}?`)) {
+            localStorage.setItem('paymentMethod', `Tarjeta de ${tipoTexto} terminada en ${lastFour}`);
+            localStorage.setItem('paymentCardType', tipoTexto);
+            
+            if (confirm(`Confirmar pago con Tarjeta de ${tipoTexto} terminada en ${lastFour}?`)) {
                 window.location.href = "BoletaElectronica.html";
             }
-        });
-        
-        document.querySelector('a[href="BoletaElectronica.html"]')?.addEventListener('click', function(e) {
-            e.preventDefault();
-            document.getElementById('payment-form').dispatchEvent(new Event('submit'));
         });
         
         window.onload = loadPaymentData;
         
         if (localStorage.getItem('isLoggedIn') !== 'true') {
-            alert('Debes iniciar sesión para realizar un pago');
+            alert('Debes iniciar sesion para realizar un pago');
             window.location.href = "InicioSesion.html";
         }
     </script>
