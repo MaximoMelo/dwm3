@@ -21,7 +21,7 @@
             --secondary-color: #6c757d;
             --danger-color: #cc4c4c;
             --border-radius-lg: 12px; 
-            --border-radius-sm: 6px;  
+            --border-radius-sm: 6px;  
         }
 
         body {
@@ -91,44 +91,356 @@
         .form-control-lg {
             padding: 0.5rem 1rem;
         }
+        
+        .autofill-info {
+            font-size: 0.85rem;
+            color: var(--secondary-color);
+            margin-top: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .autofill-info i {
+            font-size: 0.9rem;
+        }
+        
+        .card-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+        
+        .input-container {
+            position: relative;
+        }
+        
+        .saved-data-badge {
+            background-color: #e8f4fd;
+            color: var(--primary-color);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-left: 10px;
+        }
 
     </style>
 </head>
 
 <body class="d-flex align-items-center justify-content-center vh-100">
 
-    <div class="p-5 payment-form-card" style="max-width: 450px; width: 90%;"> 
-        <form>
+    <div class="p-5 payment-form-card" style="max-width: 500px; width: 90%;"> 
+        <form id="payment-form">
             <h3 class="text-center">Ingrese sus datos de pago:</h3>
             <hr class="opacity-75" style="border-color: var(--dark-border);"> 
             
+            <div class="alert alert-info alert-dismissible fade show mb-3" role="alert" style="font-size: 0.9rem;">
+                <i class="bi bi-info-circle"></i> Los datos se autocompletarán desde tu perfil si los has guardado previamente.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            
             <div class="mb-3">
-                <label for="Ntarjeta" class="form-label">N° de tarjeta:</label>
-                <input type="number" class="form-control form-control-lg" id="Ntarjeta" placeholder="XXXX XXXX XXXX XXXX">
+                <label for="Ntarjeta" class="form-label">
+                    N° de tarjeta:
+                    <span id="card-saved-badge" class="saved-data-badge" style="display: none;">
+                        <i class="bi bi-check-circle"></i> Guardado
+                    </span>
+                </label>
+                <div class="input-container">
+                    <input type="text" class="form-control form-control-lg" id="Ntarjeta" 
+                           placeholder="1234 5678 9012 3456" maxlength="19">
+                    <span class="card-icon" id="card-type-icon">💳</span>
+                </div>
+                <div class="autofill-info" id="card-autofill-info" style="display: none;">
+                    <i class="bi bi-arrow-clockwise"></i> Cargado desde tu perfil
+                </div>
             </div>
 
             <div class="row">
                 <div class="mb-3 col-6">
-                    <label for="exp" class="form-label">Vencimiento:</label>
-                    <input type="text" class="form-control form-control-lg" id="exp" placeholder="MM/AA">
+                    <label for="exp" class="form-label">
+                        Vencimiento:
+                        <span id="expiry-saved-badge" class="saved-data-badge" style="display: none;">
+                            <i class="bi bi-check-circle"></i> Guardado
+                        </span>
+                    </label>
+                    <input type="text" class="form-control form-control-lg" id="exp" placeholder="MM/AA" maxlength="5">
+                    <div class="autofill-info" id="expiry-autofill-info" style="display: none;">
+                        <i class="bi bi-arrow-clockwise"></i> Cargado desde tu perfil
+                    </div>
                 </div>
 
                 <div class="mb-4 col-6">
-                    <label for="cvv" class="form-label">CVV:</label>
-                    <input type="password" class="form-control form-control-lg" id="cvv" placeholder="XXX">
+                    <label for="cvv" class="form-label">
+                        CVV:
+                        <span id="cvv-saved-badge" class="saved-data-badge" style="display: none;">
+                            <i class="bi bi-check-circle"></i> Guardado
+                        </span>
+                    </label>
+                    <input type="password" class="form-control form-control-lg" id="cvv" placeholder="123" maxlength="4">
+                    <div class="autofill-info" id="cvv-autofill-info" style="display: none;">
+                        <i class="bi bi-arrow-clockwise"></i> Cargado desde tu perfil
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <label for="card-type" class="form-label">Tipo de tarjeta:</label>
+                <select class="form-control form-control-lg" id="card-type">
+                    <option value="">Seleccionar tipo</option>
+                    <option value="Visa">Visa</option>
+                    <option value="Mastercard">Mastercard</option>
+                    <option value="American Express">American Express</option>
+                    <option value="Débito">Tarjeta de Débito</option>
+                </select>
+                <div class="autofill-info" id="cardtype-autofill-info" style="display: none;">
+                    <i class="bi bi-arrow-clockwise"></i> Cargado desde tu perfil
                 </div>
             </div>
 
             <div class="d-grid mt-2">
-                <a href="BoletaElectronica.html" class="btn btn-primary btn-lg w-100"> 
+                <button type="submit" class="btn btn-primary btn-lg w-100"> 
                     Pagar y finalizar
-                </a>
+                </button>
             </div>
             
             <div class="d-grid mt-3">
-                   <a href="CarritoCompras.html" class="btn btn-sm btn-outline-secondary">Volver al Carrito</a>
+                <a href="CarritoCompras.html" class="btn btn-sm btn-outline-secondary">Volver al Carrito</a>
+            </div>
+            
+            <div class="text-center mt-3">
+                <a href="PerfilUsuario.html" class="btn btn-link" style="font-size: 0.9rem;">
+                    <i class="bi bi-person-circle"></i> Gestionar datos guardados en mi perfil
+                </a>
             </div>
         </form>
     </div>
+
+    <script>
+        const style = document.createElement('style');
+        style.textContent = `
+            @font-face {
+                font-family: 'bootstrap-icons';
+                src: url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/fonts/bootstrap-icons.woff2') format('woff2'),
+                     url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/fonts/bootstrap-icons.woff') format('woff');
+            }
+            .bi::before {
+                font-family: 'bootstrap-icons' !important;
+            }
+            .bi-info-circle::before { content: "\\F431"; }
+            .bi-arrow-clockwise::before { content: "\\F116"; }
+            .bi-check-circle::before { content: "\\F26B"; }
+            .bi-person-circle::before { content: "\\F4DA"; }
+        `;
+        document.head.appendChild(style);
+        
+        async function loadPaymentData() {
+            const userEmail = localStorage.getItem('userEmail');
+            
+            if (!userEmail) {
+                window.location.href = "InicioSesion.html";
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/usuarios/${userEmail}`);
+                if (response.ok) {
+                    const userData = await response.json();
+                    
+                    if (userData.numTarjeta) {
+                        const formattedCard = formatCardNumberForDisplay(userData.numTarjeta);
+                        document.getElementById('Ntarjeta').value = formattedCard;
+                        showAutofillInfo('card');
+                        detectCardType(userData.numTarjeta);
+                    }
+                    
+                    if (userData.vencimiento) {
+                        document.getElementById('exp').value = userData.vencimiento;
+                        showAutofillInfo('expiry');
+                    }
+                    
+                    if (userData.cvv) {
+                        document.getElementById('cvv').value = userData.cvv;
+                        showAutofillInfo('cvv');
+                    }
+                    
+                    if (userData.metodoPago) {
+                        document.getElementById('card-type').value = userData.metodoPago;
+                        showAutofillInfo('cardtype');
+                    }
+                }
+            } catch (error) {
+                console.error('Error cargando datos de pago:', error);
+            }
+        }
+        
+        function showAutofillInfo(field) {
+            const badges = {
+                'card': 'card-saved-badge',
+                'expiry': 'expiry-saved-badge',
+                'cvv': 'cvv-saved-badge',
+                'cardtype': 'cardtype-autofill-info'
+            };
+            
+            const infoDivs = {
+                'card': 'card-autofill-info',
+                'expiry': 'expiry-autofill-info',
+                'cvv': 'cvv-autofill-info',
+                'cardtype': 'cardtype-autofill-info'
+            };
+            
+            if (badges[field]) {
+                document.getElementById(badges[field]).style.display = 'inline-block';
+            }
+            
+            if (infoDivs[field]) {
+                document.getElementById(infoDivs[field]).style.display = 'flex';
+            }
+        }
+        
+        function formatCardNumberForDisplay(cardNumber) {
+            const cleaned = cardNumber.replace(/\D/g, '');
+            const parts = cleaned.match(/.{1,4}/g);
+            return parts ? parts.join(' ').substring(0, 19) : '';
+        }
+        
+        function detectCardType(cardNumber) {
+            const cleaned = cardNumber.replace(/\D/g, '');
+            const cardIcon = document.getElementById('card-type-icon');
+            
+            if (/^4/.test(cleaned)) {
+                cardIcon.textContent = ''; 
+                document.getElementById('card-type').value = 'Visa';
+            } else if (/^5[1-5]/.test(cleaned)) {
+                cardIcon.textContent = ''; 
+                document.getElementById('card-type').value = 'Mastercard';
+            } else if (/^3[47]/.test(cleaned)) {
+                cardIcon.textContent = ''; 
+                document.getElementById('card-type').value = 'American Express';
+            } else {
+                cardIcon.textContent = '💳';
+            }
+        }
+        
+        document.getElementById('Ntarjeta').addEventListener('input', function(e) {
+            let value = this.value.replace(/\D/g, '');
+            let formatted = '';
+            
+            for (let i = 0; i < value.length; i++) {
+                if (i > 0 && i % 4 === 0) {
+                    formatted += ' ';
+                }
+                formatted += value[i];
+            }
+            
+            this.value = formatted.substring(0, 19);
+            
+            if (value.length >= 1) {
+                detectCardType(value);
+            }
+        });
+        
+        document.getElementById('exp').addEventListener('input', function(e) {
+            let value = this.value.replace(/\D/g, '');
+            
+            if (value.length >= 2) {
+                let month = value.substring(0, 2);
+                let year = value.substring(2, 4);
+                
+                if (parseInt(month) < 1) month = '01';
+                if (parseInt(month) > 12) month = '12';
+                
+                this.value = month + '/' + year;
+            } else {
+                this.value = value;
+            }
+        });
+        
+        document.getElementById('cvv').addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '').substring(0, 4);
+        });
+        
+        document.getElementById('payment-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const cardNumber = document.getElementById('Ntarjeta').value.replace(/\s/g, '');
+            const expiry = document.getElementById('exp').value;
+            const cvv = document.getElementById('cvv').value;
+            const cardType = document.getElementById('card-type').value;
+            
+            if (!cardNumber) {
+                alert('Por favor, ingresa el número de tarjeta');
+                document.getElementById('Ntarjeta').focus();
+                return;
+            }
+            
+            if (cardNumber.length < 13 || cardNumber.length > 19) {
+                alert('El número de tarjeta debe tener entre 13 y 19 dígitos');
+                document.getElementById('Ntarjeta').focus();
+                return;
+            }
+            
+            if (!expiry) {
+                alert('Por favor, ingresa la fecha de vencimiento');
+                document.getElementById('exp').focus();
+                return;
+            }
+            
+            if (!/^\d{2}\/\d{2}$/.test(expiry)) {
+                alert('El vencimiento debe estar en formato MM/AA (ej: 12/25)');
+                document.getElementById('exp').focus();
+                return;
+            }
+            
+            const month = parseInt(expiry.substring(0, 2));
+            if (month < 1 || month > 12) {
+                alert('El mes de vencimiento debe estar entre 01 y 12');
+                document.getElementById('exp').focus();
+                return;
+            }
+            
+            if (!cvv) {
+                alert('Por favor, ingresa el código CVV');
+                document.getElementById('cvv').focus();
+                return;
+            }
+            
+            if (cvv.length < 3 || cvv.length > 4) {
+                alert('El CVV debe tener 3 o 4 dígitos');
+                document.getElementById('cvv').focus();
+                return;
+            }
+            
+            if (!cardType) {
+                alert('Por favor, selecciona el tipo de tarjeta');
+                document.getElementById('card-type').focus();
+                return;
+            }
+            
+            const lastFour = cardNumber.substring(cardNumber.length - 4);
+            localStorage.setItem('paymentMethod', `${cardType} terminada en ${lastFour}`);
+            localStorage.setItem('paymentCardType', cardType);
+            
+            if (confirm(`¿Confirmar pago con ${cardType} terminada en ${lastFour}?`)) {
+                window.location.href = "BoletaElectronica.html";
+            }
+        });
+        
+        document.querySelector('a[href="BoletaElectronica.html"]')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('payment-form').dispatchEvent(new Event('submit'));
+        });
+        
+        window.onload = loadPaymentData;
+        
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            alert('Debes iniciar sesión para realizar un pago');
+            window.location.href = "InicioSesion.html";
+        }
+    </script>
 </body>
 </html>
