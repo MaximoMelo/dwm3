@@ -22,7 +22,7 @@
             }
 
             .main-card {
-                max-width: 450px; 
+                max-width: 500px; /* Aumentado para el nuevo campo */
                 width: 90%;
                 padding: 40px;
                 border-radius: 10px;
@@ -51,19 +51,39 @@
                 background-color: #555 !important;
                 border-color: #555 !important;
             }
+            
+            .image-preview {
+                width: 100px;
+                height: 100px;
+                object-fit: cover;
+                border-radius: 8px;
+                border: 2px solid var(--dark-border);
+                margin-top: 10px;
+                display: none;
+            }
+            
+            .preview-container {
+                text-align: center;
+                margin-bottom: 15px;
+            }
+            
+            .image-help {
+                font-size: 0.8rem;
+                color: #aaa;
+                margin-top: 5px;
+            }
         </style>
     </head>
     
     <body class="d-flex align-items-center justify-content-center vh-100">
 
         <div class="main-card">
-            <h2 class="text-center mb-5 text-light">AGREGAR PRODUCTO</h2>
+            <h2 class="text-center mb-4 text-light">AGREGAR PRODUCTO</h2>
             
             <form>
-                
                 <div class="row mb-4">
                     <label for="nom.producto" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="nom.producto">
+                    <input type="text" class="form-control" id="nom.producto" required>
                 </div>
 
                 <div class="row mb-4">
@@ -73,21 +93,39 @@
 
                 <div class="row mb-4">
                     <label for="categoria" class="form-label">Categoría</label>
-                    <select class="form-control" id="categoria">
+                    <select class="form-control" id="categoria" required>
                     </select>
                 </div>
 
                 <div class="row mb-4">
                     <label for="precio" class="form-label">Precio</label>
-                    <input type="number" class="form-control" id="precio">
+                    <input type="number" class="form-control" id="precio" min="1" required>
                 </div>
 
-                <div class="row mb-5">
+                <div class="row mb-4">
                     <label for="stock" class="form-label">Stock</label>
-                    <input type="number" class="form-control" id="stock">
+                    <input type="number" class="form-control" id="stock" min="0" value="0">
                 </div>
 
-                <div class="d-flex justify-content-center gap-4">
+                <!-- NUEVO CAMPO: URL DE IMAGEN -->
+                <div class="row mb-4">
+                    <label for="imagen" class="form-label">URL de la Imagen</label>
+                    <input type="url" class="form-control" id="imagen" 
+                           placeholder="https://ejemplo.com/imagen.jpg">
+                    <div class="image-help">
+                        Puedes usar: https://ejemplo.com/imagen.jpg o dejar vacío para imagen por defecto
+                    </div>
+                    
+                    <!-- Vista previa de la imagen -->
+                    <div class="preview-container">
+                        <img id="image-preview" class="image-preview" alt="Vista previa">
+                        <div id="preview-message" class="image-help" style="display: none;">
+                            Vista previa de la imagen
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center gap-4 mt-4">
                     <a href="index.html" class="btn btn-secondary w-50" style="max-width: 125px;">
                         Volver
                     </a>
@@ -100,6 +138,37 @@
         </div>
         
         <script>
+            // Función para mostrar vista previa de la imagen
+            function setupImagePreview() {
+                const imageInput = document.getElementById('imagen');
+                const imagePreview = document.getElementById('image-preview');
+                const previewMessage = document.getElementById('preview-message');
+                
+                imageInput.addEventListener('input', function() {
+                    const url = this.value.trim();
+                    
+                    if (url && this.checkValidity()) {
+                        imagePreview.src = url;
+                        imagePreview.style.display = 'block';
+                        previewMessage.style.display = 'block';
+                        
+                        // Verificar si la imagen se carga correctamente
+                        imagePreview.onload = function() {
+                            console.log('Imagen cargada correctamente');
+                        };
+                        
+                        imagePreview.onerror = function() {
+                            console.log('Error cargando la imagen');
+                            // Mostrar placeholder si la imagen no carga
+                            imagePreview.src = 'https://via.placeholder.com/100x100/2d2d39/ffffff?text=Imagen+No+Disponible';
+                        };
+                    } else {
+                        imagePreview.style.display = 'none';
+                        previewMessage.style.display = 'none';
+                    }
+                });
+            }
+            
             document.querySelector('form').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
@@ -108,7 +177,9 @@
                 const categoria = document.getElementById('categoria').value;
                 const stock = document.getElementById('stock').value;
                 const descripcion = document.getElementById('descripcion').value.trim();
+                const imagen = document.getElementById('imagen').value.trim();
                 
+                // Validaciones
                 if (!nombre) {
                     alert('El nombre del producto es requerido');
                     return;
@@ -124,13 +195,26 @@
                     return;
                 }
                 
+                // Validar URL de imagen si se proporciona
+                if (imagen) {
+                    try {
+                        new URL(imagen);
+                    } catch (error) {
+                        alert('La URL de la imagen no es válida. Debe ser una URL completa (ej: https://ejemplo.com/imagen.jpg)');
+                        return;
+                    }
+                }
+                
                 const producto = {
                     nombre: nombre,
                     precio: Number(precio),
                     categoria: categoria,
                     stock: stock ? Number(stock) : 0,
-                    descripcion: descripcion
+                    descripcion: descripcion,
+                    imagen: imagen || 'img/default.jpg' // Usar imagen por defecto si no se proporciona
                 };
+                
+                console.log('Enviando producto:', producto);
                 
                 try {
                     const response = await fetch('/api/productos', {
@@ -146,6 +230,10 @@
                     if (response.ok) {
                         alert('Producto agregado exitosamente');
                         document.querySelector('form').reset();
+                        
+                        // Ocultar vista previa
+                        document.getElementById('image-preview').style.display = 'none';
+                        document.getElementById('preview-message').style.display = 'none';
                         
                         setTimeout(() => {
                             window.location.href = "index.html";
@@ -179,6 +267,8 @@
                     console.error('Error cargando categorías:', error);
                     const categoriasDefault = ['Ceviche', 'Pescados al plato', 'Acompañamientos'];
                     const categoriaSelect = document.getElementById('categoria');
+                    categoriaSelect.innerHTML = '<option value="">Seleccione categoría</option>';
+                    
                     categoriasDefault.forEach(cat => {
                         const option = document.createElement('option');
                         option.value = cat;
@@ -188,7 +278,10 @@
                 }
             }
             
-            window.onload = cargarCategorias;
+            window.onload = function() {
+                cargarCategorias();
+                setupImagePreview();
+            };
         </script>
     </body>
 </html>
