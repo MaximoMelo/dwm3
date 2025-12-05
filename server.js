@@ -16,7 +16,8 @@ const productos = [
     ingredientes: ['pescado', 'limón', 'cebolla', 'cilantro', 'ají'], 
     categoria: 'Ceviche',
     stock: 15, 
-    descripcion: 'Ceviche fresco con mariscos' 
+    descripcion: 'Ceviche fresco con mariscos',
+    imagen: 'https://buenazo.cronosmedia.glr.pe/original/2020/09/09/5f58f8c082c2f615f804ffdb.jpg'
   },
   { 
     _id: '2',
@@ -25,7 +26,8 @@ const productos = [
     ingredientes: ['congrio', 'limón', 'aceite de oliva', 'romero'], 
     categoria: 'Pescados al plato',
     stock: 10, 
-    descripcion: 'Congrio fresco a la plancha' 
+    descripcion: 'Congrio fresco a la plancha',
+    imagen: 'https://www.800.cl/galeriasitios/Och/2017/6/21/Och_20478_Fl-10682-quotidien-bistro-Fp19.jpg'
   },
   { 
     _id: '3',
@@ -34,7 +36,8 @@ const productos = [
     ingredientes: ['arroz', 'camarones', 'calamares', 'almejas', 'pimiento'], 
     categoria: 'Acompañamientos',
     stock: 20, 
-    descripcion: ' ' 
+    descripcion: ' ',
+    imagen: 'https://www.recetasthermomix.pe/wp-content/uploads/recetas_0657c4454ca33fa8c6f001769ab2b80f.jpg'
   },
   { 
     _id: '4',
@@ -43,16 +46,18 @@ const productos = [
     ingredientes: ['reineta', 'mantequilla', 'limón', 'pimienta', 'ajo'], 
     categoria: 'Ceviche',
     stock: 20, 
-    descripcion: 'Arroz con mix de mariscos' 
+    descripcion: 'Arroz con mix de mariscos',
+    imagen: 'https://i.pinimg.com/736x/dd/32/37/dd323789ca509bd0e43820337222eb2d.jpg'
   },
   { 
     _id: '5',
-    nombre: 'Machas a la parmesana ', 
+    nombre: 'Machas a la parmesana', 
     precio: 5800, 
     ingredientes: ['machas', 'queso', 'mantequilla', 'ajo'], 
     categoria: 'Acompañamientos',
     stock: 20, 
-    descripcion: 'Machas gratinadas con queso' 
+    descripcion: 'Machas gratinadas con queso',
+    imagen: 'https://unacocinafeliz.com/wp-content/uploads/2022/10/3-19-500x500.jpg'
   },
   { 
     _id: '6',
@@ -61,7 +66,8 @@ const productos = [
     ingredientes: ['jaiba', 'cebolla', 'aji', 'queso'], 
     categoria: 'Acompañamientos',
     stock: 15, 
-    descripcion: 'Horneado de carne de jaiba' 
+    descripcion: 'Horneado de carne de jaiba',
+    imagen: 'https://images2-mega.cdn.mdstrm.com/meganoticias/2023/10/02/pastel-de-jaiba_427127_1_651ae6d86ac25.jpg'
   },
   { 
     _id: '7',
@@ -70,7 +76,8 @@ const productos = [
     ingredientes: ['locos', 'queso', 'cebolla', 'aji', 'leche'], 
     categoria: 'Acompañamientos',
     stock: 20, 
-    descripcion: 'Guiso espeso de locos' 
+    descripcion: 'Guiso espeso de locos',
+    imagen: 'https://www.mariberico.cl/web/wp-content/uploads/2023/03/chupe-de-loco-camaron.jpg'
   },
   { 
     _id: '8',
@@ -79,7 +86,8 @@ const productos = [
     ingredientes: ['congrio', 'papas', 'cebolla', 'aji', 'cilantro'], 
     categoria: 'Pescados al plato',
     stock: 10, 
-    descripcion: 'Sopa de congrio' 
+    descripcion: 'Sopa de congrio',
+    imagen: 'https://www.buzodecahuil.cl/wp-content/uploads/2020/11/caldillo_de_congrio.jpg'
   },
   { 
     _id: '9',
@@ -88,7 +96,8 @@ const productos = [
     ingredientes: ['reineta', 'limón', 'cebolla', 'cilantro', 'pimienta'], 
     categoria: 'Ceviche',
     stock: 20, 
-    descripcion: 'Ceviche fresco de reineta' 
+    descripcion: 'Ceviche fresco de reineta',
+    imagen: 'https://cdn0.recetasgratis.net/es/posts/8/6/9/ceviche_de_reineta_77968_orig.jpg'
   },
   { 
     _id: '10',
@@ -97,15 +106,31 @@ const productos = [
     ingredientes: ['camarones', 'aceite de oliva', 'ajo', 'aji verde'], 
     categoria: 'Acompañamientos',
     stock: 15, 
-    descripcion: 'Camarones salteados en salsa' 
+    descripcion: 'Camarones salteados en salsa',
+    imagen: 'https://www.800.cl/galeriasitios/Och/Och_12594_Platos-03-CamaronesAlPilPil.jpg'
+  }
+];
+
+const imagenesSlider = [
+  {
+    id: 1,
+    imagen: 'https://buenazo.cronosmedia.glr.pe/original/2020/09/09/5f58f8c082c2f615f804ffdb.jpg',
+  },
+  {
+    id: 2,
+    imagen: 'https://www.recetasthermomix.pe/wp-content/uploads/recetas_0657c4454ca33fa8c6f001769ab2b80f.jpg',
+  },
+  {
+    id: 3,
+    imagen: 'https://unacocinafeliz.com/wp-content/uploads/2022/10/3-19-500x500.jpg',
   }
 ];
 
 const usuarios = {
   'cliente123@gmail.com': {
     email: 'cliente123@gmail.com',
-    nombre: 'Cliente Ejemplo',
-    direccion: 'Calle Falsa 123, Santiago',
+    nombre: 'Cliente',
+    direccion: 'Calle, Ciudad',
     telefono: '+56912345678',
     metodoPago: 'Tarjeta de Crédito'
   }
@@ -139,6 +164,15 @@ app.get('/api/productos', (req, res) => {
   }
 });
 
+app.get('/api/slider/imagenes', (req, res) => {
+  try {
+    res.json(imagenesSlider);
+  } catch (error) {
+    console.error('Error en /api/slider/imagenes:', error);
+    res.status(500).json({ error: 'Error al obtener imágenes del slider' });
+  }
+});
+
 app.get('/api/categorias', (req, res) => {
   try {
     const categorias = [...new Set(productos.map(p => p.categoria))];
@@ -164,7 +198,8 @@ app.post('/api/productos', (req, res) => {
       categoria,
       stock: stock ? Number(stock) : 10,
       descripcion: descripcion || '',
-      ingredientes: []
+      ingredientes: [],
+      imagen: 'img/default.jpg'
     };
     
     productos.push(nuevoProducto);

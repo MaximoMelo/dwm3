@@ -150,24 +150,109 @@
             margin-left: 20px;
         }
 
-        .image-slider-placeholder {
+        .slider-container {
+            position: relative;
+            width: calc(100% - 40px);
             height: 350px;
-            background-color: #f0f0f0;
-            border: 1px solid var(--dark-border);
-            border-radius: var(--border-radius-lg); 
+            margin: 0 20px;
+            overflow: hidden;
+            border-radius: var(--border-radius-lg);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .slider-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .slide-content {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 15px 25px;
+            border-radius: var(--border-radius-sm);
+            text-align: center;
+            max-width: 80%;
+        }
+
+        .slide-content h4 {
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 1.3rem;
+        }
+
+        .slide-content p {
+            margin: 0;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(30, 58, 138, 0.8);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 0 15px;
-            margin: 0 20px;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+            justify-content: center;
         }
-        .slider-arrow {
-            color: var(--primary-color);
-            font-size: 2.5rem; 
-            opacity: 0.8;
+
+        .slider-btn:hover {
+            background: rgba(30, 58, 138, 1);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .prev-btn {
+            left: 10px;
+        }
+
+        .next-btn {
+            right: 10px;
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
             cursor: pointer;
-            transition: opacity 0.3s, transform 0.3s;
+            transition: background 0.3s;
+        }
+
+        .dot.active {
+            background: var(--primary-color);
         }
 
         .product-list-wrapper {
@@ -219,6 +304,13 @@
             font-size: 0.9rem;
             color: var(--text-dark);
             font-weight: bold;
+            overflow: hidden;
+        }
+
+        .product-image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         
         .product-info-wrapper {
@@ -233,7 +325,6 @@
             align-items: center;
             flex-grow: 1;
         }
-
 
         .product-list-wrapper::-webkit-scrollbar {
             width: 8px;
@@ -280,18 +371,18 @@
                         <a class="nav-link btn-outline-info mx-2" 
                             href="InicioSesion.html" 
                             id="login-profile-btn">
-                            Inicia Sesión
+                            Inicia Sesion
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link btn-outline-info mx-2" href="CarritoCompras.html">
-                            Mi Carrito 🛒
+                            Mi Carrito
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link btn-danger mx-2" 
                             href="GeneracionReporte.html"> 
-                            Sección Administrador
+                            Seccion Administrador
                         </a>
                     </li>
                 </ul>
@@ -305,7 +396,7 @@
     </main>
 
     <script>
-    const adminHTML = `<h1 class="text-center mt-5" style="color: var(--text-dark);">Vista de Administración (Contenido en desarrollo).</h1>`;
+    const adminHTML = `<h1 class="text-center mt-5" style="color: var(--text-dark);">Vista de Administracion (Contenido en desarrollo).</h1>`;
 
     function getProductNameId(name) {
         return name.toLowerCase().replace(/\s|\-/g, ''); 
@@ -331,11 +422,20 @@
         alert(`¡"${productName}" añadido al carrito! Cantidad: ${cart[productId].quantity}`);
     }
 
-    function generateProductItemHTML(productName, productId, productPrice) {
+    function generateProductItemHTML(productName, productId, productPrice, productImage = null) {
+        let imageContent = 'IMG';
+        if (productImage) {
+            imageContent = `<img src="${productImage}" alt="${productName}" 
+                          onerror="this.parentElement.innerHTML='IMG'; this.remove()"
+                          style="width: 100%; height: 100%; object-fit: cover;">`;
+        }
+        
         return `
             <div class="product-item" data-id="${productId}">
                 <div class="product-info-wrapper">
-                    <div class="product-image-placeholder">IMG</div>
+                    <div class="product-image-placeholder">
+                        ${imageContent}
+                    </div>
                     <div class="product-name-and-price">
                         <span class="data-label" style="color: var(--text-dark); flex-grow: 1;">${productName}</span>
                         <span class="fw-bold" style="color: var(--primary-color); margin-left: 15px;">$${productPrice.toLocaleString('es-CL')}</span>
@@ -353,7 +453,7 @@
         if (!productListWrapper) return;
 
         try {
-            console.log('Probando conexión a API...');
+            console.log('Probando conexion a API...');
             
             const categoriaSelect = document.getElementById('categoria');
             const searchInput = document.getElementById('search');
@@ -364,7 +464,7 @@
             let url = '/api/productos';
             const params = new URLSearchParams();
             
-            if (categoriaFiltro && categoriaFiltro !== 'Categorías') {
+            if (categoriaFiltro && categoriaFiltro !== 'Categorias') {
                 params.append('categoria', categoriaFiltro);
             }
             if (busquedaFiltro) {
@@ -388,7 +488,8 @@
             
             let productsHTML = '';
             apiProducts.forEach(product => {
-                productsHTML += generateProductItemHTML(product.nombre, product._id, product.precio);
+                const productImage = product.imagen || null;
+                productsHTML += generateProductItemHTML(product.nombre, product._id, product.precio, productImage);
             });
             
             if (apiProducts.length === 0) {
@@ -402,15 +503,15 @@
             console.error('Error cargando productos:', error);
             
             const productosEjemplo = [
-                { _id: '1', nombre: 'Ceviche Mixto', precio: 12500 },
-                { _id: '2', nombre: 'Pescado a la Plancha', precio: 9990 },
-                { _id: '3', nombre: 'Arroz con Mariscos', precio: 7800 },
-                { _id: '4', nombre: 'Pulpo al Olivo', precio: 14500 }
+                { _id: '1', nombre: 'Ceviche Mixto', precio: 12500, imagen: 'img/ceviche-mixto.jpg' },
+                { _id: '2', nombre: 'Pescado a la Plancha', precio: 9990, imagen: 'img/congrio-plancha.jpg' },
+                { _id: '3', nombre: 'Arroz con Mariscos', precio: 6800, imagen: 'img/arroz-mariscos.jpg' },
+                { _id: '4', nombre: 'Pulpo al Olivo', precio: 14500, imagen: 'img/placeholder.jpg' }
             ];
             
             let productsHTML = '';
             productosEjemplo.forEach(product => {
-                productsHTML += generateProductItemHTML(product.nombre, product._id, product.precio);
+                productsHTML += generateProductItemHTML(product.nombre, product._id, product.precio, product.imagen);
             });
             
             productListWrapper.innerHTML = productsHTML + 
@@ -430,18 +531,18 @@
             
             const categoriaSelect = document.getElementById('categoria');
             if (categoriaSelect && categorias.length > 0) {
-                let optionsHTML = '<option selected style="color: var(--text-dark);">Categorías</option>';
+                let optionsHTML = '<option selected style="color: var(--text-dark);">Categorias</option>';
                 categorias.forEach(cat => {
                     optionsHTML += `<option style="color: var(--text-dark);">${cat}</option>`;
                 });
                 categoriaSelect.innerHTML = optionsHTML;
             }
         } catch (error) {
-            console.error('Error cargando categorías:', error);
+            console.error('Error cargando categorias:', error);
             const categoriaSelect = document.getElementById('categoria');
             if (categoriaSelect) {
                 categoriaSelect.innerHTML = `
-                    <option selected style="color: var(--text-dark);">Categorías</option>
+                    <option selected style="color: var(--text-dark);">Categorias</option>
                     <option style="color: var(--text-dark);">Ceviche</option>
                     <option style="color: var(--text-dark);">Pescados al plato</option>
                     <option style="color: var(--text-dark);">Acompañamientos</option>
@@ -477,12 +578,113 @@
         }
     }
 
+    async function loadSliderImagenes() {
+        try {
+            const response = await fetch('/api/slider/imagenes');
+            
+            if (!response.ok) {
+                throw new Error(`Error ${response.status}: ${response.statusText}`);
+            }
+            
+            const sliderImages = await response.json();
+            const sliderContainer = document.querySelector('.image-slider-placeholder');
+            
+            if (!sliderContainer || sliderImages.length === 0) {
+                return;
+            }
+            
+            sliderContainer.outerHTML = `
+                <div class="slider-container" id="main-slider">
+                    <div class="slider-track" id="slider-track">
+                        ${sliderImages.map((item, index) => `
+                            <div class="slide" style="background-image: url('${item.imagen || `https://via.placeholder.com/800x350/1e3a8a/ffffff?text=${encodeURIComponent(item.titulo)}`}')">
+                                <div class="slide-content">
+                                    <h4>${item.titulo}</h4>
+                                    ${item.descripcion ? `<p>${item.descripcion}</p>` : ''}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <button class="slider-btn prev-btn">◀</button>
+                    <button class="slider-btn next-btn">▶</button>
+                    <div class="slider-dots" id="slider-dots">
+                        ${sliderImages.map((_, index) => `
+                            <div class="dot ${index === 0 ? 'active' : ''}" data-index="${index}"></div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            initSlider();
+            
+        } catch (error) {
+            console.error('Error cargando slider:', error);
+        }
+    }
+
+    function initSlider() {
+        const sliderTrack = document.getElementById('slider-track');
+        const dots = document.querySelectorAll('.dot');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+        
+        if (!sliderTrack || dots.length === 0) return;
+        
+        let currentSlide = 0;
+        const totalSlides = dots.length;
+        let slideInterval;
+        
+        function updateSlider() {
+            sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
+        }
+        
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlider();
+        }
+        
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlider();
+        }
+        
+        if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+        if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+        
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => goToSlide(index));
+        });
+        
+        if (totalSlides > 1) {
+            slideInterval = setInterval(nextSlide, 5000);
+            
+            sliderTrack.addEventListener('mouseenter', () => {
+                clearInterval(slideInterval);
+            });
+            
+            sliderTrack.addEventListener('mouseleave', () => {
+                slideInterval = setInterval(nextSlide, 5000);
+            });
+        }
+        
+        updateSlider();
+    }
+
     const listadoHTML = `
         <div class="filters-row">
             <div class="d-flex justify-content-between align-items-end mb-4">
                 <div></div> 
                 <div class="d-flex gap-2 align-items-end">
-                    <div style="width: 180px;"><select class="form-select btn text-start shadow-none" style="color: var(--text-dark) !important; border: 1px solid var(--dark-border);" id="categoria"><option selected style="color: var(--text-dark);">Categorías</option></select></div>
+                    <div style="width: 180px;"><select class="form-select btn text-start shadow-none" style="color: var(--text-dark) !important; border: 1px solid var(--dark-border);" id="categoria"><option selected style="color: var(--text-dark);">Categorias</option></select></div>
                     <div style="width: 250px;"><input type="text" class="form-control" id="search" placeholder="Buscar producto"></div>
                     <div style="width: 100px;"><button class="btn btn-primary w-100">Filtrar</button></div>
                 </div>
@@ -490,7 +692,7 @@
             <div class="content-container">
                 <div class="category-slider-wrapper">
                     <h5 style="color: var(--text-dark) !important;">Productos Destacados</h5>
-                    <div class="image-slider-placeholder"><span class="slider-arrow">◀</span><span style="color: var(--text-dark);" class="opacity-75">Slider de Imágenes</span><span class="slider-arrow">▶</span></div>
+                    <div class="image-slider-placeholder"><span class="slider-arrow">◀</span><span style="color: var(--text-dark);" class="opacity-75">Slider de Imagenes</span><span class="slider-arrow">▶</span></div>
                 </div>
                 <div class="product-list-wrapper"> 
                     <div id="product-list-wrapper-content">
@@ -521,6 +723,7 @@
             setTimeout(() => {
                 fetchAndRenderProducts();
                 cargarCategorias();
+                loadSliderImagenes();
                 setupEventListeners();
             }, 100);
         }
@@ -554,7 +757,7 @@
             if (!existingLogoutButton) {
                 const logoutButton = document.createElement('a');
                 logoutButton.id = 'logout-btn';
-                logoutButton.textContent = 'Cerrar Sesión';
+                logoutButton.textContent = 'Cerrar Sesion';
                 logoutButton.href = '#'; 
                 logoutButton.classList.add('nav-link', 'btn', 'btn-secondary', 'mx-2');
                 logoutButton.style.color = 'var(--light-bg)';
@@ -563,7 +766,7 @@
             }
 
         } else {
-            loginButton.textContent = 'Inicia Sesión';
+            loginButton.textContent = 'Inicia Sesion';
             loginButton.href = 'InicioSesion.html';
             loginButton.classList.remove('btn-info', 'btn-secondary');
             loginButton.classList.add('btn-outline-info');
